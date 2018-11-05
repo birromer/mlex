@@ -6,7 +6,7 @@ import java.util.Date;
 public class Jogo extends FileHandler {
 	private int id;
 	private String nomeJogo; 
-	private Date lancamento; 
+	private String lancamento; 
 	private String desenvolvedor;
 	private double tamanho;
 	private double nota;
@@ -14,11 +14,13 @@ public class Jogo extends FileHandler {
 	private String genero;
 	private String comentarios;
 	private int tempoJogado;
-	private File arq;
 	
-	public Jogo(int id, String nomeJogo, Date lancamento, String desenvolvedor, double tamanho, double nota, String versao, String genero, String comentarios, int tempoJogado, File arq)
+	public Jogo(int id, String nomeJogo, String lancamento, String desenvolvedor)
 	{
-		
-	}
+		this.id = id;
+		this.nomeJogo = nomeJogo; 
+		this.lancamento = lancamento; 
+		this.desenvolvedor = desenvolvedor;
+	}	
 
 }
