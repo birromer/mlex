@@ -1,12 +1,5 @@
-/**
- * 
- */
 package mlex;
 
-/**
- * @author birromer
- *
- */
 public class Main {
 
 	/**
