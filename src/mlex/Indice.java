@@ -46,5 +46,10 @@ public class Indice extends FileHandler
 		return(categoriasDoJogo.charAt(posicao) == '1');
 	}
 	
+	public int getNumeroJogos()
+	{
+		return categorias.size();
+	}
+	
 	
 }
