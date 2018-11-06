@@ -7,9 +7,10 @@ import java.util.Map;
 
 public class Repositorio extends FileHandler
 {
-	private List<Jogo> listaJogosObj = new ArrayList<Jogo>();
-	private Map<String, Integer> tabelaJogos = new HashMap<String, Integer>();
+	private static List<Jogo> listaJogosObj = new ArrayList<Jogo>();
+	private static Map<String, Integer> tabelaJogos = new HashMap<String, Integer>();
 	private java.io.Console cnsl = System.console();
+	private static Indice indice =  new Indice();
 	
 	public Repositorio() 
 	{

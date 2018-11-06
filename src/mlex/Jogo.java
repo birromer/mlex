@@ -21,6 +21,18 @@ public class Jogo extends FileHandler {
 		this.nomeJogo = nomeJogo; 
 		this.lancamento = lancamento; 
 		this.desenvolvedor = desenvolvedor;
-	}	
+	}
+	
+	public String getNomeJogo()
+	{
+		return this.nomeJogo;
+	}
+	
+	public int getIdJogo()
+	{
+		return this.id;
+	}
+	
+	
 
 }
