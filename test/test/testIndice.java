@@ -22,15 +22,31 @@ public class testIndice {
 	}
 
 	@Test
-	public void testAdicionaJogo()
+	public void testAdicionaJogoIndiceVazio()
 	{
-		assertTrue(indiceTeste.getNumeroJogos == 0);
+		assertTrue(indiceTeste.getNumeroJogos() == 0);
 		indiceTeste.adicionaJogoNoIndice(jogoTeste1);
-		assertTrue(indiceTeste.getNumeroJogos == 1);
+		assertTrue(indiceTeste.getNumeroJogos() == 1);
+
+	}
+	
+	@Test
+	public void testAdicionaJogoComUmJogo()
+	{
 		indiceTeste.adicionaJogoNoIndice(jogoTeste1);
-		assertTrue(indiceTeste.getNumeroJogos == 1);
+		assertTrue(indiceTeste.getNumeroJogos() == 1);
 		indiceTeste.adicionaJogoNoIndice(jogoTeste2);
-		assertTrue(indiceTeste.getNumeroJogos == 2);
+		assertTrue(indiceTeste.getNumeroJogos() == 2);
+		
+	}
+	
+	@Test
+	public void testAdicionaJogoQueJaEstaNoIndice()
+	{
+		indiceTeste.adicionaJogoNoIndice(jogoTeste1);
+		assertTrue(indiceTeste.getNumeroJogos() == 1);
+		indiceTeste.adicionaJogoNoIndice(jogoTeste1);
+		assertTrue(indiceTeste.getNumeroJogos() == 1);
 	}
 	
 	public void testeModificaJogo()

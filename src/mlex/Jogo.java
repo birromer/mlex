@@ -33,6 +33,11 @@ public class Jogo extends FileHandler {
 		return this.id;
 	}
 	
+	@Override
+	public String toString()
+	{
+		return ( this.id + ',' + this.nomeJogo + ',' + this.lancamento + ',' + this.desenvolvedor); 
+	}
 	
 
 }
