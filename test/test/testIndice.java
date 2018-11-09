@@ -196,13 +196,37 @@ public class testIndice {
 
 	
 	@Test
-	public void testeModificaJogo()
+	public void testmodificaJogoNoIndice()
 	{
+		try
+		{
+			indiceTeste.adicionaJogoNoIndice(jogoTeste1);
+		}
+		catch (Exception e)
+		{
+			System.out.println("primeira adicao de jogo ja existe");
+		}
+		
+		System.out.println(indiceTeste.getInformacoesJogoNoIndice(jogoTeste1.getIdJogo()));
+		assertTrue(indiceTeste.getInformacoesJogoNoIndice(jogoTeste1.getIdJogo()).get(3) == "Klei");
+		Jogo temp = new Jogo(0, "Jogo Legal", "01/09/94", "Cacatua");
+		
+		try
+		{
+			indiceTeste.modificaJogoNoIndice(temp);
+		}
+		catch (Exception e)
+		{
+			System.out.println("Jogo nao existe no indice");
+		}
+	
+		assertTrue(indiceTeste.getInformacoesJogoNoIndice(jogoTeste1.getIdJogo()).get(3) == "Cacatua");
+		System.out.println(indiceTeste.getInformacoesJogoNoIndice(temp.getIdJogo()));
 		
 	}
 	
 	@Test
-	public void testeRemoveJogo()
+	public void testRemoveJogo()
 	{
 		
 	}

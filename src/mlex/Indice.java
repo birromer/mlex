@@ -9,7 +9,7 @@ import java.util.Map;
 public class Indice extends FileHandler
 {
 	String path = "./etc/indice.txt";
-	private Map<Integer, String> indiceLocal = new HashMap<Integer, String>(); //objeto local do indice
+	private Map<Integer, List<String>> indiceLocal = new HashMap<Integer, List<String>>(); //objeto local do indice
 	private File ind = new File("./etc/indice.txt"); //arquivo do indice
 	private static Map<Integer, String> mapaJogoCategorias = new HashMap<Integer, String>(); //dicionario que relaciona id do jogo com string contendo mapaJogoCategorias relacionadas a ele
 	private List<String> listaCategorias = new ArrayList<String>(); //lista de mapaJogoCategorias disponiveis
@@ -28,13 +28,23 @@ public class Indice extends FileHandler
 			throw new Exception("Jogo ja existe");
 		} 
 		
-		String linhaIndiceAdicionada = jogo.toString() + ',' + this.getCategorias(jogo.getIdJogo()) + '\n';
+		List<String> linhaIndiceAdicionada = jogo.retornaListaAtributosRelevantes();
 		indiceLocal.put(jogo.getIdJogo(), linhaIndiceAdicionada);
 	}
 	
-	public void modificaJogoNoIndice(int id, Jogo jogo)
+	public void modificaJogoNoIndice(Jogo jogo) throws Exception
 	{
-		;
+		int idDoJogo = jogo.getIdJogo();
+
+		if (mapaJogoCategorias.containsKey(idDoJogo) == false)
+		{
+			throw new Exception("Jogo nao existe no indice");
+		}
+		else
+		{
+			List<String> linhaIndiceAdicionada = jogo.retornaListaAtributosRelevantes();
+			indiceLocal.replace(idDoJogo, linhaIndiceAdicionada);
+		}
 	}
 	
 	public void deletaJogoNoIndice(int id)
@@ -152,4 +162,10 @@ public class Indice extends FileHandler
 	{
 		mapaJogoCategorias.put(id, "0");
 	}
+	
+	public List<String> getInformacoesJogoNoIndice(int id)
+	{
+		return indiceLocal.get(id);
+	}
+	
 }
