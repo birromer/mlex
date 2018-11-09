@@ -24,6 +24,6 @@ hs_err_pid*
 
 # others
 Mlex-img/
-./.metadata/
-./bin/
-./etc/
+.metadata/
+bin/
+etc/
