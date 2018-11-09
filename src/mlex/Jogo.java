@@ -36,7 +36,7 @@ public class Jogo extends FileHandler {
 	@Override
 	public String toString()
 	{
-		return ( this.id + ',' + this.nomeJogo + ',' + this.lancamento + ',' + this.desenvolvedor); 
+		return ( Integer.toString(this.id) + ',' + this.nomeJogo + ',' + this.lancamento + ',' + this.desenvolvedor); 
 	}
 	
 

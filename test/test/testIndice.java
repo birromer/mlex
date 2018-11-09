@@ -2,6 +2,8 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,38 +18,77 @@ public class testIndice {
 	@Before
 	public void setUp()
 	{
+		File arquivoIndice = new File("./etc/indice.txt"); 
+        arquivoIndice.delete();
 		indiceTeste = new Indice();
 		jogoTeste1 = new Jogo(0, "Jogo Legal", "01/09/94", "Klei");
-		jogoTeste2 = new Jogo(666, "Jogo Chato", "31/02/94", "Klei");
+		System.out.println(jogoTeste1.toString());
+		jogoTeste2 = new Jogo(666, "Jogo Chato", "31/02/94", "Despacito");
+		System.out.println(jogoTeste2.toString());
 	}
 
 	@Test
 	public void testAdicionaJogoIndiceVazio()
 	{
 		assertTrue(indiceTeste.getNumeroJogos() == 0);
-		indiceTeste.adicionaJogoNoIndice(jogoTeste1);
+		try
+		{
+			indiceTeste.adicionaJogoNoIndice(jogoTeste1);
+		}
+		catch (Exception e)
+		{
+			System.out.println("jogo1 ja existe");
+		}
 		assertTrue(indiceTeste.getNumeroJogos() == 1);
 
+	}
+
+	@Test
+	public void testAdicionaJogoQueJaEstaNoIndice()
+	{
+		try
+		{
+			indiceTeste.adicionaJogoNoIndice(jogoTeste1);
+		}
+		catch (Exception e)
+		{
+			System.out.println("primeira adicao de jogo ja existe");
+		}
+		assertTrue(indiceTeste.getNumeroJogos() == 1);
+		try
+		{
+			indiceTeste.adicionaJogoNoIndice(jogoTeste1);
+		}
+		catch (Exception e)
+		{
+			System.out.println("segunda adicao de jogo ja existe");
+		}
+		assertTrue(indiceTeste.getNumeroJogos() == 1);
 	}
 	
 	@Test
 	public void testAdicionaJogoComUmJogo()
 	{
-		indiceTeste.adicionaJogoNoIndice(jogoTeste1);
+		try
+		{
+			indiceTeste.adicionaJogoNoIndice(jogoTeste1);
+		}
+		catch (Exception e)
+		{
+			System.out.println("jogo1 ja existe");
+		}
 		assertTrue(indiceTeste.getNumeroJogos() == 1);
-		indiceTeste.adicionaJogoNoIndice(jogoTeste2);
-		assertTrue(indiceTeste.getNumeroJogos() == 2);
-		
+		try
+		{
+			indiceTeste.adicionaJogoNoIndice(jogoTeste2);
+		}
+		catch (Exception e)
+		{
+			System.out.println("jogo2 ja existe");
+		}
+		assertTrue(indiceTeste.getNumeroJogos() == 2);	
 	}
-	
-	@Test
-	public void testAdicionaJogoQueJaEstaNoIndice()
-	{
-		indiceTeste.adicionaJogoNoIndice(jogoTeste1);
-		assertTrue(indiceTeste.getNumeroJogos() == 1);
-		indiceTeste.adicionaJogoNoIndice(jogoTeste1);
-		assertTrue(indiceTeste.getNumeroJogos() == 1);
-	}
+
 	
 	public void testeModificaJogo()
 	{

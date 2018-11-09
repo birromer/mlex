@@ -1,13 +1,9 @@
 package mlex;
 
-import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
+import java.io.FileWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +12,7 @@ import java.util.Map;
 public class Indice extends FileHandler
 {
 	String path = "./etc/indice.txt";
-	//private static Map //objeto local do indice
+	private Map<Integer, String> indiceLocal = new HashMap<Integer, String>(); //objeto local do indice
 	private static File ind = new File("./etc/indice.txt");
 	private static Map<Integer, String> categorias = new HashMap<Integer, String>();
 	private static List<String> listaCategorias = new ArrayList<String>(); 
@@ -27,20 +23,28 @@ public class Indice extends FileHandler
 		;
 	}
 	
-	public void adicionaJogoNoIndice(Jogo jogo)
+	public void adicionaJogoNoIndice(Jogo jogo) throws Exception
 	{
+		if (this.testaJogoNoIndice(jogo.getIdJogo()) == true)
+		{
+			System.out.println("Jogo ja existe no indice, sera ignorado");
+			throw new Exception("Jogo ja existe");
+		}
+		
+		
 		String categoriasDoJogo = categorias.get(jogo.getIdJogo());
 		if (categoriasDoJogo == null)
 		{
-			categoriasDoJogo = new String(new char[listaCategorias.size()]).replace("\0", "0");
+			categoriasDoJogo = new String(new char[listaCategorias.size()]).replace('\0', '0');
 		}
 
 		try 
 		{
-			PrintWriter escrevedor  = new PrintWriter(path, "UTF-8");
+			Writer saida = new BufferedWriter(new FileWriter(path));
 			String linhaIndiceAdicionada = jogo.toString() + ',' + categorias.get(jogo.getIdJogo() + '\n');
-			escrevedor.println(linhaIndiceAdicionada);
-			escrevedor.close();
+			saida.append(linhaIndiceAdicionada);
+			saida.close();
+			indiceLocal.put(jogo.getIdJogo(), linhaIndiceAdicionada);
 		}
 		catch (Exception e)
 		{
@@ -74,39 +78,11 @@ public class Indice extends FileHandler
 	
 	public int getNumeroJogos()
 	{
-		 try (BufferedInputStream is = new BufferedInputStream(new FileInputStream(ind), 1024)) {
-
-		        byte[] c = new byte[1024];
-		        boolean empty = true,
-		                lastEmpty = false;
-		        long count = 0;
-		        int read;
-		        while ((read = is.read(c)) != -1) {
-		            for (int i = 0; i < read; i++) {
-		                if (c[i] == '\n') {
-		                    count++;
-		                    lastEmpty = true;
-		                } else if (lastEmpty) {
-		                    lastEmpty = false;
-		                }
-		            }
-		            empty = false;
-		        }
-
-		        if (!empty) {
-		            if (count == 0) {
-		                count = 1;
-		            } else if (!lastEmpty) {
-		                count++;
-		            }
-		        }
-
-		        return count;
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		 return indiceLocal.size();
 	}
 	
-	
+	public boolean testaJogoNoIndice(int id)
+	{
+		return indiceLocal.containsKey(id);
+	}
 }
