@@ -22,9 +22,9 @@ public class testIndice {
         arquivoIndice.delete();
 		indiceTeste = new Indice();
 		jogoTeste1 = new Jogo(0, "Jogo Legal", "01/09/94", "Klei");
-		System.out.println(jogoTeste1.toString());
+		indiceTeste.novoJogoSendoAdicionado(0);
 		jogoTeste2 = new Jogo(666, "Jogo Chato", "31/02/94", "Despacito");
-		System.out.println(jogoTeste2.toString());
+		indiceTeste.novoJogoSendoAdicionado(666);
 	}
 
 	@Test
@@ -89,8 +89,120 @@ public class testIndice {
 		assertTrue(indiceTeste.getNumeroJogos() == 2);	
 	}
 
+	@Test
+	public void testAdicionaCategoriaAoIndiceComNenhumaCategoria()
+	{
+		assertTrue(indiceTeste.getNumeroCategorias() == 0);
+		assertTrue(indiceTeste.getMapaCategorias().size() == 2);
+		assertTrue(indiceTeste.getMapaCategorias().get(jogoTeste1.getIdJogo()).length() == 1);
+		indiceTeste.adicionaCategoriaAoIndice("Jogos do verao passado");		
+		assertTrue(indiceTeste.getNumeroCategorias() == 1);
+		assertTrue(indiceTeste.getMapaCategorias().size() == 2);
+		assertTrue(indiceTeste.getMapaCategorias().get(jogoTeste1.getIdJogo()).length() == 1);
+		indiceTeste.adicionaCategoriaAoIndice("Jogos do inverno passado");
+		assertTrue(indiceTeste.getNumeroCategorias() == 2);
+		assertTrue(indiceTeste.getMapaCategorias().size() == 2);
+		assertTrue(indiceTeste.getMapaCategorias().get(jogoTeste1.getIdJogo()).length() == 2);
+		indiceTeste.adicionaCategoriaAoIndice("Jogos do equinocio passado");
+		assertTrue(indiceTeste.getNumeroCategorias() == 3);
+		assertTrue(indiceTeste.getMapaCategorias().size() == 2);
+		assertTrue(indiceTeste.getMapaCategorias().get(jogoTeste1.getIdJogo()).length() == 3);
+//		for (Integer key : indiceTeste.getMapaCategorias().keySet())
+//		{
+//			System.out.println(indiceTeste.getCategorias(key));
+//		}
+	}
 	
+	@Test
+	public void testAdicionaCategoriaAoJogo()
+	{	
+		indiceTeste.adicionaCategoriaAoIndice("Jogos do verao passado");
+		indiceTeste.adicionaCategoriaAoIndice("Jogos do inverno passado");
+		indiceTeste.adicionaCategoriaAoIndice("Jogos do equinocio passado");
+		try
+		{
+			indiceTeste.adicionaCategoriaAoJogo(jogoTeste1.getIdJogo(), "Jogos do verao passado");
+		}
+		catch (Exception e)
+		{
+			System.out.println("categoria1 nao existe");
+		}
+		try
+		{
+			indiceTeste.adicionaCategoriaAoJogo(jogoTeste2.getIdJogo(), "Jogos do equinocio passado");
+		}
+		catch (Exception e)
+		{
+			System.out.println("categoria2 nao existe");
+		}
+		assertTrue(indiceTeste.testaCategoria(jogoTeste1.getIdJogo(), "Jogos do verao passado") == true);
+		assertTrue(indiceTeste.testaCategoria(jogoTeste2.getIdJogo(), "Jogos do equinocio passado") == true);
+		try
+		{
+			indiceTeste.adicionaCategoriaAoJogo(jogoTeste2.getIdJogo(), "Jogos do verao passado");
+		}
+		catch (Exception e)
+		{
+		
+			System.out.println("categoria2 nao existe");
+		}
+		assertTrue(indiceTeste.testaCategoria(jogoTeste2.getIdJogo(), "Jogos do verao passado") == true);
+	}
+	
+	@Test
+	public void testRemoveCategoriaDoJogo()
+	{	
+		indiceTeste.adicionaCategoriaAoIndice("Jogos do verao passado");
+		indiceTeste.adicionaCategoriaAoIndice("Jogos do inverno passado");
+		indiceTeste.adicionaCategoriaAoIndice("Jogos do equinocio passado");
+		
+		try
+		{
+			indiceTeste.adicionaCategoriaAoJogo(jogoTeste1.getIdJogo(), "Jogos do verao passado");
+		}
+		catch (Exception e)
+		{
+			System.out.println("categoria1 nao existe");
+		}
+		try
+		{
+			indiceTeste.adicionaCategoriaAoJogo(jogoTeste2.getIdJogo(), "Jogos do equinocio passado");
+		}
+		catch (Exception e)
+		{
+			System.out.println("categoria2 nao existe");
+		}
+		
+		indiceTeste.removeCategoriaDoJogo(jogoTeste1.getIdJogo(), "Jogos do verao passado");
+		indiceTeste.removeCategoriaDoJogo(jogoTeste2.getIdJogo(), "Jogos do equinocio passado");
+		
+		assertTrue(indiceTeste.testaCategoria(jogoTeste1.getIdJogo(), "Jogos do verao passado") == false);
+		assertTrue(indiceTeste.testaCategoria(jogoTeste2.getIdJogo(), "Jogos do equinocio passado") == false);
+		
+		try
+		{
+			indiceTeste.adicionaCategoriaAoJogo(jogoTeste2.getIdJogo(), "Jogos do verao passado");
+		}
+		catch (Exception e)
+		{
+		
+			System.out.println("categoria2 nao existe");
+		}
+		
+		indiceTeste.removeCategoriaDoJogo(jogoTeste2.getIdJogo(), "Jogos do verao passado");
+		
+		assertTrue(indiceTeste.testaCategoria(jogoTeste2.getIdJogo(), "Jogos do verao passado") == false);
+	}
+
+	
+	@Test
 	public void testeModificaJogo()
+	{
+		
+	}
+	
+	@Test
+	public void testeRemoveJogo()
 	{
 		
 	}

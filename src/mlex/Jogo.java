@@ -15,6 +15,8 @@ public class Jogo extends FileHandler {
 	private String comentarios;
 	private int tempoJogado;
 	
+	
+	
 	public Jogo(int id, String nomeJogo, String lancamento, String desenvolvedor)
 	{
 		this.id = id;

@@ -57,6 +57,8 @@ public class Repositorio extends FileHandler
 		
 		criaJogo(novoJogo);
 		
+		indice.novoJogoSendoAdicionado(idNovoJogo);
+		
 		return idNovoJogo;
 	}
 		
