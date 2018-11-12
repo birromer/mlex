@@ -226,9 +226,98 @@ public class testIndice {
 	}
 	
 	@Test
-	public void testRemoveJogo()
-	{
+	public void testRemoveJogoQueNaoEstaNoIndice()
+	{	
+		assertTrue(indiceTeste.getNumeroJogos() == 0);
+		try
+		{
+			indiceTeste.removeJogoDoIndice(jogoTeste1.getIdJogo());
+		}
+		catch (Exception e)
+		{
+			
+			System.out.println("jogo nao existe no indice");
+		}
+		assertTrue(indiceTeste.getNumeroJogos() == 0);
 		
+	
 	}
+	
+	
+	@Test
+	public void testRemoveJogoQueEstaNoIndice()
+	{	
+		assertTrue(indiceTeste.getNumeroJogos() == 0);
+		
+		try
+		{
+			indiceTeste.adicionaJogoNoIndice(jogoTeste1);
+		}
+		catch (Exception e)
+		{
+			System.out.println("primeira adicao de jogo ja existe");
+		}
+		
+		assertTrue(indiceTeste.getNumeroJogos() == 1);
+		
+		try
+		{
+			indiceTeste.removeJogoDoIndice(jogoTeste1.getIdJogo());
+		}
+		catch (Exception e)
+		{
+			
+			System.out.println("jogo nao existe no indice");
+		}
+		
+		assertTrue(indiceTeste.getNumeroJogos() == 0);
+	}
+	
+	@Test
+	public void testRemoveMultiplosJogosDoIndice()
+	{	
+		assertTrue(indiceTeste.getNumeroJogos() == 0);
+		
+		try
+		{
+			indiceTeste.adicionaJogoNoIndice(jogoTeste1);
+		}
+		catch (Exception e)
+		{
+			System.out.println("primeira adicao de jogo ja existe");
+		}
+		try
+		{
+			indiceTeste.adicionaJogoNoIndice(jogoTeste2);
+		}
+		catch (Exception e)
+		{
+			System.out.println("primeira adicao de jogo ja existe");
+		}
+		
+		assertTrue(indiceTeste.getNumeroJogos() == 2);
+		
+		try
+		{
+			indiceTeste.removeJogoDoIndice(jogoTeste1.getIdJogo());
+		}
+		catch (Exception e)
+		{
+			
+			System.out.println("jogo nao existe no indice");
+		}
+		try
+		{
+			indiceTeste.removeJogoDoIndice(jogoTeste2.getIdJogo());
+		}
+		catch (Exception e)
+		{
+			
+			System.out.println("jogo nao existe no indice");
+		}
+		
+		assertTrue(indiceTeste.getNumeroJogos() == 0);
+	}
+	
 
 }

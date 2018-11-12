@@ -17,7 +17,7 @@ public class Indice extends FileHandler
 	
 	public Indice()
 	{
-		;
+		//chama funcao de ler indice do arquivo;
 	}
 	
 	public void adicionaJogoNoIndice(Jogo jogo) throws Exception
@@ -47,9 +47,17 @@ public class Indice extends FileHandler
 		}
 	}
 	
-	public void deletaJogoNoIndice(int id)
+	public void removeJogoDoIndice(int id) throws Exception
 	{
-		;
+		if (mapaJogoCategorias.containsKey(id) == false)
+		{
+			throw new Exception("jogo nao existe no indice");
+		}
+		else
+		{
+			mapaJogoCategorias.remove(id);
+			indiceLocal.remove(id);
+		}
 	}
 	
 	public String getCategorias(int id)
@@ -167,5 +175,36 @@ public class Indice extends FileHandler
 	{
 		return indiceLocal.get(id);
 	}
+	
+	public void salvaObjetoIndice()
+	{
+		
+	}
+	
+	public void salvaMapaJogoCategoria()
+	{
+		
+	}
+	
+	public void restauraMapaJogoCategoria()
+	{
+		
+	}
+	
+	public void restauraObjetoIndice()
+	{
+		
+	}
+	
+	public void salvaListaCategorias()
+	{
+		
+	}
+	
+	public void restauraListaCategorias()
+	{
+		
+	}
+	
 	
 }
