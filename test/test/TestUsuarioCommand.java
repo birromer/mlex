@@ -18,10 +18,16 @@ public class TestUsuarioCommand
 	}
 
 	@Test
-	public void testUsuarioCommandVerTodosOsJogos()
+	public void testUsuarioCommandMenuInicial()
 	{
-		assertTrue(usuarioCommand.menuIniciar() == 0);
-		
+		assertTrue(usuarioCommand.menuInicial()==0);
+		assertTrue(usuarioCommand.menuInicial()==1);
+
 	}
+	
+	/*public void testUsuarioCommandMenuCategorias()
+	{
+		assertTrue(usuarioCommand.menuCategorias()==0);
+	}*/
 
 }
