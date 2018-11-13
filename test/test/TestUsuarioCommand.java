@@ -20,14 +20,22 @@ public class TestUsuarioCommand
 	@Test
 	public void testUsuarioCommandMenuInicial()
 	{
-		assertTrue(usuarioCommand.menuInicial()==0);
-		assertTrue(usuarioCommand.menuInicial()==1);
-
+		assertTrue(usuarioCommand.menuInicial(0)==0);
+		assertTrue(usuarioCommand.menuInicial(666)==666);
 	}
 	
-	/*public void testUsuarioCommandMenuCategorias()
+	public void testUsuarioCommandMenuCategorias()
 	{
-		assertTrue(usuarioCommand.menuCategorias()==0);
-	}*/
+		assertTrue(usuarioCommand.menuCategorias(0)==0);
+		assertTrue(usuarioCommand.menuCategorias(5)==5);
+	}
+	
+	public void testUsuarioCommandMenuJogo()
+	{
+		assertTrue(usuarioCommand.menuJogo(0)==0);
+		assertTrue(usuarioCommand.menuJogo(5)==5);
+	}
+	
+	
 
 }
