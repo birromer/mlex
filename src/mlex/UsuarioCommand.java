@@ -1,69 +1,56 @@
 package mlex;
 
 import java.io.IOException;
+import java.util.Scanner;
+
 
 public class UsuarioCommand
 {		
 	public static final int CHAR_TO_INT = 48;
 	private static Repositorio repositorio = new Repositorio();
 	
-	public int menuIniciar()
+	public int menuInicial()
 	{
+		Scanner scanner = new Scanner(System.in);
 		int opcaoMenu = 0;
-		System.out.println("Escolha a acao que deseja realizar:\n"
-				+ "0)Mostrar os jogos do repositorio;\n"
-				+ "1)Ver informacoes de um jogo;\n"
+		System.out.println("\n0)Mostrar os jogos do repositorio;\n"
+				+ "1)Selecionar jogo;\n"
 				+ "2)Adicionar um jogo ao repositorio;\n"
-				+ "3)Remover um jogo do repositorio;\n"
-				+ "4)Modificar um jogo do repositorio;\n"
-				+ "5)Menu de Categorias;\n"
-				+ "6)Filtrar jogos;\n"
-				+ "7)Configuracoes do usuario;\n"
-				+ "8)Sair;");
+				+ "3)Acessar colecoes;\n"
+				+ "4)Filtrar jogos;\n"
+				+ "5)Configuracoes do usuario;\n"
+				+ "666)Sair;\n"
+				+ "Escolha a acao que deseja realizar: ");
 		
-		try
-		{
-			opcaoMenu = System.in.read() - CHAR_TO_INT;
-		}
-		catch (IOException e)
-		{
-			System.out.println("erro de leitura do teclado");
-			e.printStackTrace();
-		}
+		opcaoMenu = scanner.nextInt();
 		
 		switch(opcaoMenu)
 		{
 			case 0:
-				//ve os jogo
+				//ver tds jogos
 				break;
 			case 1:
-				//ve um jogo
+				//ve um jogo e pode:
+				//remove-lo, modifica-lo, adicionar comentario, verificar integridade, enviar por email
 				break;
 			case 2:
 				//add um jogo
 				break;
 			case 3:
-				//remove um jogo
-				break;
-			case 4:
-				//modifica um jogo
-				break;
-			case 5:
 				//cetegs
 				break;
-			case 6:
+			case 4:
 				//filtroo
 				break;
-			case 7:
+			case 5:
 				//configs
 				break;
-			case 8:
+			case 666:
 				//encerra o programa
 				break;
 			default: System.out.println("Nao eras, meu bruxo!");
 		
 		}
-		System.out.println(opcaoMenu);
 		
 		return opcaoMenu;
 	}
