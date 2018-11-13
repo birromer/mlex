@@ -181,12 +181,12 @@ public class Indice extends FileHandler
 		
 	}
 	
-	public void salvaMapaJogoCategoria()
+	public void salvaMapaJogoCategorias()
 	{
 		
 	}
 	
-	public void restauraMapaJogoCategoria()
+	public void restauraMapaJogoCategorias()
 	{
 		
 	}
