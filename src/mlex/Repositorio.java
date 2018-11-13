@@ -12,11 +12,6 @@ public class Repositorio extends FileHandler
 	private java.io.Console cnsl = System.console();
 	private static Indice indice =  new Indice();
 	
-	public Repositorio() 
-	{
-		;
-	}
-
 	public boolean verificaId(String nomeJogo)
 	{
 		return tabelaJogos.containsKey(nomeJogo);
