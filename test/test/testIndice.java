@@ -1,8 +1,10 @@
 package test;
 
 import static org.junit.Assert.*;
-
 import java.io.File;
+import java.io.IOException;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,11 +16,15 @@ public class testIndice {
 	Indice indiceTeste;
 	Jogo jogoTeste1;
 	Jogo jogoTeste2;
+	File arquivoIndice;
+	String pathObjetoIndice = "./etc/objeto_indice";
+	String pathMapaJogoObjetos = "./etc/mapa_jogo_objetos";
+	String pathListaCategorias = "./etc/lista_categorias.txt";
 	
 	@Before
 	public void setUp()
 	{
-		File arquivoIndice = new File("./etc/indice.txt"); 
+		arquivoIndice = new File("./etc/indice.txt"); 
         arquivoIndice.delete();
 		indiceTeste = new Indice();
 		jogoTeste1 = new Jogo(0, "Jogo Legal", "01/09/94", "Klei");
@@ -193,7 +199,6 @@ public class testIndice {
 		
 		assertTrue(indiceTeste.testaCategoria(jogoTeste2.getIdJogo(), "Jogos do verao passado") == false);
 	}
-
 	
 	@Test
 	public void testmodificaJogoNoIndice()
@@ -239,10 +244,7 @@ public class testIndice {
 			System.out.println("jogo nao existe no indice");
 		}
 		assertTrue(indiceTeste.getNumeroJogos() == 0);
-		
-	
 	}
-	
 	
 	@Test
 	public void testRemoveJogoQueEstaNoIndice()
@@ -318,6 +320,131 @@ public class testIndice {
 		
 		assertTrue(indiceTeste.getNumeroJogos() == 0);
 	}
+	
+	@Test
+	public void testSalvaObjetoIndiceEmArquivoQueNaoExiste()
+	{
+		File arquivoObjetoIndice = new File(pathObjetoIndice);
+		
+		if (arquivoObjetoIndice.exists() == true)
+		{
+			arquivoObjetoIndice.delete();
+		}
+		assertFalse(arquivoObjetoIndice.exists());
+		indiceTeste.salvaObjetoIndice();
+		assertTrue(arquivoObjetoIndice .exists());
+	}
+	
+	@Test
+	public void testSalvaObjetoIndiceEmArquivoQueExisteVazio()
+	{
+		File arquivoObjetoIndice = new File(pathObjetoIndice);
+		
+		if (arquivoObjetoIndice.exists() == true)
+		{
+			arquivoObjetoIndice.delete();
+		}
+		try
+		{
+			arquivoObjetoIndice.createNewFile();
+		}
+		catch (IOException e)
+		{
+			System.out.println("falha em criar arquivo indice vazio");
+		}
+		assertTrue(arquivoObjetoIndice.exists());
+		indiceTeste.salvaObjetoIndice();
+		assertTrue(arquivoObjetoIndice.exists());
+	}
+	
+	@Test
+	public void testSalvaObjetoIndiceEmArquivoQueExisteComConteudoAleatorio()
+	{
+		File arquivoObjetoIndice = new File(pathObjetoIndice);
+		
+		if (arquivoObjetoIndice.exists() == false)
+		{
+			try
+			{
+				arquivoObjetoIndice.createNewFile();
+			}
+			catch (IOException e)
+			{
+				System.out.println("falha em criar arquivo indice vazio");
+			}
+		}
+		
+		assertTrue(arquivoObjetoIndice.exists());
+		indiceTeste.salvaObjetoIndice();
+		assertTrue(arquivoObjetoIndice.exists());
+	}
+	
+	@Test
+	public void testSalvaMapaJogoCategoriasEmArquivoQueNaoExiste()
+	{
+		
+	}
+	
+	@Test
+	public void testSalvaMapaJogoCategoriasEmArquivoQueExisteVazio()
+	{
+		
+	}
+	
+	@Test
+	public void testSalvaListaCategoriasEmArquivoVazio()
+	{
+		
+	}
+	
+	@Test
+	public void testSalvaListaCategoriasEmArquivoQueExisteComConteudoAleatorio()
+	{
+		
+	}
+	
+	@Test
+	public void testSalvaListaCategoriasEmArquivoQueExisteVazio()
+	{
+		
+	}
+	
+	@Test
+	public void testRestauraObjetoIndiceDoArquivoQueNaoExiste()
+	{
+		
+	}
+	
+	@Test
+	public void testRestauraObjetoIndiceDoArquivoQueExiste()
+	{
+		
+	}
+	
+	@Test
+	public void testRestauraMapaJogoCategoriasDoArquivoQueNaoExiste()
+	{
+		
+	}
+	
+	@Test
+	public void testRestauraMapaJogoCategoriasDoArquivoQueExiste()
+	{
+		
+	}
+	
+	@Test
+	public void testRestauraListaCategoriasDoArquivoQueNaoExiste()
+	{
+		
+	}
+	
+	@Test
+	public void testRestauraListaCategoriasDoArquivoQueExiste()
+	{
+		
+	}
+	
 	
 
 }
