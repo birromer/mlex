@@ -17,7 +17,7 @@ public class Indice extends FileHandler
 	private File ind = new File("./etc/indice.txt"); //arquivo do indice
 	private String caminhoParaObjetoIndice = "./etc/objeto_indice";
 	private String caminhoParaMapaJogoCategorias = "./etc/mapa_jogo_categorias";
-	private String ListaCategorias = "./etc/lista_categorias";
+	private String caminhoParaListaCategorias = "./etc/lista_categorias";
 	private static Map<Integer, String> mapaJogoCategorias = new HashMap<Integer, String>(); //dicionario que relaciona id do jogo com string contendo mapaJogoCategorias relacionadas a ele
 	private List<String> listaCategorias = new ArrayList<String>(); //lista de mapaJogoCategorias disponiveis
 	
@@ -185,18 +185,19 @@ public class Indice extends FileHandler
 	
 	public void salvaObjetoIndice()
 	{
-		
-		salvaObjetoEmArquivo(indiceLocal, caminhoParaObjetoIndice);
+		this.salvaObjetoEmArquivo(indiceLocal, caminhoParaObjetoIndice);
 	}
 	
 	public void salvaMapaJogoCategorias()
 	{
-		
+		this.salvaObjetoEmArquivo(mapaJogoCategorias, caminhoParaMapaJogoCategorias);
+
 	}
 	
 	public void restauraMapaJogoCategorias()
 	{
-		
+		this.salvaObjetoEmArquivo(listaCategorias, caminhoParaListaCategorias);
+
 	}
 	
 	public void restauraObjetoIndice()
