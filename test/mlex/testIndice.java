@@ -1,4 +1,4 @@
-package test;
+package mlex;
 
 import static org.junit.Assert.*;
 import java.io.File;
@@ -322,6 +322,7 @@ public class testIndice {
 		
 		assertTrue(indiceTeste.getNumeroJogos() == 0);
 	}
+	
 	
 	
 	
