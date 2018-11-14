@@ -1,6 +1,10 @@
 package mlex;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +15,9 @@ public class Indice extends FileHandler
 	String path = "./etc/indice.txt";
 	private Map<Integer, List<String>> indiceLocal = new HashMap<Integer, List<String>>(); //objeto local do indice
 	private File ind = new File("./etc/indice.txt"); //arquivo do indice
+	private String caminhoParaObjetoIndice = "./etc/objeto_indice";
+	private String caminhoParaMapaJogoCategorias = "./etc/mapa_jogo_categorias";
+	private String ListaCategorias = "./etc/lista_categorias";
 	private static Map<Integer, String> mapaJogoCategorias = new HashMap<Integer, String>(); //dicionario que relaciona id do jogo com string contendo mapaJogoCategorias relacionadas a ele
 	private List<String> listaCategorias = new ArrayList<String>(); //lista de mapaJogoCategorias disponiveis
 	
@@ -93,7 +100,7 @@ public class Indice extends FileHandler
 		return(categoriasDoJogo.charAt(posicao) == '1');
 	}
 	
-	public int getNumeroJogos()
+	int getNumeroJogos()
 	{
 		 return indiceLocal.size();
 	}
@@ -103,7 +110,7 @@ public class Indice extends FileHandler
 		return listaCategorias.size();
 	}
 	
-	public boolean testaJogoNoIndice(int id)
+	boolean testaJogoNoIndice(int id)
 	{
 		return indiceLocal.containsKey(id);
 	}
@@ -127,12 +134,12 @@ public class Indice extends FileHandler
 		}
 	}
 	
-	public List<String> getListaCategorias()
+	List<String> getListaCategorias()
 	{
 		return listaCategorias;
 	}
 	
-	public Map<Integer, String> getMapaCategorias()
+	Map<Integer, String> getMapaCategorias()
 	{
 		return mapaJogoCategorias;
 	}
@@ -179,6 +186,7 @@ public class Indice extends FileHandler
 	public void salvaObjetoIndice()
 	{
 		
+		salvaObjetoEmArquivo(indiceLocal, caminhoParaObjetoIndice);
 	}
 	
 	public void salvaMapaJogoCategorias()
