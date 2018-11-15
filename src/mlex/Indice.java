@@ -239,7 +239,7 @@ public class Indice extends FileHandler
 
 	public void restauraListaCategorias()
 	{
-		
+		listaCategorias = (List<String>) (this.leArquivo(caminhoParaListaCategorias));
 	}
 
 

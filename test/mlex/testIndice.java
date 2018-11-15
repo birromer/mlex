@@ -14,6 +14,7 @@ import mlex.Jogo;
 
 public class testIndice {
 	Indice indiceTeste;
+	Indice indiceTemp;
 	Jogo jogoTeste1;
 	Jogo jogoTeste2;
 	File arquivoIndice;
@@ -515,7 +516,7 @@ public class testIndice {
 	@Test
 	public void testRestauraObjetoIndiceDoArquivoQueNaoExiste()
 	{
-		Indice indiceTemp = new Indice();
+		indiceTemp = new Indice();
 
 		arquivoObjetoIndice = new File(pathObjetoIndice);
 		
@@ -532,8 +533,7 @@ public class testIndice {
 	@Test
 	public void testRestauraObjetoIndiceDoArquivoQueExiste()
 	{
-		Indice indiceTemp = new Indice();
-		indiceTemp = indiceTeste;
+		indiceTemp = new Indice();
 		
 		try
 		{
@@ -546,15 +546,28 @@ public class testIndice {
 		
 		indiceTeste.salvaObjetoIndice();
 		
-		assertFalse(indiceTemp.getNumeroJogos() == 1);
+		assertFalse(indiceTemp.getNumeroJogos() == indiceTeste.getNumeroJogos());
+		
 		indiceTemp.restauraObjetoIndice();
-		assertTrue(indiceTeste.getIndiceLocal() == indiceTemp.getIndiceLocal());
+		
+		assertTrue(indiceTeste.getNumeroJogos() == indiceTemp.getNumeroJogos());
 	}
 	
 	@Test
 	public void testRestauraMapaJogoCategoriasDoArquivoQueNaoExiste()
 	{
-		fail();
+		indiceTemp = new Indice();
+
+		arquivoMapaJogoCategorias = new File(pathMapaJogoCategorias);
+		
+		if (arquivoMapaJogoCategorias.exists() == true)
+		{
+			arquivoMapaJogoCategorias.delete();
+		}
+		
+		indiceTemp.restauraMapaJogoCategorias();
+		
+		assertFalse(indiceTeste.getIndiceLocal() == indiceTemp.getIndiceLocal());
 	}
 	
 	@Test
@@ -566,15 +579,35 @@ public class testIndice {
 	@Test
 	public void testRestauraListaCategoriasDoArquivoQueNaoExiste()
 	{
-		fail();
+		indiceTemp = new Indice();
+		
+		arquivoListaCategorias = new File(pathListaCategorias);
+				
+		indiceTeste.adicionaCategoriaAoIndice("Jogos do verao passado");
+		
+		if (arquivoListaCategorias.exists() == true)
+		{
+			arquivoListaCategorias.delete();
+		}
+		
+		indiceTemp.restauraListaCategorias();
+		
+		assertFalse(indiceTeste.getNumeroCategorias() == indiceTemp.getNumeroCategorias());
 	}
 	
 	@Test
 	public void testRestauraListaCategoriasDoArquivoQueExiste()
 	{
-		fail();
+		indiceTemp = new Indice();
+
+		indiceTeste.adicionaCategoriaAoIndice("Jogos do verao passado");
+		indiceTeste.salvaListaCategorias();
+		
+		assertFalse(indiceTemp.getNumeroCategorias() == indiceTeste.getNumeroCategorias());
+		
+		indiceTemp.restauraListaCategorias();
+	
+		assertTrue(indiceTemp.getNumeroCategorias() == indiceTeste.getNumeroCategorias());
 	}
 	
-	
-
 }
