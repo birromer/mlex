@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.ObjectInputStream;
+import java.io.FileInputStream;
+
 
 public class Indice extends FileHandler
 {
@@ -20,25 +23,25 @@ public class Indice extends FileHandler
 	private String caminhoParaListaCategorias = "./etc/lista_categorias";
 	private static Map<Integer, String> mapaJogoCategorias = new HashMap<Integer, String>(); //dicionario que relaciona id do jogo com string contendo mapaJogoCategorias relacionadas a ele
 	private List<String> listaCategorias = new ArrayList<String>(); //lista de mapaJogoCategorias disponiveis
-	
-	
+
+
 	public Indice()
 	{
 		//chama funcao de ler indice do arquivo;
 	}
-	
+
 	public void adicionaJogoNoIndice(Jogo jogo) throws Exception
 	{
 		if (this.testaJogoNoIndice(jogo.getIdJogo()) == true)
 		{
 			System.out.println("Jogo ja existe no indice, sera ignorado");
 			throw new Exception("Jogo ja existe");
-		} 
-		
+		}
+
 		List<String> linhaIndiceAdicionada = jogo.retornaListaAtributosRelevantes();
 		indiceLocal.put(jogo.getIdJogo(), linhaIndiceAdicionada);
 	}
-	
+
 	public void modificaJogoNoIndice(Jogo jogo) throws Exception
 	{
 		int idDoJogo = jogo.getIdJogo();
@@ -53,7 +56,7 @@ public class Indice extends FileHandler
 			indiceLocal.replace(idDoJogo, linhaIndiceAdicionada);
 		}
 	}
-	
+
 	public void removeJogoDoIndice(int id) throws Exception
 	{
 		if (mapaJogoCategorias.containsKey(id) == false)
@@ -66,7 +69,7 @@ public class Indice extends FileHandler
 			indiceLocal.remove(id);
 		}
 	}
-	
+
 	public String getCategorias(int id)
 	{
 		String categs = mapaJogoCategorias.get(id);
@@ -86,44 +89,44 @@ public class Indice extends FileHandler
 			return categs;
 		}
 	}
-	
+
 	public int getPosicaoCategoria(String categoria)
 	{
 		return listaCategorias.indexOf(categoria);
 	}
-	
+
 	public boolean testaCategoria(int id, String categoria)
 	{
 		int posicao = this.getPosicaoCategoria(categoria);
 		String categoriasDoJogo = this.getCategorias(id);
-		
+
 		return(categoriasDoJogo.charAt(posicao) == '1');
 	}
-	
+
 	int getNumeroJogos()
 	{
 		 return indiceLocal.size();
 	}
-	
+
 	public int getNumeroCategorias()
 	{
 		return listaCategorias.size();
 	}
-	
+
 	boolean testaJogoNoIndice(int id)
 	{
 		return indiceLocal.containsKey(id);
 	}
-	
+
 	public void adicionaCategoriaAoIndice(String novaCategoria)
 	{
 		if (listaCategorias.contains(novaCategoria) == true)
 		{
 			return;
 		}
-		
+
 		listaCategorias.add(novaCategoria);
-		
+
 		for (Integer key : mapaJogoCategorias.keySet())
 		{
 			if (this.getNumeroCategorias() > 1)
@@ -133,87 +136,107 @@ public class Indice extends FileHandler
 			}
 		}
 	}
-	
+
 	List<String> getListaCategorias()
 	{
 		return listaCategorias;
 	}
-	
+
 	Map<Integer, String> getMapaCategorias()
 	{
 		return mapaJogoCategorias;
 	}
-	
+
 	public void adicionaCategoriaAoJogo(int id, String categoria) throws Exception
 	{
 		if (listaCategorias.contains(categoria) == false)
 		{
 			throw new Exception();
 		}
-		
+
 		int posicaoCategoria = this.getPosicaoCategoria(categoria);
 		String listaCategoriasDoJogo = mapaJogoCategorias.get(id);
 		char[] listaAtualizadaDeCategoriasDoJogo = listaCategoriasDoJogo.toCharArray();
 		listaAtualizadaDeCategoriasDoJogo[posicaoCategoria] = '1';
 		mapaJogoCategorias.replace(id, String.valueOf(listaAtualizadaDeCategoriasDoJogo));
-			
+
 	}
-	
+
 	public void removeCategoriaDoJogo(int id, String categoria)
 	{
 		if (listaCategorias.contains(categoria) == false)
 		{
 			return;
 		}
-		
+
 		int posicaoCategoria = this.getPosicaoCategoria(categoria);
 		String listaCategoriasDoJogo = mapaJogoCategorias.get(id);
 		char[] listaAtualizadaDeCategoriasDoJogo = listaCategoriasDoJogo.toCharArray();
 		listaAtualizadaDeCategoriasDoJogo[posicaoCategoria] = '0';
 		mapaJogoCategorias.replace(id, String.valueOf(listaAtualizadaDeCategoriasDoJogo));
 	}
-	
+
 	public void novoJogoSendoAdicionado(int id)
 	{
 		mapaJogoCategorias.put(id, "0");
 	}
-	
+
 	public List<String> getInformacoesJogoNoIndice(int id)
 	{
 		return indiceLocal.get(id);
 	}
-	
+
 	public void salvaObjetoIndice()
 	{
 		this.salvaObjetoEmArquivo(indiceLocal, caminhoParaObjetoIndice);
 	}
-	
+
 	public void salvaMapaJogoCategorias()
 	{
 		this.salvaObjetoEmArquivo(mapaJogoCategorias, caminhoParaMapaJogoCategorias);
-
 	}
-	
+
 	public void restauraMapaJogoCategorias()
 	{
 		this.salvaObjetoEmArquivo(listaCategorias, caminhoParaListaCategorias);
-
 	}
-	
+
+
+	Object leArquivo(String caminhoParaArquivo)
+	{
+		File arquivo = new File(caminhoParaArquivo);
+		try
+		{
+			FileInputStream fileIn = new FileInputStream(arquivo);
+			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+
+			Object obj = objectIn.readObject();
+
+			objectIn.close();
+
+			return obj;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public void restauraObjetoIndice()
 	{
-		
+		indiceLocal = this.leArquivo(caminhoParaObjetoIndice);
 	}
-	
+
 	public void salvaListaCategorias()
 	{
-		
+
 	}
-	
+
 	public void restauraListaCategorias()
 	{
-		
+
 	}
-	
-	
+
+
 }
