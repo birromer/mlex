@@ -19,7 +19,7 @@ public class testIndice {
 	File arquivoIndice;
 	String pathObjetoIndice = "./etc/objeto_indice";
 	String pathMapaJogoCategorias = "./etc/mapa_jogo_categorias";
-	String pathListaCategorias = "./etc/lista_categorias.txt";
+	String pathListaCategorias = "./etc/lista_categorias";
 	FileOutputStream saidaArquivoEscrita;
 	ObjectOutputStream saidaObjetoEscrita;
 	

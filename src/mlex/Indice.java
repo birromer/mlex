@@ -223,9 +223,10 @@ public class Indice extends FileHandler
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void restauraObjetoIndice()
 	{
-		indiceLocal = this.leArquivo(caminhoParaObjetoIndice);
+		indiceLocal = (Map<Integer, List<String>>) this.leArquivo(caminhoParaObjetoIndice);
 	}
 
 	public void salvaListaCategorias()
