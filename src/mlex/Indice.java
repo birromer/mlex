@@ -21,9 +21,13 @@ public class Indice extends FileHandler
 	private String caminhoParaObjetoIndice = "./etc/objeto_indice";
 	private String caminhoParaMapaJogoCategorias = "./etc/mapa_jogo_categorias";
 	private String caminhoParaListaCategorias = "./etc/lista_categorias";
-	private static Map<Integer, String> mapaJogoCategorias = new HashMap<Integer, String>(); //dicionario que relaciona id do jogo com string contendo mapaJogoCategorias relacionadas a ele
+	private Map<Integer, String> mapaJogoCategorias = new HashMap<Integer, String>(); //dicionario que relaciona id do jogo com string contendo mapaJogoCategorias relacionadas a ele
 	private List<String> listaCategorias = new ArrayList<String>(); //lista de mapaJogoCategorias disponiveis
 
+	public Map<Integer, List<String>> getIndiceLocal()
+	{
+		return indiceLocal;
+	}
 
 	public Indice()
 	{

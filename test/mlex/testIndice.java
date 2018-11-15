@@ -515,37 +515,64 @@ public class testIndice {
 	@Test
 	public void testRestauraObjetoIndiceDoArquivoQueNaoExiste()
 	{
+		Indice indiceTemp = new Indice();
+
+		arquivoObjetoIndice = new File(pathObjetoIndice);
 		
+		if (arquivoObjetoIndice.exists() == true)
+		{
+			arquivoObjetoIndice.delete();
+		}
+		
+		indiceTemp.restauraObjetoIndice();
+		
+		assertFalse(indiceTeste.getIndiceLocal() == indiceTemp.getIndiceLocal());
 	}
 	
 	@Test
 	public void testRestauraObjetoIndiceDoArquivoQueExiste()
 	{
+		Indice indiceTemp = new Indice();
+		indiceTemp = indiceTeste;
 		
+		try
+		{
+			indiceTeste.adicionaJogoNoIndice(jogoTeste1);
+		}
+		catch (Exception e)
+		{
+			System.out.println("jogo1 ja existe");
+		}
+		
+		indiceTeste.salvaObjetoIndice();
+		
+		assertFalse(indiceTemp.getNumeroJogos() == 1);
+		indiceTemp.restauraObjetoIndice();
+		assertTrue(indiceTeste.getIndiceLocal() == indiceTemp.getIndiceLocal());
 	}
 	
 	@Test
 	public void testRestauraMapaJogoCategoriasDoArquivoQueNaoExiste()
 	{
-		
+		fail();
 	}
 	
 	@Test
 	public void testRestauraMapaJogoCategoriasDoArquivoQueExiste()
 	{
-		
+		fail();
 	}
 	
 	@Test
 	public void testRestauraListaCategoriasDoArquivoQueNaoExiste()
 	{
-		
+		fail();
 	}
 	
 	@Test
 	public void testRestauraListaCategoriasDoArquivoQueExiste()
 	{
-		
+		fail();
 	}
 	
 	
