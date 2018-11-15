@@ -17,6 +17,9 @@ public class testIndice {
 	Jogo jogoTeste1;
 	Jogo jogoTeste2;
 	File arquivoIndice;
+	File arquivoObjetoIndice;
+	File arquivoMapaJogoCategorias;
+	File arquivoListaCategorias;
 	String pathObjetoIndice = "./etc/objeto_indice";
 	String pathMapaJogoCategorias = "./etc/mapa_jogo_categorias";
 	String pathListaCategorias = "./etc/lista_categorias";
@@ -323,13 +326,10 @@ public class testIndice {
 		assertTrue(indiceTeste.getNumeroJogos() == 0);
 	}
 	
-	
-	
-	
 	@Test
 	public void testSalvaObjetoIndiceEmArquivoQueNaoExiste()
 	{
-		File arquivoObjetoIndice = new File(pathObjetoIndice);
+		arquivoObjetoIndice = new File(pathObjetoIndice);
 		
 		if (arquivoObjetoIndice.exists() == true)
 		{
@@ -343,7 +343,7 @@ public class testIndice {
 	@Test
 	public void testSalvaObjetoIndiceEmArquivoQueExisteVazio()
 	{
-		File arquivoObjetoIndice = new File(pathObjetoIndice);
+		arquivoObjetoIndice = new File(pathObjetoIndice);
 		
 		if (arquivoObjetoIndice.exists() == true)
 		{
@@ -365,7 +365,7 @@ public class testIndice {
 	@Test
 	public void testSalvaObjetoIndiceEmArquivoQueExisteComConteudoAleatorio()
 	{
-		File arquivoObjetoIndice = new File(pathObjetoIndice);
+		arquivoObjetoIndice = new File(pathObjetoIndice);
 		
 		if (arquivoObjetoIndice.exists() == false)
 		{
@@ -390,7 +390,7 @@ public class testIndice {
 	@Test
 	public void testSalvaMapaJogoCategoriasEmArquivoQueNaoExiste()
 	{
-		File arquivoMapaJogoCategorias = new File(pathMapaJogoCategorias);
+		arquivoMapaJogoCategorias = new File(pathMapaJogoCategorias);
 		
 		if (arquivoMapaJogoCategorias.exists() == true)
 		{
@@ -404,7 +404,7 @@ public class testIndice {
 	@Test
 	public void testSalvaMapaJogoCategoriasEmArquivoQueExisteVazio()
 	{
-		File arquivoMapaJogoCategorias = new File(pathMapaJogoCategorias);
+		arquivoMapaJogoCategorias = new File(pathMapaJogoCategorias);
 		
 		if (arquivoMapaJogoCategorias.exists() == true)
 		{
@@ -426,7 +426,7 @@ public class testIndice {
 	@Test
 	public void testSalvaMapaJogoCategoriasEmArquivoQueExisteComConteudoAleatorio()
 	{
-		File arquivoMapaJogoCategorias = new File(pathMapaJogoCategorias);
+		arquivoMapaJogoCategorias = new File(pathMapaJogoCategorias);
 		
 		if (arquivoMapaJogoCategorias.exists() == false)
 		{
@@ -451,7 +451,7 @@ public class testIndice {
 	@Test
 	public void testSalvaListaCategoriasEmArquivoQueNaoExiste()
 	{
-		File arquivoListaCategorias = new File(pathListaCategorias);
+		arquivoListaCategorias = new File(pathListaCategorias);
 		
 		if (arquivoListaCategorias.exists() == true)
 		{
@@ -465,7 +465,7 @@ public class testIndice {
 	@Test
 	public void testSalvaListaCategoriasEmArquivoQueExisteVazio()
 	{
-		File arquivoListaCategorias = new File(pathListaCategorias);
+		arquivoListaCategorias = new File(pathListaCategorias);
 		
 		if (arquivoListaCategorias.exists() == true)
 		{
@@ -487,7 +487,7 @@ public class testIndice {
 	@Test
 	public void testSalvaListaCategoriasEmArquivoQueExisteComConteudoAleatorio()
 	{
-		File arquivoListaCategorias = new File(pathListaCategorias);
+		arquivoListaCategorias = new File(pathListaCategorias);
 		
 		if (arquivoListaCategorias.exists() == false)
 		{

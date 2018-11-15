@@ -46,7 +46,7 @@ abstract public class FileHandler
 		}
 	}
 	
-	public void salvaObjetoEmArquivo(Object objeto, String caminhoParaArquivo)
+	public void salvaObjetoEmArquivo (Object objeto, String caminhoParaArquivo)
 	{
 		arquivoUsado = new File(caminhoParaArquivo);
 		
@@ -64,11 +64,11 @@ abstract public class FileHandler
 		
 		try
 		{
-			saidaArquivoEscrita = new FileOutputStream("./etc/objeto_indice");
+			saidaArquivoEscrita = new FileOutputStream(caminhoParaArquivo);
 		}
 		catch (FileNotFoundException e)
 		{
-			System.out.println("arquivo do objeto indice nao encontrado");
+			System.out.println("arquivo nao encontrado");
 		}
 		
 		try

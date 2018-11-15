@@ -196,7 +196,7 @@ public class Indice extends FileHandler
 		this.salvaObjetoEmArquivo(mapaJogoCategorias, caminhoParaMapaJogoCategorias);
 	}
 
-	public void restauraMapaJogoCategorias()
+	public void salvaListaCategorias()
 	{
 		this.salvaObjetoEmArquivo(listaCategorias, caminhoParaListaCategorias);
 	}
@@ -223,20 +223,19 @@ public class Indice extends FileHandler
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public void restauraObjetoIndice()
 	{
 		indiceLocal = (Map<Integer, List<String>>) this.leArquivo(caminhoParaObjetoIndice);
 	}
 
-	public void salvaListaCategorias()
+	public void restauraMapaJogoCategorias()
 	{
-
+		mapaJogoCategorias = (Map<Integer, String>) this.leArquivo(caminhoParaObjetoIndice);
 	}
 
 	public void restauraListaCategorias()
 	{
-
+		
 	}
 
 
