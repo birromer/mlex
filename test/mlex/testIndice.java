@@ -573,7 +573,38 @@ public class testIndice {
 	@Test
 	public void testRestauraMapaJogoCategoriasDoArquivoQueExiste()
 	{
-		fail();
+		indiceTemp = new Indice();
+		
+		try
+		{
+			indiceTeste.adicionaJogoNoIndice(jogoTeste1);
+			indiceTemp.adicionaJogoNoIndice(jogoTeste1);
+		}
+		catch (Exception e)
+		{
+			System.out.println("jogo1 ja existe");
+		}
+		
+		indiceTeste.adicionaCategoriaAoIndice("Jogos do verao passado");
+		indiceTemp.adicionaCategoriaAoIndice("Jogos do verao passado");
+		
+		try
+		{
+			indiceTeste.adicionaCategoriaAoJogo(jogoTeste1.getIdJogo(), "Jogos do verao passado");
+		}
+		catch (Exception e)
+		{
+			System.out.println("categoria1 nao existe");
+		}
+		
+		indiceTeste.salvaMapaJogoCategorias();
+		
+		assertFalse(indiceTemp.testaCategoria(jogoTeste1.getIdJogo(), "Jogos do verao passado"));
+		
+		indiceTemp.restauraMapaJogoCategorias();
+		
+		assertTrue(indiceTemp.testaCategoria(jogoTeste1.getIdJogo(), "Jogos do verao passado"));
+		
 	}
 	
 	@Test
@@ -591,6 +622,8 @@ public class testIndice {
 		}
 		
 		indiceTemp.restauraListaCategorias();
+		
+		System.out.println(indiceTemp.getNumeroCategorias());
 		
 		assertFalse(indiceTeste.getNumeroCategorias() == indiceTemp.getNumeroCategorias());
 	}

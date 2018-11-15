@@ -109,7 +109,7 @@ public class Indice extends FileHandler
 
 	int getNumeroJogos()
 	{
-		 return indiceLocal.size();
+		return indiceLocal.size();
 	}
 
 	public int getNumeroCategorias()
@@ -163,7 +163,6 @@ public class Indice extends FileHandler
 		char[] listaAtualizadaDeCategoriasDoJogo = listaCategoriasDoJogo.toCharArray();
 		listaAtualizadaDeCategoriasDoJogo[posicaoCategoria] = '1';
 		mapaJogoCategorias.replace(id, String.valueOf(listaAtualizadaDeCategoriasDoJogo));
-
 	}
 
 	public void removeCategoriaDoJogo(int id, String categoria)
@@ -229,16 +228,22 @@ public class Indice extends FileHandler
 
 	public void restauraObjetoIndice()
 	{
+		//adicionar teste para se arquivo nao existir
+		
 		indiceLocal = (Map<Integer, List<String>>) this.leArquivo(caminhoParaObjetoIndice);
 	}
 
 	public void restauraMapaJogoCategorias()
 	{
+		//adicionar teste para se arquivo nao existir
+		
 		mapaJogoCategorias = (Map<Integer, String>) this.leArquivo(caminhoParaObjetoIndice);
 	}
 
 	public void restauraListaCategorias()
 	{
+		//adicionar teste para se arquivo nao existir
+		
 		listaCategorias = (List<String>) (this.leArquivo(caminhoParaListaCategorias));
 	}
 
