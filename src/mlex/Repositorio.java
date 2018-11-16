@@ -218,6 +218,11 @@ public class Repositorio extends FileHandler
 		return listaJogosObj.size();
 	}
 	
+	public void atualizaAtributo(int idJogo, int opcao, String atributoAtualizado)
+	{
+		
+	}
+	
 	private int menuFiltro()
 	{
 		System.out.println("\n1)Filtrar por nome do jogo;\n"

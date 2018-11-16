@@ -18,6 +18,7 @@ public class UsuarioCommand
 	private String usuario = "admin";
 	private String senha = "admin";
 	private String ordenacao = "n";
+	Jogo jogoAtual;
 	
 	public UsuarioCommand()
 	{
@@ -182,41 +183,84 @@ public class UsuarioCommand
 	
 	public int menuJogo(int opcaoDeJogo)
 	{
-		//busca por um jogo -- CICA FAIS GALERO
+		System.out.println("Digite o nome do jogo a ser pesquisado: ");
+		String nomeJogoPesquisado = scanner.next();
+		int idJogoPesquisado = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
 		
-		switch(opcaoDeJogo)
+		if (idJogoPesquisado == -1)
 		{
-			case -1:
-				break;
-			case 0:
-				//modifica
-				break;
-			case 1:
-				//remove
-				break;
-			case 2:
-				//adicionar comentario
-				break;
-			case 3:
-				//verificar integridade
-				break;
-			case 4:
-				//enviar por email
-				break;
-			case 5:
-				//volta
-				break;
-			default: 
-				System.out.println("Nao eras, meu bruxo!");
+			System.out.println("Jogo com esse nome nao existe no repositorio");
+			return -1;
 		}
-		
-		System.out.println("\n0)Modificar informacoes;\n"
-				+ "1)Remover do repositorio;\n"
-				+ "2)Adicionar comentario;\n"
-				+ "3)Verificar integridade;\n"
-				+ "4)Recomendar para um amigo;\n"
-				+ "5)Voltar;\n"
-				+ "Escolha a acao que deseja realizar: ");		
+		else
+		{
+			switch(opcaoDeJogo)
+			{
+				case -1:
+					break;
+				case 0:
+					System.out.println("Digite o que deseja modificar");
+					System.out.println("1 - nomeJogo"
+									+ "2 - lancamento"
+									+ "3 - desenvolvedor"
+									+ "4 - versao"
+									+ "5 - genero");
+					int opcao = scanner.nextInt();
+					String atributoAtualizado;
+					switch (opcao)
+					{
+						case 1:
+							System.out.println("Digite o nome atualizado do jogo:");
+							atributoAtualizado = scanner.next();
+							repositorio.atualizaAtributo(idJogoPesquisado, 1, atributoAtualizado);
+							break;
+						case 2:
+							System.out.println("Digite a data atualizada de lancamento do jogo (DD/MM/AAAA):");
+							repositorio.atualizaAtributo(idJogoPesquisado, 2, atributoAtualizado);
+							break;
+						case 3:
+							System.out.println("Digite o nome atualizado do desenvolvedor do jogo:");
+							repositorio.atualizaAtributo(idJogoPesquisado, 3, atributoAtualizado);
+							break;
+						case 4:
+							System.out.println("Digite a versao atualizada  do jogo:");
+							repositorio.atualizaAtributo(idJogoPesquisado, 4, atributoAtualizado);
+							break;
+						case 5:
+							System.out.println("Digite o genero atualizado do jogo:");
+							repositorio.atualizaAtributo(idJogoPesquisado, 5, atributoAtualizado);
+							break;
+						default:
+							break;
+					}
+					break;
+				case 1:
+					//remove
+					break;
+				case 2:
+					//adicionar comentario
+					break;
+				case 3:
+					//verificar integridade
+					break;
+				case 4:
+					//enviar por email
+					break;
+				case 5:
+					//volta
+					break;
+				default: 
+					System.out.println("Nao eras, meu bruxo!");
+			}
+			
+			System.out.println("\n0)Modificar informacoes;\n"
+					+ "1)Remover do repositorio;\n"
+					+ "2)Adicionar comentario;\n"
+					+ "3)Verificar integridade;\n"
+					+ "4)Recomendar para um amigo;\n"
+					+ "5)Voltar;\n"
+					+ "Escolha a acao que deseja realizar: ");
+		}
 		
 		return opcaoDeJogo;
 	}
