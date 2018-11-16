@@ -1,5 +1,7 @@
 package mlex;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +13,7 @@ public class Repositorio extends FileHandler
 	private static List<Jogo> listaJogosObj = new ArrayList<Jogo>();
 	private static Map<String, Integer> tabelaJogos = new HashMap<String, Integer>();
 	private java.io.Console cnsl = System.console();
-	private static Indice indice =  new Indice();
+	private Indice indice =  new Indice();
 	private Scanner scanner = new Scanner(System.in);
 	
 	public boolean verificaId(String nomeJogo)
@@ -127,7 +129,7 @@ public class Repositorio extends FileHandler
 			default: 
 				System.out.println("opcao invalida!");
 		}
-		
+	
 		return ids;
 	}
 	
@@ -146,7 +148,8 @@ public class Repositorio extends FileHandler
 			case 1:
 				//com subfiltro
 				int opcaoDeSubfiltro = menuFiltro();
-				String nomeOpcaoDeSubfiltro = scanner.nextLine();
+				System.out.println("\nDigite o parametro do subfiltro.");
+				String nomeOpcaoDeSubfiltro = scanner.next();
 				ids = indice.filtroPorAtributos(nomeOpcaoDeSubfiltro, opcaoDeSubfiltro);
 				resultados = indice.filtroPorCategoria(nomeDeCategoria, ids);
 				
@@ -180,11 +183,13 @@ public class Repositorio extends FileHandler
 	
 	public void addJogoNaCateg(Jogo jogo, String nomeCateg)
 	{
-		try {
+		try
+		{
 			indice.adicionaCategoriaAoJogo(jogo.getIdJogo(), nomeCateg);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}
+		catch (Exception e)
+		{
+			System.out.println("falhou em adicionar jogo na categoria");
 		}
 	}
 	
