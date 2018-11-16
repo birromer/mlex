@@ -28,3 +28,4 @@ Mlex-img/
 bin/
 etc/
 .recommenders/
+.mlex.conf
