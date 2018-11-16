@@ -27,23 +27,39 @@ public class TestUsuarioCommand
 			arquivoConfiguracao.delete();
 		}
 	}
-
-	@Test
-	public void testUsuarioCommandMenuInicial()
-	{
-		usuarioCommand = new UsuarioCommand();
-		assertTrue(usuarioCommand.menuInicial(0)==0);
-		assertTrue(usuarioCommand.menuInicial(666)==666);
-	}
+	
+//	@Test
+//	public void testUsuarioCommandMenuInicialAdicionaPrimeiroJogo()
+//	{
+//		usuarioCommand = new UsuarioCommand();
+//		assertTrue(usuarioCommand.menuInicial(2)==2);
+//	}
+//	
+//	@Test
+//	public void testUsuarioCommandMenuInicialAdicionaDoisJogos()
+//	{
+//		usuarioCommand = new UsuarioCommand();
+//		assertTrue(usuarioCommand.menuInicial(2)==2);
+//		assertTrue(usuarioCommand.menuInicial(2)==2);
+//	}
 	
 	@Test
-	public void testUsuarioCommandMenuCategorias()
+	public void testUsuarioCommandMenuInicialVerJogoQueNaoExisteEmIndiceComElementos()
 	{
 		usuarioCommand = new UsuarioCommand();
-		assertTrue(usuarioCommand.menuCategorias(0)==0);
-		assertTrue(usuarioCommand.menuCategorias(5)==5);
+		assertTrue(usuarioCommand.menuInicial(2)==2);
+		assertTrue(usuarioCommand.menuInicial(2)==2);
+		assertEquals(usuarioCommand.menuJogo(0),0);
 	}
 	
+//	@Test
+//	public void testUsuarioCommandMenuCategorias()
+//	{
+//		usuarioCommand = new UsuarioCommand();
+//		assertTrue(usuarioCommand.menuCategorias(0)==0);
+//		assertTrue(usuarioCommand.menuCategorias(5)==5);
+//	}
+//	
 	@Test
 	public void testUsuarioCommandMenuJogo()
 	{
