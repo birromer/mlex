@@ -600,11 +600,11 @@ public class testIndice {
 		indiceTeste.salvaMapaJogoCategorias();
 		
 		assertFalse(indiceTemp.testaCategoria(jogoTeste1.getIdJogo(), "Jogos do verao passado"));
+		assertTrue(indiceTeste.testaCategoria(jogoTeste1.getIdJogo(), "Jogos do verao passado"));
 		
 		indiceTemp.restauraMapaJogoCategorias();
 		
 		assertTrue(indiceTemp.testaCategoria(jogoTeste1.getIdJogo(), "Jogos do verao passado"));
-		
 	}
 	
 	@Test

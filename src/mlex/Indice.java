@@ -1,10 +1,6 @@
 package mlex;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +13,7 @@ public class Indice extends FileHandler
 {
 	String path = "./etc/indice.txt";
 	private Map<Integer, List<String>> indiceLocal = new HashMap<Integer, List<String>>(); //objeto local do indice
-	private File ind = new File("./etc/indice.txt"); //arquivo do indice
+//	private File ind = new File("./etc/indice.txt"); //arquivo do indice
 	private String caminhoParaObjetoIndice = "./etc/objeto_indice";
 	private String caminhoParaMapaJogoCategorias = "./etc/mapa_jogo_categorias";
 	private String caminhoParaListaCategorias = "./etc/lista_categorias";
@@ -114,7 +110,14 @@ public class Indice extends FileHandler
 
 	public int getNumeroCategorias()
 	{
-		return listaCategorias.size();
+		if (listaCategorias == null)
+		{
+			return 0;
+		}
+		else
+		{
+			return listaCategorias.size();
+		}	
 	}
 
 	boolean testaJogoNoIndice(int id)
@@ -226,6 +229,7 @@ public class Indice extends FileHandler
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void restauraObjetoIndice()
 	{
 		//adicionar teste para se arquivo nao existir
@@ -233,6 +237,7 @@ public class Indice extends FileHandler
 		indiceLocal = (Map<Integer, List<String>>) this.leArquivo(caminhoParaObjetoIndice);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void restauraMapaJogoCategorias()
 	{
 		//adicionar teste para se arquivo nao existir
@@ -240,6 +245,7 @@ public class Indice extends FileHandler
 		mapaJogoCategorias = (Map<Integer, String>) this.leArquivo(caminhoParaObjetoIndice);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void restauraListaCategorias()
 	{
 		//adicionar teste para se arquivo nao existir
