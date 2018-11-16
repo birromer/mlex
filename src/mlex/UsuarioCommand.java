@@ -239,7 +239,23 @@ public class UsuarioCommand
 					repositorio.removeJogo(idJogoPesquisado);
 					break;
 				case 2:
-					//adicionar comentario -- PACHEC0 FAZ AQUI
+					//adicionar comentario
+					System.out.println("Tipo de comentario");
+					System.out.println("1 - Com Nota"
+									+ "2 - Sem Nota");
+					int opcaoComentario = scanner.nextInt();
+					switch(opcaoComentario)
+					{
+						case 1:
+							System.out.println("Digite o seu comentario");
+							String comentario = scanner.next();
+							repositorio.addComentarioEmJogo(idJogoPesquisado, comentario);
+							break;
+						case 2:
+							break;
+						default:
+							break;
+					}
 					break;
 				case 3:
 					//verificar integridade -- PACHEC0 FAZ AQUI
