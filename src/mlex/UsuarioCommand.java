@@ -1,9 +1,10 @@
 package mlex;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Properties;
 import java.util.Scanner;
 
 
@@ -13,15 +14,58 @@ public class UsuarioCommand
 	private final static int OPCAO_VOLTAR = 5;
 	private static Repositorio repositorio = new Repositorio();
 	private Scanner scanner = new Scanner(System.in);
-	private File arquivoConfiguracoes = new File("./.mlex.conf");
+	private Properties configuracoes = new Properties();
+	private String usuario = "admin";
+	private String senha = "admin";
+	private String ordenacao = "n";
 	
 	public UsuarioCommand()
 	{
-		if (arquivoConfiguracoes.exists() == false)
+		if (new File("./.mlex.conf").exists() == false)
 		{
-			arquivoConfiguracoes.createNewFile();
+			configuracoes.setProperty("usuario", "admin");
+			configuracoes.setProperty("senha", "admin");
+			configuracoes.setProperty("ordenado", "n");
 			
+			try
+			{
+				configuracoes.store(new FileOutputStream("./.mlex.conf"), null);
+			}
+			catch (IOException e) 
+			{
+				System.out.println("Problema escrevendo arquivo de configuracao default");
+			}
 		}
+		else
+		{
+			try
+			{
+				configuracoes.load(new FileInputStream("./.mlex.conf"));
+			}
+			catch (IOException e)
+			{
+				System.out.println("Problema na leitura do arquivo de configuracao");
+			}
+			
+			usuario = configuracoes.getProperty("usuario");
+			senha = configuracoes.getProperty("senha");
+			ordenacao = configuracoes.getProperty("ordenacao");
+		}
+	}
+	
+	String getUsuario()
+	{
+		return this.usuario;
+	}
+	
+	String getSenha()
+	{
+		return this.senha;
+	}
+	
+	String getOrdenacao()
+	{
+		return this.ordenacao;
 	}
 	
 	public int menuInicial(int opcaoMenu)
