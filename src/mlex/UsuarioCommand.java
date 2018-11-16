@@ -1,6 +1,8 @@
 package mlex;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -23,6 +25,11 @@ public class UsuarioCommand
 			case 1:
 				//ve um jogo e pode:
 				//remove-lo, modifica-lo, adicionar comentario, verificar integridade, enviar por email
+				
+				//String nomeJogoProcurado = usuario digita nome do jogo;
+				//int id = repositorio.getIdParaVerInfoDeJogo(nomeJogoProcurado);
+				//abre arquivo com id;
+				//imprime o jogo
 				int opcaoJogo = -1;
 				do
 				{
@@ -44,6 +51,9 @@ public class UsuarioCommand
 				break;
 			case 4:
 				//filtroo
+				//int filt = this.menuFiltro();
+				//String nomefilt;
+				//repositorio.filtroPorAtributoDoJogo(nomefilt, filt);
 				break;
 			case 5:
 				//configs
@@ -70,13 +80,16 @@ public class UsuarioCommand
 	public int menuCategorias(int opcaoDeCategoria)
 	{
 		//exibe todas colecoes --- CICA FAZ ISSO AQUI
-		
+				
 		switch(opcaoDeCategoria)
 		{
 			case -1:
 				break;
 			case 0:
 				//exibe jogos em x colecao
+//				String nomeDeCategoria;
+//				repositorio.filtroDascategorias(nomeDeCategoria, 0);
+//								
 				break;
 			case 1:
 				//cria nova colecao
@@ -89,6 +102,8 @@ public class UsuarioCommand
 				break;
 			case 4:
 				//filtra jogos dentro de uma colecao
+//				String nomeDeCategoria;
+//				repositorio.filtroDascategorias(nomeDeCategoria, 1);
 				break;
 			case 5:
 				break;
@@ -147,6 +162,18 @@ public class UsuarioCommand
 				+ "Escolha a acao que deseja realizar: ");		
 		
 		return opcaoDeJogo;
+	}
+	
+	public int menuFiltro()
+	{
+		System.out.println("\n1)Filtrar por nome do jogo;\n"
+				+ "2)Filtrar data do lancamento do jogo;\n"
+				+ "3)Filtrar por nome do desenvolvedor do jogo;\n"
+				+ "4)Cancela;\n");
+		
+		int opcaoDeFiltro = scanner.nextInt();
+		
+		return opcaoDeFiltro;
 	}
 
 }
