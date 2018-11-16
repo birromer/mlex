@@ -1,7 +1,10 @@
 package mlex;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -58,7 +61,7 @@ public class Comentario extends FileHandler{
 		//se arquivo nao existe
 		if(!f.exists()) {
 			try {
-				String txt = "" + this.getData() + '\n';
+				String txt = "" + this.getData();
 				f.createNewFile();
 	
 				
@@ -83,10 +86,12 @@ public class Comentario extends FileHandler{
 			//salva comentario em fim de arquivo 
 			try {
 				PrintWriter out = new PrintWriter (new BufferedWriter (new FileWriter(this.getPath(),true)));
+				
 				out.println();
-				out.println(this.getTexto()+'\n');
-				out.println(Double.toString(this.getNota())+'\n');
+				out.println(this.getTexto());
+				out.println(Double.toString(this.getNota()));
 				out.println(this.getData());
+
 
 				out.close();
 			}
@@ -96,5 +101,35 @@ public class Comentario extends FileHandler{
 		}
 	}
 	
+	
+	public void exibeComentarios() {
+		String fpath = this.path;
+		
+		try {
+			BufferedReader br = new BufferedReader( new FileReader(fpath));
+			String ln = null;
+			while ((ln = br.readLine()) != null) {
+				System.out.println(ln);
+			}
+			br.close();
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void removeComentarios(int jogoId) {
+		
+		
+	}
+	
+	
 
+	
+	
 }

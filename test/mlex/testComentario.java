@@ -48,9 +48,10 @@ public class testComentario {
 //	}
 	
 	@Test
-	public void arquivoComentario() {
+	public void testeArquivoComentario() {
 		
 		//salva comentario 0 duas vezes
+		comentario0.salvaComentario();
 		comentario0.salvaComentario();
 		comentario0.salvaComentario();
 		
@@ -81,6 +82,12 @@ public class testComentario {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	
+	@Test
+	public void testeExibicao() {
+		comentario0.exibeComentarios();
 	}
 
 }
