@@ -43,40 +43,23 @@ public class Jogo extends FileHandler {
 		return listaAtributosRelevantes;
 	}
 	
-	public void atualizaAtributos()
+	public void atualizaAtributos(int opcao, String atributoAtualizado)
 	{
-		System.out.println("Digite o que deseja modificar");
-		System.out.println("1 - nomeJogo"
-						+ "2 - lancamento"
-						+ "3 - desenvolvedor"
-						+ "4 - versao"
-						+ "5 - genero");
-		int opcao = scanner.nextInt();
 		switch (opcao)
 		{
 			case 1:
-				System.out.println("Digite o nome atualizado do jogo:");
-				this.nomeJogo = scanner.next();
-				break;
+				this.nomeJogo = atributoAtualizado;
 			case 2:
-				System.out.println("Digite a data atualizada de lancamento do jogo (DD/MM/AAAA):");
-				this.lancamento = scanner.next();
-				break;
+				this.lancamento = atributoAtualizado;
 			case 3:
-				System.out.println("Digite o nome atualizado do desenvolvedor do jogo:");
-				this.desenvolvedor = scanner.next();
-				break;
+				this.desenvolvedor = atributoAtualizado;
 			case 4:
-				System.out.println("Digite a versao atualizada  do jogo:");
-				this.versao = scanner.next();
-				break;
+				this.versao = atributoAtualizado;
 			case 5:
-				System.out.println("Digite o genero atualizado do jogo:");
-				this.genero = scanner.next();
-				break;
-			default:
-				break;
+				this.genero = atributoAtualizado;
 		}
+		
+		//salva objeto no arquivo
 	}
 	
 	
