@@ -1,5 +1,7 @@
 package mlex;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +13,7 @@ public class Repositorio extends FileHandler
 	private static List<Jogo> listaJogosObj = new ArrayList<Jogo>();
 	private static Map<String, Integer> tabelaJogos = new HashMap<String, Integer>();
 	private java.io.Console cnsl = System.console();
-	private static Indice indice =  new Indice();
+	private Indice indice =  new Indice();
 	private Scanner scanner = new Scanner(System.in);
 	
 	public boolean verificaId(String nomeJogo)
@@ -127,7 +129,7 @@ public class Repositorio extends FileHandler
 			default: 
 				System.out.println("opcao invalida!");
 		}
-		
+	
 		return ids;
 	}
 	
@@ -141,41 +143,38 @@ public class Repositorio extends FileHandler
 				//sem subfiltro
 				ids = indice.getIdsDoIndice();
 				resultados = indice.filtroPorCategoria(nomeDeCategoria, ids);
-				if(resultados == -1)
-				{
-					System.out.println("\nNenhum jogo encontrado, verifique se o nome da colecao foi digitado corretamente.");
-					return resultados;
-				}
-				if(resultados == 0)
-				{
-					System.out.println("Nao ha jogos na colecao selecionada.");
-					return resultados;
-				}
-				System.out.println("\nResultados filtrados por colecao '" + nomeDeCategoria + "': ");
-				indice.imprimeAlgunsJogos(ids);
+				this.mostraResultadosDoFiltroDeCategorias(resultados, ids, nomeDeCategoria);
 				break;
-//			case 1:
-//				//com subfiltro
-				//menu do filtro
-//				ids = indice.filtroPorAtributos(nomeOpcaoDeBusca, opcaoDeBusca)
-//				int resultados = indice.filtroPorCategoria(nomeDeCategoria, ids);
-//				if(resultados == -1)
-//				{
-//					System.out.println("\nNenhum jogo encontrado, verifique se o nome da colecao foi digitado corretamente.");
-//					return ids;
-//				}
-//				if(resultados == 0)
-//				{
-//					System.out.println("Nao ha jogos na colecao selecionada.");
-//					return ids;
-//				}
-//				System.out.println("\nResultados filtrados por colecao '" + nomeDeCategoria + "': ");
-//				indice.imprimeAlgunsJogos(ids);
-//				break;
+			case 1:
+				//com subfiltro
+				int opcaoDeSubfiltro = menuFiltro();
+				System.out.println("\nDigite o parametro do subfiltro.");
+				String nomeOpcaoDeSubfiltro = scanner.next();
+				ids = indice.filtroPorAtributos(nomeOpcaoDeSubfiltro, opcaoDeSubfiltro);
+				resultados = indice.filtroPorCategoria(nomeDeCategoria, ids);
+				
+				this.mostraResultadosDoFiltroDeCategorias(resultados, ids, nomeDeCategoria);
+				break;
 		}
 		return resultados;
 	}
 	
+	private int mostraResultadosDoFiltroDeCategorias(int nroDeResultados, List<Integer> idsValidos, String nomeDeCategoria)
+	{
+		if(nroDeResultados == -1)
+		{
+			System.out.println("\nNenhum jogo encontrado, verifique se o nome da colecao foi digitado corretamente.");
+			return nroDeResultados;
+		}
+		if(nroDeResultados == 0)
+		{
+			System.out.println("Nao ha jogos na colecao selecionada.");
+			return nroDeResultados;
+		}
+		System.out.println("\nResultados filtrados por colecao '" + nomeDeCategoria + "': ");
+		indice.imprimeAlgunsJogos(idsValidos);
+		return nroDeResultados;
+	}
 	
 	public void criaCateg(String nomeCateg)
 	{
@@ -184,11 +183,13 @@ public class Repositorio extends FileHandler
 	
 	public void addJogoNaCateg(Jogo jogo, String nomeCateg)
 	{
-		try {
+		try
+		{
 			indice.adicionaCategoriaAoJogo(jogo.getIdJogo(), nomeCateg);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}
+		catch (Exception e)
+		{
+			System.out.println("falhou em adicionar jogo na categoria");
 		}
 	}
 	
