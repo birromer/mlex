@@ -1,4 +1,4 @@
-package test;
+package mlex;
 
 import static org.junit.Assert.*;
 
