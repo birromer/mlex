@@ -82,8 +82,8 @@ public class UsuarioCommand
 				//ve um jogo e pode:
 				//remove-lo, modifica-lo, adicionar comentario, verificar integridade, enviar por email
 				
-				//String nomeJogoProcurado = usuario digita nome do jogo;
-				//int id = repositorio.getIdParaVerInfoDeJogo(nomeJogoProcurado);
+				String nomeJogoProcurado = scanner.nextLine();
+				int id = repositorio.getIdParaVerInfoDeJogo(nomeJogoProcurado);
 				//abre arquivo com id;
 				//imprime o jogo
 				int opcaoJogo = -1;
@@ -109,9 +109,9 @@ public class UsuarioCommand
 				break;
 			case 4:
 				//filtroo
-				//int filt = this.menuFiltro();
-				//String nomefilt;
-				//repositorio.filtroPorAtributoDoJogo(nomefilt, filt);
+				int filt = this.menuFiltro();
+				String nomefilt = scanner.nextLine();
+				repositorio.filtroPorAtributoDoJogo(nomefilt, filt);
 				break;
 			case 5:
 				//configs
@@ -138,6 +138,7 @@ public class UsuarioCommand
 	public int menuCategorias(int opcaoDeCategoria)
 	{
 		//exibe todas colecoes --- CICA FAZ ISSO AQUI
+		String nomeDeCategoria;
 				
 		switch(opcaoDeCategoria)
 		{
@@ -145,9 +146,8 @@ public class UsuarioCommand
 				break;
 			case 0:
 				//exibe jogos em x colecao
-//				String nomeDeCategoria;
-//				repositorio.filtroDascategorias(nomeDeCategoria, 0);
-//								
+				nomeDeCategoria = scanner.nextLine();
+				repositorio.filtroDasCategorias(nomeDeCategoria, 0);
 				break;
 			case 1:
 				//cria nova colecao
@@ -160,8 +160,8 @@ public class UsuarioCommand
 				break;
 			case 4:
 				//filtra jogos dentro de uma colecao
-//				String nomeDeCategoria;
-//				repositorio.filtroDascategorias(nomeDeCategoria, 1);
+				nomeDeCategoria = scanner.nextLine();
+				repositorio.filtroDasCategorias(nomeDeCategoria, 1);
 				break;
 			case 5:
 				break;
