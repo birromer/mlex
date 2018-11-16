@@ -243,7 +243,8 @@ public class Repositorio extends FileHandler
 		listaJogosObj.get(idJogo).atualizaAtributos(opcao, atributoAtualizado);
 	}
 	
-	public void addComentarioEmJogo(int jogoId, String txt, float nota){
+	public void addComentarioEmJogo(int jogoId, String txt, float nota)
+	{	
 		for (Jogo j: this.listaJogosObj) {
 			if (j.getIdJogo() == jogoId){
 				j.addComentario(txt, nota);
@@ -253,8 +254,32 @@ public class Repositorio extends FileHandler
 		
 	}
 	
-	public void removeComentariosDeJogo() {};
+	public void removeComentariosDeJogo(int jogoId)
+	{
+		for (Jogo j: this.listaJogosObj) {
+			if (j.getIdJogo() == jogoId){
+				j.removeComentarios();
+				break;
+			}
+		}
+	}
 	
 
-	public void exibeComentariosDeJogo() {};
+	public void exibeComentariosDeJogo(int jogoId) 
+	{
+		for (Jogo j: this.listaJogosObj) {
+			if (j.getIdJogo() == jogoId){
+				j.exibeComentarios();
+				break;
+			}
+		}	
+	}
+	
+	public void setInfoJogo(Jogo j) {
+		this.idNovoJogo = j.getIdJogo();
+		this.nomeNovoJogo = j.getNomeJogo();
+		this.lancamentoNovoJogo = j.getLancamentoJogo();
+		this.desenvolvedorNovoJogo = j.getDesenvolvedorJogo();
+			
+	}
 }

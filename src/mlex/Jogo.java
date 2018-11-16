@@ -14,7 +14,7 @@ public class Jogo extends FileHandler {
 	private String desenvolvedor;
 	private String versao = "valor indexistente";
 	private String genero = "valor indexistente";
-	private Comentario comentarios;
+	private Comentario comentario;
 	Scanner scanner = new Scanner(System.in);
 	
 	
@@ -34,6 +34,14 @@ public class Jogo extends FileHandler {
 	public int getIdJogo()
 	{
 		return this.idJogo;
+	}
+	
+	public String getLancamentoJogo() {
+		return this.lancamento;
+	}
+	
+	public String getDesenvolvedorJogo() {
+		return this.desenvolvedor;
 	}
 	
 	public List<String> retornaListaAtributosRelevantes()
