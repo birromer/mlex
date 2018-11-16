@@ -61,13 +61,25 @@ public class Repositorio extends FileHandler
 	{
 		return listaJogosObj.size();
 	}
-//	
-//	public void addComentarioEmJogo(int jogoId, String txt){
-//	}
-//	
-//	public void addComentarioEmJogo(int jogoId, String txt){
-//		
-//	}
+	
+	public void addComentarioEmJogo(int jogoId, String txt){
+		for (Jogo j: this.listaJogosObj) {
+			if (j.getIdJogo() == jogoId){
+				j.addComentario(txt);
+				break;
+			}
+		}
+	}
+	
+	public void addComentarioEmJogo(int jogoId, String txt, float nota){
+		for (Jogo j: this.listaJogosObj) {
+			if (j.getIdJogo() == jogoId){
+				j.addComentario(txt, nota);
+				break;
+			}
+		}
+		
+	}
 	
 	public void removeComentariosDeJogo() {
 		
