@@ -141,41 +141,37 @@ public class Repositorio extends FileHandler
 				//sem subfiltro
 				ids = indice.getIdsDoIndice();
 				resultados = indice.filtroPorCategoria(nomeDeCategoria, ids);
-				if(resultados == -1)
-				{
-					System.out.println("\nNenhum jogo encontrado, verifique se o nome da colecao foi digitado corretamente.");
-					return resultados;
-				}
-				if(resultados == 0)
-				{
-					System.out.println("Nao ha jogos na colecao selecionada.");
-					return resultados;
-				}
-				System.out.println("\nResultados filtrados por colecao '" + nomeDeCategoria + "': ");
-				indice.imprimeAlgunsJogos(ids);
+				this.mostraResultadosDoFiltroDeCategorias(resultados, ids, nomeDeCategoria);
 				break;
-//			case 1:
-//				//com subfiltro
-				//menu do filtro
-//				ids = indice.filtroPorAtributos(nomeOpcaoDeBusca, opcaoDeBusca)
-//				int resultados = indice.filtroPorCategoria(nomeDeCategoria, ids);
-//				if(resultados == -1)
-//				{
-//					System.out.println("\nNenhum jogo encontrado, verifique se o nome da colecao foi digitado corretamente.");
-//					return ids;
-//				}
-//				if(resultados == 0)
-//				{
-//					System.out.println("Nao ha jogos na colecao selecionada.");
-//					return ids;
-//				}
-//				System.out.println("\nResultados filtrados por colecao '" + nomeDeCategoria + "': ");
-//				indice.imprimeAlgunsJogos(ids);
-//				break;
+			case 1:
+				//com subfiltro
+				int opcaoDeSubfiltro = menuFiltro();
+				String nomeOpcaoDeSubfiltro = scanner.nextLine();
+				ids = indice.filtroPorAtributos(nomeOpcaoDeSubfiltro, opcaoDeSubfiltro);
+				resultados = indice.filtroPorCategoria(nomeDeCategoria, ids);
+				
+				this.mostraResultadosDoFiltroDeCategorias(resultados, ids, nomeDeCategoria);
+				break;
 		}
 		return resultados;
 	}
 	
+	private int mostraResultadosDoFiltroDeCategorias(int nroDeResultados, List<Integer> idsValidos, String nomeDeCategoria)
+	{
+		if(nroDeResultados == -1)
+		{
+			System.out.println("\nNenhum jogo encontrado, verifique se o nome da colecao foi digitado corretamente.");
+			return nroDeResultados;
+		}
+		if(nroDeResultados == 0)
+		{
+			System.out.println("Nao ha jogos na colecao selecionada.");
+			return nroDeResultados;
+		}
+		System.out.println("\nResultados filtrados por colecao '" + nomeDeCategoria + "': ");
+		indice.imprimeAlgunsJogos(idsValidos);
+		return nroDeResultados;
+	}
 	
 	public void criaCateg(String nomeCateg)
 	{
