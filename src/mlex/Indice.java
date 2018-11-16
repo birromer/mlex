@@ -191,7 +191,91 @@ public class Indice extends FileHandler
 	{
 		return indiceLocal.get(id);
 	}
+	
+	public int getIdComNome(String nomeJogoProcurado) {
+		int id = -1;
+		for (Integer key : indiceLocal.keySet())
+		{
+			if (this.getInformacoesJogoNoIndice(key).get(1) == nomeJogoProcurado)
+			{
+				id = key;
+				return id;
+			}
+		}
+		return id;
+	}
 
+	
+	public List<Integer> filtroPorAtributos(String nomeOpcaoDeBusca, int opcaoDeBusca)
+	{
+		List<Integer> ids = new ArrayList<Integer>();
+		for (Integer key : indiceLocal.keySet())
+		{
+			if (this.getInformacoesJogoNoIndice(key).get(opcaoDeBusca) == nomeOpcaoDeBusca)
+			{
+				ids.add(key);
+//		possivel implementacao de similaridade de strings pra uma pesquisa mais legal
+//			import uk.ac.shef.wit.simmetrics.similaritymetrics.JaroWinkler    
+//			public double compareStrings(String stringA, String stringB)
+//			{
+//			    JaroWinkler algorithm = new JaroWinkler();
+//			    return algorithm.getSimilarity(stringA, stringB);
+//			}
+//				
+			}
+		}
+		return ids;
+	}
+	
+	public void imprimeAlgunsJogos(List<Integer> idsProcurados)
+	{
+		for(Integer key : indiceLocal.keySet())
+		{
+			if(idsProcurados.contains(key))
+					System.out.println("\nNome: " + this.getInformacoesJogoNoIndice(key).get(1) 
+						+ "\nLancamento: " + this.getInformacoesJogoNoIndice(key).get(2)
+						+ "\nLancamento: " + this.getInformacoesJogoNoIndice(key).get(3));
+		}
+	}
+	
+	public List<Integer> getIdsDoIndice()
+	{
+		List<Integer> idsDosJogos = new ArrayList<Integer>();
+		for(Integer key : indiceLocal.keySet())
+		{
+			idsDosJogos.add(key);
+		}
+		return idsDosJogos;
+	}
+	
+	public int filtroPorCategoria(String nomeCateg, List<Integer> idsValidos)
+	{
+		int resultados = -1;
+		
+		if(listaCategorias.contains(nomeCateg) == false)
+			return resultados;
+		resultados = 0;
+		int posicaoDaCategoria = this.getPosicaoCategoria(nomeCateg);
+		for (int i = 0; i < idsValidos.size(); i++)
+		{
+			int key = idsValidos.get(i);
+			System.out.println(key);
+			String listaCategoriasDoJogo = mapaJogoCategorias.get(key);
+			char[] jogoTemCategoria = listaCategoriasDoJogo.toCharArray();
+			
+			if(jogoTemCategoria[posicaoDaCategoria] == '1')
+			{
+				resultados++;
+				
+				System.out.println("\nNome: " + this.getInformacoesJogoNoIndice(key).get(1) 
+						+ "\nLancamento: " + this.getInformacoesJogoNoIndice(key).get(2)
+						+ "\nLancamento: " + this.getInformacoesJogoNoIndice(key).get(3));
+			}
+		}		
+		
+		return resultados;
+	}
+	
 	public void salvaObjetoIndice()
 	{
 		this.salvaObjetoEmArquivo(indiceLocal, caminhoParaObjetoIndice);
