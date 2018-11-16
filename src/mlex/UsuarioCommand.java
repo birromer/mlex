@@ -95,7 +95,7 @@ public class UsuarioCommand
 				break;
 			case 2:
 				//add um jogo
-				repositorio.getInformacoesJogo();
+				repositorio.getInformacoesJogo();				
 				repositorio.adicionaJogo();
 				break;
 			case 3:
@@ -272,6 +272,7 @@ public class UsuarioCommand
 				+ "3)Filtrar por nome do desenvolvedor do jogo;\n"
 				+ "4)Cancela;\n");
 		
+		scanner.reset();
 		int opcaoDeFiltro = scanner.nextInt();
 		
 		return opcaoDeFiltro;
