@@ -1,9 +1,11 @@
 package mlex;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 
 
 public class UsuarioCommand
@@ -11,7 +13,16 @@ public class UsuarioCommand
 	private final static int OPCAO_VOLTAR = 5;
 	private static Repositorio repositorio = new Repositorio();
 	private Scanner scanner = new Scanner(System.in);
+	private File arquivoConfiguracoes = new File("./.mlex.conf");
 	
+	public UsuarioCommand()
+	{
+		if (arquivoConfiguracoes.exists() == false)
+		{
+			arquivoConfiguracoes.createNewFile();
+			
+		}
+	}
 	
 	public int menuInicial(int opcaoMenu)
 	{
@@ -39,6 +50,8 @@ public class UsuarioCommand
 				break;
 			case 2:
 				//add um jogo
+				repositorio.getInformacoesJogo();
+				repositorio.adicionaJogo();
 				break;
 			case 3:
 				//opcoes da colecoes

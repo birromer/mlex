@@ -24,12 +24,14 @@ public class TestUsuarioCommand
 		assertTrue(usuarioCommand.menuInicial(666)==666);
 	}
 	
+	@Test
 	public void testUsuarioCommandMenuCategorias()
 	{
 		assertTrue(usuarioCommand.menuCategorias(0)==0);
 		assertTrue(usuarioCommand.menuCategorias(5)==5);
 	}
 	
+	@Test
 	public void testUsuarioCommandMenuJogo()
 	{
 		assertTrue(usuarioCommand.menuJogo(0)==0);
