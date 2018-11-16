@@ -43,7 +43,7 @@ public class UsuarioCommand
 				} while (opcaoCategoria != OPCAO_VOLTAR);
 				break;
 			case 4:
-				//filtroo
+				//filtro
 				break;
 			case 5:
 				//configs

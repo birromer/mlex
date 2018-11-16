@@ -61,5 +61,19 @@ public class Repositorio extends FileHandler
 	{
 		return listaJogosObj.size();
 	}
+//	
+//	public void addComentarioEmJogo(int jogoId, String txt){
+//	}
+//	
+//	public void addComentarioEmJogo(int jogoId, String txt){
+//		
+//	}
+	
+	public void removeComentariosDeJogo() {
+		
+	}
 
+	public void exibeComentariosDeJogo() {
+		
+	}
 }

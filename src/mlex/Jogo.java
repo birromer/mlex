@@ -15,7 +15,7 @@ public class Jogo extends FileHandler {
 	private double nota;
 	private String versao;
 	private String genero;
-	private String comentarios;
+	private Comentario comentario;
 	private int tempoJogado;
 	
 	
@@ -50,6 +50,27 @@ public class Jogo extends FileHandler {
 	{
 		//refazer para ficar bonito
 		return ( Integer.toString(this.idJogo) + ',' + this.nomeJogo + ',' + this.lancamento + ',' + this.desenvolvedor); 
+	}
+	
+	public void addComentario(String texto) {
+		this.comentario = new Comentario(texto, this.idJogo);
+		comentario.salvaComentario();
+	}
+	
+	public void addComentario(String texto, float nota) {
+		this.comentario = new Comentario("",this.idJogo);
+		this.comentario = new Comentario(texto, this.idJogo, nota);
+		this.comentario.salvaComentario();
+	}
+	
+	public void removeComentarios() {
+		this.comentario = new Comentario("",this.idJogo);
+		this.comentario.removeComentarios();
+	}
+	
+	public void exibeComentarios() {
+		this.comentario = new Comentario("",this.idJogo);
+		this.comentario.exibeComentarios();
 	}
 	
 
