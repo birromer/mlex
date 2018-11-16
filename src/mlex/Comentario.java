@@ -92,7 +92,6 @@ public class Comentario extends FileHandler{
 				out.println(Double.toString(this.getNota()));
 				out.println(this.getData());
 
-
 				out.close();
 			}
 			catch(IOException e){
@@ -123,8 +122,14 @@ public class Comentario extends FileHandler{
 		
 	}
 	
-	public void removeComentarios(int jogoId) {
-		
+	public void removeComentarios() {
+		File f = new File(this.path);
+		if(f.delete()) {
+			System.out.println("Comentarios deletados");
+		}
+		else {
+			System.out.println("Arquivos não existem");
+		}
 		
 	}
 	

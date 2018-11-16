@@ -23,30 +23,6 @@ public class testComentario {
 		comentario1 = new Comentario("Jogo maravilhoso",2,3.5f);
 	}
 	
-//	@Test
-//	public void arquivo() {
-//		File f = new File("./etc/teste.txt");
-//		
-//		//se arquivo nao existe
-//		if(!f.exists()) {
-//			try {
-//				String txt = "textao2";
-//	
-//				f.createNewFile();
-//	
-//				
-//				FileWriter fw = new FileWriter (f.getAbsolutePath());
-//				BufferedWriter bw = new BufferedWriter(fw);
-//				
-//				bw.write(txt);
-//				bw.close();
-//			}
-//			catch(IOException e) {
-//				
-//			}
-//		}
-//	}
-	
 	@Test
 	public void testeArquivoComentario() {
 		
@@ -90,6 +66,10 @@ public class testComentario {
 		comentario0.exibeComentarios();
 	}
 
+	@Test
+	public void testeRemocao() {
+		comentario0.removeComentarios();
+	}
 }
 
 
