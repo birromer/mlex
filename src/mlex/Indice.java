@@ -197,7 +197,7 @@ public class Indice extends FileHandler
 		int id = -1;
 		for (Integer key : indiceLocal.keySet())
 		{
-			if (this.getInformacoesJogoNoIndice(key).get(1) == nomeJogoProcurado)
+			if (this.getInformacoesJogoNoIndice(key).get(1).equals(nomeJogoProcurado))
 			{
 				id = key;
 				return id;

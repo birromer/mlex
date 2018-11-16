@@ -17,9 +17,10 @@ public class TestRepositorio {
 	}
 
 	@Test
-	public void test()
+	public void testAdicionaPrimeiroJogo()
 	{
-		
+		assertTrue(repositorioTeste.adicionaJogo() == 0);
 	}
+	
 
 }

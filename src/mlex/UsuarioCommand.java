@@ -207,7 +207,7 @@ public class UsuarioCommand
 									+ "4 - versao"
 									+ "5 - genero");
 					int opcao = scanner.nextInt();
-					String atributoAtualizado;
+					String atributoAtualizado = new String();
 					switch (opcao)
 					{
 						case 1:
@@ -236,13 +236,13 @@ public class UsuarioCommand
 					}
 					break;
 				case 1:
-					//remove
+					repositorio.removeJogo(idJogoPesquisado);
 					break;
 				case 2:
-					//adicionar comentario
+					//adicionar comentario -- PACHEC0 FAZ AQUI
 					break;
 				case 3:
-					//verificar integridade
+					//verificar integridade -- PACHEC0 FAZ AQUI
 					break;
 				case 4:
 					//enviar por email
