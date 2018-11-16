@@ -251,31 +251,25 @@ public class Indice extends FileHandler
 	public int filtroPorCategoria(String nomeCateg, List<Integer> idsValidos)
 	{
 		int resultados = -1;
-		
 		if(listaCategorias.contains(nomeCateg) == false)
 			return resultados;
 		
-		System.out.println(resultados);
 		resultados = 0;
 		int posicaoDaCategoria = this.getPosicaoCategoria(nomeCateg);
-		for (int i = 0; i < idsValidos.size(); i++)
+		
+		for (int i=0;i<idsValidos.size();i++)
 		{
 			int key = idsValidos.get(i);
-			System.out.println(key);
 			String listaCategoriasDoJogo = mapaJogoCategorias.get(key);
 			char[] jogoTemCategoria = listaCategoriasDoJogo.toCharArray();
-			
 			if(jogoTemCategoria[posicaoDaCategoria] == '1')
 			{
 				resultados++;
-				System.out.println(resultados);
-				
 				System.out.println("\nNome: " + this.getInformacoesJogoNoIndice(key).get(1) 
 						+ "\nLancamento: " + this.getInformacoesJogoNoIndice(key).get(2)
 						+ "\nLancamento: " + this.getInformacoesJogoNoIndice(key).get(3));
 			}
-		}		
-		
+		}
 		return resultados;
 	}
 	
@@ -315,6 +309,7 @@ public class Indice extends FileHandler
 			return null;
 		}
 	}
+	
 
 	@SuppressWarnings("unchecked")
 	public void restauraObjetoIndice()
@@ -323,13 +318,14 @@ public class Indice extends FileHandler
 		
 		indiceLocal = (Map<Integer, List<String>>) this.leArquivo(caminhoParaObjetoIndice);
 	}
+	
 
 	@SuppressWarnings("unchecked")
 	public void restauraMapaJogoCategorias()
 	{
 		//adicionar teste para se arquivo nao existir
 		
-		mapaJogoCategorias = (Map<Integer, String>) this.leArquivo(caminhoParaObjetoIndice);
+		mapaJogoCategorias = (Map<Integer, String>) this.leArquivo(caminhoParaMapaJogoCategorias);
 	}
 
 	@SuppressWarnings("unchecked")
