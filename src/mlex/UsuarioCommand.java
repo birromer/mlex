@@ -19,6 +19,7 @@ public class UsuarioCommand
 	private String senha = "admin";
 	private String ordenacao = "n";
 	Jogo jogoAtual;
+	private String nomeJogoPesquisado;
 	
 	public UsuarioCommand()
 	{
@@ -81,9 +82,9 @@ public class UsuarioCommand
 			case 1:
 				//ve um jogo e pode:
 				//remove-lo, modifica-lo, adicionar comentario, verificar integridade, enviar por email
-				
-				String nomeJogoProcurado = scanner.nextLine();
-				int id = repositorio.getIdParaVerInfoDeJogo(nomeJogoProcurado);
+				System.out.println("Digite o nome do jogo a ser pesquisado: ");
+				nomeJogoPesquisado = scanner.nextLine();
+				int id = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
 				//abre arquivo com id;
 				//imprime o jogo
 				int opcaoJogo = -1;
@@ -183,8 +184,6 @@ public class UsuarioCommand
 	
 	public int menuJogo(int opcaoDeJogo)
 	{
-		System.out.println("Digite o nome do jogo a ser pesquisado: ");
-		String nomeJogoPesquisado = scanner.next();
 		int idJogoPesquisado = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
 		
 		if (idJogoPesquisado == -1)
@@ -199,12 +198,12 @@ public class UsuarioCommand
 				case -1:
 					break;
 				case 0:
-					System.out.println("Digite o que deseja modificar");
-					System.out.println("1 - nomeJogo"
-									+ "2 - lancamento"
-									+ "3 - desenvolvedor"
-									+ "4 - versao"
-									+ "5 - genero");
+					System.out.println("Digite o que deseja modificar\n");
+					System.out.println("1 - nomeJogo\n"
+									+ "2 - lancamento\n"
+									+ "3 - desenvolvedor\n"
+									+ "4 - versao\n"
+									+ "5 - genero\n");
 					int opcao = scanner.nextInt();
 					String atributoAtualizado = new String();
 					switch (opcao)
@@ -216,18 +215,22 @@ public class UsuarioCommand
 							break;
 						case 2:
 							System.out.println("Digite a data atualizada de lancamento do jogo (DD/MM/AAAA):");
+							atributoAtualizado = scanner.next();
 							repositorio.atualizaAtributo(idJogoPesquisado, 2, atributoAtualizado);
 							break;
 						case 3:
 							System.out.println("Digite o nome atualizado do desenvolvedor do jogo:");
+							atributoAtualizado = scanner.next();
 							repositorio.atualizaAtributo(idJogoPesquisado, 3, atributoAtualizado);
 							break;
 						case 4:
 							System.out.println("Digite a versao atualizada  do jogo:");
+							atributoAtualizado = scanner.next();
 							repositorio.atualizaAtributo(idJogoPesquisado, 4, atributoAtualizado);
 							break;
 						case 5:
 							System.out.println("Digite o genero atualizado do jogo:");
+							atributoAtualizado = scanner.next();
 							repositorio.atualizaAtributo(idJogoPesquisado, 5, atributoAtualizado);
 							break;
 						default:

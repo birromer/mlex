@@ -1,5 +1,6 @@
 package mlex;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,6 @@ public class Repositorio extends FileHandler
 {
 	private static List<Jogo> listaJogosObj = new ArrayList<Jogo>();
 	private static Map<String, Integer> tabelaJogos = new HashMap<String, Integer>();
-	//private java.io.Console cnsl = System.console();
 	private Indice indice =  new Indice();
 	private Scanner scanner = new Scanner(System.in);
 
@@ -49,9 +49,7 @@ public class Repositorio extends FileHandler
 		if (idNovoJogo == -1)
 		{
 			idNovoJogo = listaJogosObj.size();
-			System.out.println(idNovoJogo);
 		}
-
 
 		if (indice.getIdsDoIndice().contains(idNovoJogo))
 		{
@@ -92,7 +90,12 @@ public class Repositorio extends FileHandler
 				System.out.println("Jogo nao existe no indice");
 			}
 
-
+			listaJogosObj.set(idJogo, null);
+			
+			if (! new File("./etc/" + idJogo).delete())
+			{
+				System.out.println("arquivo a ser deletado nao existe");
+			}
 		}
 	}
 
