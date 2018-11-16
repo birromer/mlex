@@ -21,21 +21,9 @@ public class Repositorio extends FileHandler
 	
 	public boolean verificaId(String nomeJogo)
 	{
-		return tabelaJogos.containsKey(nomeJogo);
+		return tabelaJogos.keySet().contains(nomeJogo);
 	}
-	
-	private int getId(String nomeJogo)
-	{
-		if(verificaId(nomeJogo) == true)
-		{
-			return tabelaJogos.get(nomeJogo);
-		}
-		else
-		{
-			return tabelaJogos.size(); //verifica arquivo pelo ultimo id usado
-		}
-	}
-	
+		
 	public void getInformacoesJogo()
 	{
 		nomeNovoJogo = cnsl.readLine("Nome do jogo a ser adicionado: ");
@@ -51,6 +39,11 @@ public class Repositorio extends FileHandler
 	public int adicionaJogo()
 	{
 		idNovoJogo = indice.getIdComNome(nomeNovoJogo);
+		if (idNovoJogo == -1)
+		{
+			idNovoJogo = listaJogosObj.size();
+			System.out.println(idNovoJogo);
+		}
 		
 		
 		if (indice.getIdsDoIndice().contains(idNovoJogo))
@@ -61,7 +54,7 @@ public class Repositorio extends FileHandler
 		{
 			Jogo novoJogo = new Jogo(idNovoJogo, nomeNovoJogo, lancamentoNovoJogo, desenvolvedorNovoJogo);
 			tabelaJogos.put(nomeNovoJogo, idNovoJogo);
-		
+			
 			criaJogo(novoJogo);
 		
 			try
@@ -77,6 +70,23 @@ public class Repositorio extends FileHandler
 		}
 		
 		return idNovoJogo;
+	}
+	
+	public void removeJogo(int idJogo)
+	{
+		if (indice.getIdsDoIndice().contains(idJogo))
+		{
+			try
+			{
+				indice.removeJogoDoIndice(idJogo);
+			}
+			catch (Exception e)
+			{
+				System.out.println("Jogo nao existe no indice");
+			}
+			
+			
+		}
 	}
 	
 	public void adicionaJogoPassaTeste(Jogo novoJogo)
@@ -221,6 +231,7 @@ public class Repositorio extends FileHandler
 	public void atualizaAtributo(int idJogo, int opcao, String atributoAtualizado)
 	{
 		
+		listaJogosObj.get(idJogo).atualizaAtributos(opcao, atributoAtualizado);
 	}
 	
 	private int menuFiltro()
