@@ -10,7 +10,7 @@ public class Repositorio extends FileHandler
 {
 	private static List<Jogo> listaJogosObj = new ArrayList<Jogo>();
 	private static Map<String, Integer> tabelaJogos = new HashMap<String, Integer>();
-	private java.io.Console cnsl = System.console();
+	//private java.io.Console cnsl = System.console();
 	private static Indice indice =  new Indice();
 	private Scanner scanner = new Scanner(System.in);
 	
@@ -26,9 +26,16 @@ public class Repositorio extends FileHandler
 		
 	public void getInformacoesJogo()
 	{
-		nomeNovoJogo = cnsl.readLine("Nome do jogo a ser adicionado: ");
-		lancamentoNovoJogo = cnsl.readLine("Data de lancamento do jogo a ser adicionado (DD/MM/AAAA): ");
-		desenvolvedorNovoJogo = cnsl.readLine("Desenvolvedor do jogo a ser adicionado: ");
+		System.out.println("Nome do jogo a ser adicionado: ");
+		this.nomeNovoJogo = scanner.next();
+		
+		System.out.println("Data de lancamento do jogo a ser adicionado (DD/MM/AAAA): ");
+		scanner.reset();
+		this.lancamentoNovoJogo = scanner.next();
+		
+		System.out.println("Desenvolvedor do jogo a ser adicionado: ");
+		scanner.reset();
+		this.desenvolvedorNovoJogo = scanner.next();
 	}
 	
 	public void criaJogo(Jogo jogo)
@@ -52,8 +59,8 @@ public class Repositorio extends FileHandler
 		}
 		else
 		{
-			Jogo novoJogo = new Jogo(idNovoJogo, nomeNovoJogo, lancamentoNovoJogo, desenvolvedorNovoJogo);
-			tabelaJogos.put(nomeNovoJogo, idNovoJogo);
+			Jogo novoJogo = new Jogo(this.idNovoJogo, this.nomeNovoJogo, this.lancamentoNovoJogo, this.desenvolvedorNovoJogo);
+			tabelaJogos.put(this.nomeNovoJogo, this.idNovoJogo);
 			
 			criaJogo(novoJogo);
 		
