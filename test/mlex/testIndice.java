@@ -18,13 +18,13 @@ public class testIndice {
 	Jogo jogoTeste1;
 	Jogo jogoTeste2;
 	Jogo jogoTeste3;
+	String pathObjetoIndice = "./etc/objeto_indice";
+	String pathMapaJogoCategorias = "./etc/mapa_jogo_categorias";
+	String pathListaCategorias = "./etc/lista_categorias";
 	File arquivoIndice;
 	File arquivoObjetoIndice;
 	File arquivoMapaJogoCategorias;
 	File arquivoListaCategorias;
-	String pathObjetoIndice = "./etc/objeto_indice";
-	String pathMapaJogoCategorias = "./etc/mapa_jogo_categorias";
-	String pathListaCategorias = "./etc/lista_categorias";
 	FileOutputStream saidaArquivoEscrita;
 	ObjectOutputStream saidaObjetoEscrita;
 	
@@ -33,13 +33,20 @@ public class testIndice {
 	{
 		arquivoIndice = new File("./etc/indice.txt"); 
         arquivoIndice.delete();
-		indiceTeste = new Indice();
+        arquivoObjetoIndice = new File(pathObjetoIndice);
+        arquivoObjetoIndice.delete();
+        arquivoMapaJogoCategorias = new File(pathMapaJogoCategorias);
+        arquivoMapaJogoCategorias.delete();
+        arquivoListaCategorias = new File(pathListaCategorias);
+        arquivoListaCategorias.delete();
+        indiceTeste = new Indice();
 		jogoTeste1 = new Jogo(0, "Jogo Legal", "01/09/94", "Klei");
 		indiceTeste.novoJogoSendoAdicionado(0);
 		jogoTeste2 = new Jogo(666, "Jogo Chato", "01/09/94", "Despacito");
 		indiceTeste.novoJogoSendoAdicionado(666);
 		jogoTeste3 = new Jogo(3, "Aladdin2", "16/08/94", "Despacito");
 		indiceTeste.novoJogoSendoAdicionado(3);
+		
 	}
 
 	@Test
