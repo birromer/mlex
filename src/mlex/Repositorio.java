@@ -14,6 +14,11 @@ public class Repositorio extends FileHandler
 	private static Indice indice =  new Indice();
 	private Scanner scanner = new Scanner(System.in);
 	
+	private int idNovoJogo;
+	private String nomeNovoJogo;
+	private String lancamentoNovoJogo;
+	private String desenvolvedorNovoJogo;
+	
 	public boolean verificaId(String nomeJogo)
 	{
 		return tabelaJogos.containsKey(nomeJogo);
@@ -27,8 +32,15 @@ public class Repositorio extends FileHandler
 		}
 		else
 		{
-			return 1; //verifica arquivo pelo ultimo id usado
+			return tabelaJogos.size(); //verifica arquivo pelo ultimo id usado
 		}
+	}
+	
+	public void getInformacoesJogo()
+	{
+		nomeNovoJogo = cnsl.readLine("Nome do jogo a ser adicionado: ");
+		lancamentoNovoJogo = cnsl.readLine("Data de lancamento do jogo a ser adicionado (DD/MM/AAAA): ");
+		desenvolvedorNovoJogo = cnsl.readLine("Desenvolvedor do jogo a ser adicionado: ");
 	}
 	
 	public void criaJogo(Jogo jogo)
@@ -38,41 +50,49 @@ public class Repositorio extends FileHandler
 	
 	public int adicionaJogo()
 	{
-		//coisas com arquivo
-		//buscaArquivo()
+		idNovoJogo = indice.getIdComNome(nomeNovoJogo);
 		
 		
-		//coisas para criar novo jogo
-		String nomeNovoJogo = cnsl.readLine("Nome do jogo a ser adicionado: ");
-		String lancamentoNovoJogo = cnsl.readLine("Data de lancamento do jogo a ser adicionado (DD/MM/AAAA): ");
-		String desenvolvedorNovoJogo = cnsl.readLine("Desenvolvedor do jogo a ser adicionado: ");
-		
-		int idNovoJogo = this.tamanho();
-		
-		Jogo novoJogo = new Jogo(idNovoJogo, nomeNovoJogo, lancamentoNovoJogo, desenvolvedorNovoJogo);
-		tabelaJogos.put(nomeNovoJogo, idNovoJogo);
-		
-		criaJogo(novoJogo);
-		
-		try {
-			indice.adicionaJogoNoIndice(novoJogo);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (indice.getIdsDoIndice().contains(idNovoJogo))
+		{
+			System.out.println("tentativa de adicao de novo jogo falhou pois jogo ja existe");
 		}
-		indice.novoJogoSendoAdicionado(idNovoJogo);
+		else
+		{
+			Jogo novoJogo = new Jogo(idNovoJogo, nomeNovoJogo, lancamentoNovoJogo, desenvolvedorNovoJogo);
+			tabelaJogos.put(nomeNovoJogo, idNovoJogo);
+		
+			criaJogo(novoJogo);
+		
+			try
+			{
+				indice.adicionaJogoNoIndice(novoJogo);
+			}
+			catch (Exception e)
+			{
+				System.out.println("falha ao adicionar novo jogo no indice");
+			}
+		
+			indice.novoJogoSendoAdicionado(idNovoJogo);
+		}
 		
 		return idNovoJogo;
 	}
 	
 	public void adicionaJogoPassaTeste(Jogo novoJogo)
 	{
-		try {
+		try 
+		{
 			indice.adicionaJogoNoIndice(novoJogo);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
+		
 		indice.novoJogoSendoAdicionado(novoJogo.getIdJogo());
 	}
+	
 	
 	public int getIdParaVerInfoDeJogo(String nomeJogoProcurado)
 	{
@@ -82,6 +102,7 @@ public class Repositorio extends FileHandler
 		{
 			id = indice.getIdComNome(nomeJogoProcurado);
 		}
+		
 		return id;
 	}
 	
