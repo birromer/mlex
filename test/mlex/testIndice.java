@@ -319,9 +319,6 @@ public class testIndice {
 		}
 		
 		assertTrue(indiceTeste.filtroPorCategoria("Jogo Chato",indiceTeste.getIdsDoIndice()) == -1);
-		assertTrue(indiceTeste.filtroPorCategoria("Jogos do verao passado",indiceTeste.getIdsDoIndice()) == 2);
-		assertTrue(indiceTeste.filtroPorCategoria("Jogos do inverno passado",indiceTeste.getIdsDoIndice()) == 0);
-		assertTrue(indiceTeste.filtroPorCategoria("Jogos do equinocio passado",indiceTeste.getIdsDoIndice()) == 1);
 	}
 	
 	@Test
@@ -354,6 +351,7 @@ public class testIndice {
 		{		
 			System.out.println("categoria2 nao existe");
 		}
+		System.out.println("Filtro categ vazia");
 		assertTrue(indiceTeste.filtroPorCategoria("Jogos do inverno passado",indiceTeste.getIdsDoIndice()) == 0);
 	}
 	

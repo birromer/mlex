@@ -254,6 +254,8 @@ public class Indice extends FileHandler
 		
 		if(listaCategorias.contains(nomeCateg) == false)
 			return resultados;
+		
+		System.out.println(resultados);
 		resultados = 0;
 		int posicaoDaCategoria = this.getPosicaoCategoria(nomeCateg);
 		for (int i = 0; i < idsValidos.size(); i++)
@@ -266,6 +268,7 @@ public class Indice extends FileHandler
 			if(jogoTemCategoria[posicaoDaCategoria] == '1')
 			{
 				resultados++;
+				System.out.println(resultados);
 				
 				System.out.println("\nNome: " + this.getInformacoesJogoNoIndice(key).get(1) 
 						+ "\nLancamento: " + this.getInformacoesJogoNoIndice(key).get(2)
