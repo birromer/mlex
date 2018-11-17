@@ -254,5 +254,12 @@ public class Repositorio extends FileHandler
 
 		return opcaoDeFiltro;
 	}
+	
+	public void encerraRepositorio()
+	{
+		indice.salvaObjetoIndice();
+		indice.salvaMapaJogoCategorias();
+		indice.salvaListaCategorias();
+	}
 
 }

@@ -9,8 +9,8 @@ public class Jogo extends FileHandler{
 	private String nomeJogo; 
 	private String lancamento; 
 	private String desenvolvedor;
-	private String versao = "valor indexistente";
-	private String genero = "valor indexistente";
+	private String versao = "v1.0";
+	private String genero = "valor inexistente";
 	private Comentario comentarios;
 	Scanner scanner = new Scanner(System.in);
 	String caminhoObjetoJogo;
@@ -56,6 +56,7 @@ public class Jogo extends FileHandler{
 				genero = atributoAtualizado;
 		}		
 		caminhoObjetoJogo = "./etc/" + Integer.toString(idJogo);
+		System.out.println(caminhoObjetoJogo);
 		this.salvaObjetoEmArquivo(this, caminhoObjetoJogo);
 	}
 	
