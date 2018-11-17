@@ -29,5 +29,5 @@ bin/
 etc/
 .recommenders/
 .mlex.conf
-src/mlex/MyMLex.java
+src/mlex/MyMlex.java
 src/mlex/RedirecionadorConsole.java
