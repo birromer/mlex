@@ -55,10 +55,11 @@ public class Jogo extends FileHandler{
 			case 5:
 				genero = atributoAtualizado;
 		}		
-		caminhoObjetoJogo = "./etc/" + Integer.toString(idJogo);
+		caminhoObjetoJogo = "./etc/jogos/" + Integer.toString(idJogo);
 		System.out.println(caminhoObjetoJogo);
 		this.salvaObjetoEmArquivo(this, caminhoObjetoJogo);
 	}
+	
 	
 	@Override
 	public String toString()

@@ -127,13 +127,9 @@ public class Indice extends FileHandler
 	}
 
 	public void adicionaCategoriaAoIndice(String novaCategoria)
-	{
-		System.out.println(novaCategoria);
-		
-		
+	{	
 		if (listaCategorias.contains(novaCategoria) == true)
 		{
-			System.out.println("entrou no caso da categoria ja existir blaaaaaaaaaaaaaaaaaaaa");
 			return;
 		}
 
@@ -144,11 +140,9 @@ public class Indice extends FileHandler
 			if (this.getNumeroCategorias() > 1)
 			{
 				String novaListaCategorias = mapaJogoCategorias.get(key) + "0";
-				System.out.println("==================  " + novaListaCategorias);
 				mapaJogoCategorias.replace(key, novaListaCategorias);
 			}
 		}
-		System.out.println("==================  " + mapaJogoCategorias);
 	}
 
 	List<String> getListaCategorias()

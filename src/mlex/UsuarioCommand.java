@@ -8,7 +8,6 @@ import java.util.Properties;
 import java.util.Scanner;
 
 
-
 public class UsuarioCommand
 {		
 	private final static int OPCAO_VOLTAR = 5;
@@ -84,9 +83,6 @@ public class UsuarioCommand
 				//remove-lo, modifica-lo, adicionar comentario, verificar integridade, enviar por email
 				System.out.println("Digite o nome do jogo a ser pesquisado: ");
 				nomeJogoPesquisado = scanner.nextLine();
-				int id = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
-				//abre arquivo com id;
-				//imprime o jogo
 				int opcaoJogo = -1;
 				do
 				{

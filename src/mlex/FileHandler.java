@@ -1,9 +1,6 @@
 package mlex;
 
 import java.io.File;
-//import java.io.FileNotFoundException;
-//import java.io.IOException;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -80,6 +77,16 @@ abstract public class FileHandler
 		{
 			System.out.println("erro ao escrever objeto no arquivo");
 		}
+		
+		try
+		{
+			saidaArquivoEscrita.close();
+		}
+		catch (IOException e)
+		{
+			System.out.println("erro ao fechar stream de saida do arquivo");
+		}
+
 	}
 	
 	public File buscaArquivo(int nome, int op)
@@ -87,9 +94,8 @@ abstract public class FileHandler
 		return null;
 	}
 	
-	public void atualizaArquivo(int nome, int op)
+	public void atualizaArquivo(int nome, int op) 
 	{
-		
 	}
 	
 }
