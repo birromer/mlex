@@ -1,6 +1,8 @@
 package mlex;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +21,21 @@ public class Repositorio extends FileHandler
 	private String lancamentoNovoJogo;
 	private String desenvolvedorNovoJogo;
 
+	public Repositorio()
+	{
+		Jogo jogoASerSalvo;
+		File diretorioJogos = new File("./etc/jogos/");
+		File[] jogosSalvos = diretorioJogos.listFiles();
+		if (jogosSalvos != null)
+		{
+			for (File arquivoJogo : jogosSalvos)
+			{
+				jogoASerSalvo = this.leJogo(arquivoJogo.getName());
+				this.adicionaJogoPassaTeste(jogoASerSalvo);
+			}
+		}
+	}
+	
 	public boolean verificaId(String nomeJogo)
 	{
 		return tabelaJogos.keySet().contains(nomeJogo);
@@ -41,6 +58,7 @@ public class Repositorio extends FileHandler
 	public void criaJogo(Jogo jogo)
 	{
 		listaJogosObj.add(jogo);
+		tabelaJogos.put(jogo.getNomeJogo(), jogo.getIdJogo());
 	}
 
 	public int adicionaJogo()
@@ -58,8 +76,7 @@ public class Repositorio extends FileHandler
 		else
 		{
 			Jogo novoJogo = new Jogo(this.idNovoJogo, this.nomeNovoJogo, this.lancamentoNovoJogo, this.desenvolvedorNovoJogo);
-			tabelaJogos.put(this.nomeNovoJogo, this.idNovoJogo);
-
+			
 			criaJogo(novoJogo);
 
 			try
@@ -111,6 +128,8 @@ public class Repositorio extends FileHandler
 		}
 
 		indice.novoJogoSendoAdicionado(novoJogo.getIdJogo());
+		
+		this.criaJogo(novoJogo);
 	}
 
 
@@ -272,6 +291,27 @@ public class Repositorio extends FileHandler
 		indice.salvaObjetoIndice();
 		indice.salvaMapaJogoCategorias();
 		indice.salvaListaCategorias();
+	}
+	
+	public Jogo leJogo(String nome)
+	{
+		File arquivo =  new File("./etc/jogos/" + nome);
+		try
+		{
+			FileInputStream fileIn = new FileInputStream(arquivo);
+			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+		
+			Jogo jogoLido = (Jogo) objectIn.readObject();
+			
+			objectIn.close();
+			
+			return jogoLido;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

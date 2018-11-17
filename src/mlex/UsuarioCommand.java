@@ -23,7 +23,7 @@ public class UsuarioCommand
 	private int idJogoPesquisado;
 	
 	public UsuarioCommand()
-	{
+	{	
 		if (new File("./.mlex.conf").exists() == false)
 		{
 			configuracoes.setProperty("usuario", "admin");
@@ -52,7 +52,7 @@ public class UsuarioCommand
 			
 			usuario = configuracoes.getProperty("usuario");
 			senha = configuracoes.getProperty("senha");
-			ordenacao = configuracoes.getProperty("ordenacao");
+			ordenacao = configuracoes.getProperty("ordenacao");	
 		}
 	}
 	
@@ -83,6 +83,7 @@ public class UsuarioCommand
 			case 1:
 				//ve um jogo e pode:
 				//remove-lo, modifica-lo, adicionar comentario, verificar integridade, enviar por email
+				limpaTela();
 				System.out.println("Digite o nome do jogo a ser pesquisado: ");
 				nomeJogoPesquisado = scanner.next();
 				int opcaoJogo = -1;
@@ -122,6 +123,7 @@ public class UsuarioCommand
 				System.out.println("Nao eras, meu bruxo!");
 		}
 		
+		limpaTela();
 		System.out.println("\n0)Mostrar os jogos do repositorio;\n"
 				+ "1)Selecionar jogo;\n"
 				+ "2)Adicionar um jogo ao repositorio;\n"
@@ -182,6 +184,7 @@ public class UsuarioCommand
 				System.out.println("Nao eras, meu bruxo!");
 		}
 		
+		limpaTela();
 		System.out.println("\n0)Buscar jogos da colecao;\n"
 				+ "1)Criar colecao;\n"
 				+ "2)Adicionar um jogo a colecao;\n"
@@ -210,6 +213,7 @@ public class UsuarioCommand
 				case -1:
 					break;
 				case 0:
+					limpaTela();
 					System.out.println("Digite o que deseja modificar\n");
 					System.out.println("1 - nomeJogo\n"
 									+ "2 - lancamento\n"
@@ -268,6 +272,7 @@ public class UsuarioCommand
 					System.out.println("Nao eras, meu bruxo!");
 			}
 			
+			limpaTela();
 			System.out.println("\n0)Modificar informacoes;\n"
 					+ "1)Remover do repositorio;\n"
 					+ "2)Adicionar comentario;\n"
@@ -282,6 +287,7 @@ public class UsuarioCommand
 	
 	public int menuFiltro()
 	{
+		limpaTela();
 		System.out.println("\n1)Filtrar por nome do jogo;\n"
 				+ "2)Filtrar data do lancamento do jogo;\n"
 				+ "3)Filtrar por nome do desenvolvedor do jogo;\n"
@@ -291,6 +297,18 @@ public class UsuarioCommand
 		int opcaoDeFiltro = scanner.nextInt();
 		
 		return opcaoDeFiltro;
+	}
+	
+	public void limpaTela()
+	{
+		try
+		{
+			Runtime.getRuntime().exec("clear");
+		}
+		catch (IOException e)
+		{
+			System.out.println("Erro ao limpar a tela");
+		}
 	}
 
 }

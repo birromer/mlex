@@ -22,7 +22,7 @@ abstract public class FileHandler
 		return arquivo.exists();
 	}
 	
-	public Object leArquivo(int nome)
+	public Object leArquivo(String nome)
 	{
 		File arquivo =  new File(path + nome);
 		try
