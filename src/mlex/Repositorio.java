@@ -10,32 +10,39 @@ public class Repositorio extends FileHandler
 {
 	private static List<Jogo> listaJogosObj = new ArrayList<Jogo>();
 	private static Map<String, Integer> tabelaJogos = new HashMap<String, Integer>();
-	private java.io.Console cnsl = System.console();
-	private static Indice indice =  new Indice();
+	//private java.io.Console cnsl = System.console();
+	private Indice indice =  new Indice();
 	private Scanner scanner = new Scanner(System.in);
-	
+
 	private int idNovoJogo;
 	private String nomeNovoJogo;
 	private String lancamentoNovoJogo;
 	private String desenvolvedorNovoJogo;
-	
+
 	public boolean verificaId(String nomeJogo)
 	{
 		return tabelaJogos.keySet().contains(nomeJogo);
 	}
-		
+
 	public void getInformacoesJogo()
 	{
-		nomeNovoJogo = cnsl.readLine("Nome do jogo a ser adicionado: ");
-		lancamentoNovoJogo = cnsl.readLine("Data de lancamento do jogo a ser adicionado (DD/MM/AAAA): ");
-		desenvolvedorNovoJogo = cnsl.readLine("Desenvolvedor do jogo a ser adicionado: ");
+		System.out.println("Nome do jogo a ser adicionado: ");
+		this.nomeNovoJogo = scanner.next();
+
+		System.out.println("Data de lancamento do jogo a ser adicionado (DD/MM/AAAA): ");
+		scanner.reset();
+		this.lancamentoNovoJogo = scanner.next();
+
+		System.out.println("Desenvolvedor do jogo a ser adicionado: ");
+		scanner.reset();
+		this.desenvolvedorNovoJogo = scanner.next();
 	}
-	
+
 	public void criaJogo(Jogo jogo)
 	{
 		listaJogosObj.add(jogo);
 	}
-	
+
 	public int adicionaJogo()
 	{
 		idNovoJogo = indice.getIdComNome(nomeNovoJogo);
@@ -44,19 +51,19 @@ public class Repositorio extends FileHandler
 			idNovoJogo = listaJogosObj.size();
 			System.out.println(idNovoJogo);
 		}
-		
-		
+
+
 		if (indice.getIdsDoIndice().contains(idNovoJogo))
 		{
 			System.out.println("tentativa de adicao de novo jogo falhou pois jogo ja existe");
 		}
 		else
 		{
-			Jogo novoJogo = new Jogo(idNovoJogo, nomeNovoJogo, lancamentoNovoJogo, desenvolvedorNovoJogo);
-			tabelaJogos.put(nomeNovoJogo, idNovoJogo);
-			
+			Jogo novoJogo = new Jogo(this.idNovoJogo, this.nomeNovoJogo, this.lancamentoNovoJogo, this.desenvolvedorNovoJogo);
+			tabelaJogos.put(this.nomeNovoJogo, this.idNovoJogo);
+
 			criaJogo(novoJogo);
-		
+
 			try
 			{
 				indice.adicionaJogoNoIndice(novoJogo);
@@ -65,13 +72,13 @@ public class Repositorio extends FileHandler
 			{
 				System.out.println("falha ao adicionar novo jogo no indice");
 			}
-		
+
 			indice.novoJogoSendoAdicionado(idNovoJogo);
 		}
-		
+
 		return idNovoJogo;
 	}
-	
+
 	public void removeJogo(int idJogo)
 	{
 		if (indice.getIdsDoIndice().contains(idJogo))
@@ -84,14 +91,14 @@ public class Repositorio extends FileHandler
 			{
 				System.out.println("Jogo nao existe no indice");
 			}
-			
-			
+
+
 		}
 	}
-	
+
 	public void adicionaJogoPassaTeste(Jogo novoJogo)
 	{
-		try 
+		try
 		{
 			indice.adicionaJogoNoIndice(novoJogo);
 		}
@@ -99,27 +106,27 @@ public class Repositorio extends FileHandler
 		{
 			e.printStackTrace();
 		}
-		
+
 		indice.novoJogoSendoAdicionado(novoJogo.getIdJogo());
 	}
-	
-	
+
+
 	public int getIdParaVerInfoDeJogo(String nomeJogoProcurado)
 	{
 		int id = -1;
-		
+
 		if(indice.getNumeroJogos() > 0)
 		{
 			id = indice.getIdComNome(nomeJogoProcurado);
 		}
-		
+
 		return id;
 	}
-	
+
 	public List<Integer> filtroPorAtributoDoJogo(String nomeOpcaoDeBusca, int opcaoDeBusca)
 	{
 		List<Integer> ids = new ArrayList<Integer>();
-		
+
 		switch(opcaoDeBusca)
 		{
 			case 1:
@@ -155,13 +162,13 @@ public class Repositorio extends FileHandler
 				else
 					System.out.println("\nNenhum jogo encontrado, verifique se o nome do desenvolvedor foi digitado corretamente");
 				break;
-			default: 
+			default:
 				System.out.println("opcao invalida!");
 		}
-		
+
 		return ids;
 	}
-	
+
 	public int filtroDasCategorias(String nomeDeCategoria, int opcaoDeBuscaCateg)
 	{
 		List<Integer> ids = new ArrayList<Integer>();
@@ -172,61 +179,61 @@ public class Repositorio extends FileHandler
 				//sem subfiltro
 				ids = indice.getIdsDoIndice();
 				resultados = indice.filtroPorCategoria(nomeDeCategoria, ids);
-				if(resultados == -1)
-				{
-					System.out.println("\nNenhum jogo encontrado, verifique se o nome da colecao foi digitado corretamente.");
-					return resultados;
-				}
-				if(resultados == 0)
-				{
-					System.out.println("Nao ha jogos na colecao selecionada.");
-					return resultados;
-				}
-				System.out.println("\nResultados filtrados por colecao '" + nomeDeCategoria + "': ");
-				indice.imprimeAlgunsJogos(ids);
+				this.mostraResultadosDoFiltroDeCategorias(resultados, ids, nomeDeCategoria);
 				break;
-//			case 1:
-//				//com subfiltro
-				//menu do filtro
-//				ids = indice.filtroPorAtributos(nomeOpcaoDeBusca, opcaoDeBusca)
-//				int resultados = indice.filtroPorCategoria(nomeDeCategoria, ids);
-//				if(resultados == -1)
-//				{
-//					System.out.println("\nNenhum jogo encontrado, verifique se o nome da colecao foi digitado corretamente.");
-//					return ids;
-//				}
-//				if(resultados == 0)
-//				{
-//					System.out.println("Nao ha jogos na colecao selecionada.");
-//					return ids;
-//				}
-//				System.out.println("\nResultados filtrados por colecao '" + nomeDeCategoria + "': ");
-//				indice.imprimeAlgunsJogos(ids);
-//				break;
+			case 1:
+				//com subfiltro
+				int opcaoDeSubfiltro = menuFiltro();
+				System.out.println("\nDigite o parametro do subfiltro.");
+				String nomeOpcaoDeSubfiltro = scanner.next();
+				ids = indice.filtroPorAtributos(nomeOpcaoDeSubfiltro, opcaoDeSubfiltro);
+				resultados = indice.filtroPorCategoria(nomeDeCategoria, ids);
+
+				this.mostraResultadosDoFiltroDeCategorias(resultados, ids, nomeDeCategoria);
+				break;
 		}
 		return resultados;
 	}
-	
-	
+
+	private int mostraResultadosDoFiltroDeCategorias(int nroDeResultados, List<Integer> idsValidos, String nomeDeCategoria)
+	{
+		if(nroDeResultados == -1)
+		{
+			System.out.println("\nNenhum jogo encontrado, verifique se o nome da colecao foi digitado corretamente.");
+			return nroDeResultados;
+		}
+		if(nroDeResultados == 0)
+		{
+			System.out.println("Nao ha jogos na colecao selecionada.");
+			return nroDeResultados;
+		}
+		System.out.println("\nResultados filtrados por colecao '" + nomeDeCategoria + "': ");
+		indice.imprimeAlgunsJogos(idsValidos);
+		return nroDeResultados;
+	}
+
 	public void criaCateg(String nomeCateg)
 	{
 		indice.adicionaCategoriaAoIndice(nomeCateg);
 	}
-	
+
 	public void addJogoNaCateg(Jogo jogo, String nomeCateg)
 	{
-		try {
+		try
+		{
 			indice.adicionaCategoriaAoJogo(jogo.getIdJogo(), nomeCateg);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}
+		catch (Exception e)
+		{
+			System.out.println("falhou em adicionar jogo na categoria");
 		}
 	}
-	
+
 	public int tamanho()
 	{
 		return listaJogosObj.size();
 	}
+
 	
 	public void addComentarioEmJogo(int jogoId, String txt){
 		for (Jogo j: this.listaJogosObj) {
@@ -236,13 +243,7 @@ public class Repositorio extends FileHandler
 			}
 		}
 	}
-
-	public void atualizaAtributo(int idJogo, int opcao, String atributoAtualizado)
-	{
 		
-		listaJogosObj.get(idJogo).atualizaAtributos(opcao, atributoAtualizado);
-	}
-	
 	public void addComentarioEmJogo(int jogoId, String txt, float nota)
 	{	
 		for (Jogo j: this.listaJogosObj) {
@@ -251,7 +252,24 @@ public class Repositorio extends FileHandler
 				break;
 			}
 		}
-		
+	}
+
+	public void atualizaAtributo(int idJogo, int opcao, String atributoAtualizado)
+	{
+
+		listaJogosObj.get(idJogo).atualizaAtributos(opcao, atributoAtualizado);
+	}
+
+	private int menuFiltro()
+	{
+		System.out.println("\n1)Filtrar por nome do jogo;\n"
+				+ "2)Filtrar data do lancamento do jogo;\n"
+				+ "3)Filtrar por nome do desenvolvedor do jogo;\n"
+				+ "4)Cancela;\n");
+
+		int opcaoDeFiltro = scanner.nextInt();
+
+		return opcaoDeFiltro;
 	}
 	
 	public void removeComentariosDeJogo(int jogoId)

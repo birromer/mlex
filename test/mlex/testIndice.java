@@ -31,7 +31,7 @@ public class testIndice {
 	@Before
 	public void setUp()
 	{
-		arquivoIndice = new File("./etc/indice.txt"); 
+		arquivoIndice = new File("./etc/indice.txt");
         arquivoIndice.delete();
         arquivoObjetoIndice = new File(pathObjetoIndice);
         arquivoObjetoIndice.delete();
@@ -52,6 +52,7 @@ public class testIndice {
 	@Test
 	public void testAdicionaJogoIndiceVazio()
 	{
+		System.out.println(indiceTeste.getNumeroJogos());
 		assertTrue(indiceTeste.getNumeroJogos() == 0);
 		try
 		{
@@ -261,9 +262,10 @@ public class testIndice {
 			indiceTeste.adicionaJogoNoIndice(jogoTeste1);
 			indiceTeste.adicionaJogoNoIndice(jogoTeste2);
 			indiceTeste.adicionaJogoNoIndice(jogoTeste3);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}
+		catch (Exception e)
+		{
+			System.out.println("falha em adicionar jogo no indice");
 		}
 		assertTrue(indiceTeste.getIdComNome(jogoTeste1.getNomeJogo()) == jogoTeste1.getIdJogo());
 		assertTrue(indiceTeste.getIdComNome(jogoTeste2.getNomeJogo()) == jogoTeste2.getIdJogo());
@@ -277,9 +279,10 @@ public class testIndice {
 			indiceTeste.adicionaJogoNoIndice(jogoTeste1);
 			indiceTeste.adicionaJogoNoIndice(jogoTeste2);
 			indiceTeste.adicionaJogoNoIndice(jogoTeste3);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}
+		catch (Exception e)
+		{
+			System.out.println("falha em adicionar jogo no indice");
 		}		
 		//System.out.println("filtro por nome:\n");
 		assertTrue(indiceTeste.filtroPorAtributos("Jogo Chato", 1).size() == 1);
@@ -304,7 +307,7 @@ public class testIndice {
 			indiceTeste.adicionaJogoNoIndice(jogoTeste3);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 		indiceTeste.adicionaCategoriaAoIndice("Jogos do verao passado");
 		indiceTeste.adicionaCategoriaAoIndice("Jogos do inverno passado");
@@ -345,7 +348,7 @@ public class testIndice {
 			indiceTeste.adicionaJogoNoIndice(jogoTeste3);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 		indiceTeste.adicionaCategoriaAoIndice("Jogos do verao passado");
 		indiceTeste.adicionaCategoriaAoIndice("Jogos do inverno passado");
@@ -386,7 +389,7 @@ public class testIndice {
 			indiceTeste.adicionaJogoNoIndice(jogoTeste3);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 		indiceTeste.adicionaCategoriaAoIndice("Jogos do verao passado");
 		indiceTeste.adicionaCategoriaAoIndice("Jogos do inverno passado");
@@ -425,9 +428,10 @@ public class testIndice {
 			indiceTeste.adicionaJogoNoIndice(jogoTeste1);
 			indiceTeste.adicionaJogoNoIndice(jogoTeste2);
 			indiceTeste.adicionaJogoNoIndice(jogoTeste3);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}
+		catch (Exception e)
+		{
+			System.out.println("falha em adicionar jogo no indice");			
 		}
 		
 		indiceTeste.adicionaCategoriaAoIndice("Jogos do verao passado");
