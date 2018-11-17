@@ -247,7 +247,6 @@ public class Indice extends FileHandler
 		int resultados = -1;
 		if(listaCategorias.contains(nomeCateg) == false)
 		{
-			System.out.println("Entrou no caso de nao conter a categoria na lista de categorias");
 			return resultados;
 		}
 		
