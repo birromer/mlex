@@ -40,7 +40,7 @@ public class Jogo extends FileHandler{
 		return listaAtributosRelevantes;
 	}
 	
-	public void atualizaAtributos(int opcao, String atributoAtualizado)
+	public Jogo atualizaAtributos(int opcao, String atributoAtualizado)
 	{
 		switch (opcao)
 		{
@@ -58,6 +58,8 @@ public class Jogo extends FileHandler{
 		caminhoObjetoJogo = "./etc/jogos/" + Integer.toString(idJogo);
 		System.out.println(caminhoObjetoJogo);
 		this.salvaObjetoEmArquivo(this, caminhoObjetoJogo);
+		
+		return this;
 	}
 	
 	
