@@ -333,12 +333,6 @@ public class Repositorio extends FileHandler
 
 						if(!(this.listaJogosObj.get(i).getVersao().equals(parsedLine[1]))) 
 						{
-							System.out.println("===");
-							System.out.println(j.getNomeJogo());
-							System.out.println(j.getVersao());
-							System.out.println(parsedLine[1]);
-							System.out.println("====");
-
 							String velhaVersao = this.listaJogosObj.get(i).getVersao().substring(1);
 							String novaVersao = parsedLine[1].substring(1);
 							double novo = Double.parseDouble(novaVersao);
@@ -348,6 +342,7 @@ public class Repositorio extends FileHandler
 							{
 								j.setVersao(parsedLine[1]);
 								this.listaJogosObj.set(i, j);
+								System.out.println(j.getNomeJogo() + " foi atualizado com sucesso para a versão " + parsedLine[1] +".");
 							}
 						}
 					}

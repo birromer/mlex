@@ -261,7 +261,7 @@ public class UsuarioCommand
 					}
 					break;
 				case 3:
-					//verificar integridade -- PACHEC0 FAZ AQUI
+					repositorio.verificaIntegridade();
 					break;
 				case 4:
 					//enviar por email
