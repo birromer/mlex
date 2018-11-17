@@ -66,8 +66,11 @@ public class Jogo extends FileHandler{
 	@Override
 	public String toString()
 	{
-		//refazer para ficar bonito
-		return ( Integer.toString(this.idJogo) + ',' + this.nomeJogo + ',' + this.lancamento + ',' + this.desenvolvedor); 
+		return ("Nome: "+ this.nomeJogo
+				+ "Data lancamento: " +this.lancamento
+				+ "Desenvolvedor: " + this.desenvolvedor
+				+ "Versao: " + this.versao
+				+ "Genero: " + this.genero); 
 	}
 	
 
