@@ -78,7 +78,7 @@ abstract public class FileHandler
 		}
 		catch (IOException e)
 		{
-			System.out.println("erro ao escrever objeto indice no arquivo");
+			System.out.println("erro ao escrever objeto no arquivo");
 		}
 	}
 	

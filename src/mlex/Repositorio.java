@@ -1,5 +1,9 @@
 package mlex;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +14,6 @@ public class Repositorio extends FileHandler
 {
 	private static List<Jogo> listaJogosObj = new ArrayList<Jogo>();
 	private static Map<String, Integer> tabelaJogos = new HashMap<String, Integer>();
-	//private java.io.Console cnsl = System.console();
 	private Indice indice =  new Indice();
 	private Scanner scanner = new Scanner(System.in);
 
@@ -49,9 +52,7 @@ public class Repositorio extends FileHandler
 		if (idNovoJogo == -1)
 		{
 			idNovoJogo = listaJogosObj.size();
-			System.out.println(idNovoJogo);
 		}
-
 
 		if (indice.getIdsDoIndice().contains(idNovoJogo))
 		{
@@ -92,7 +93,12 @@ public class Repositorio extends FileHandler
 				System.out.println("Jogo nao existe no indice");
 			}
 
-
+			listaJogosObj.set(idJogo, null);
+			
+			if (! new File("./etc/" + idJogo).delete())
+			{
+				System.out.println("arquivo a ser deletado nao existe");
+			}
 		}
 	}
 
@@ -281,7 +287,14 @@ public class Repositorio extends FileHandler
 			}
 		}
 	}
-	
+
+	public void encerraRepositorio()
+	{
+		indice.salvaObjetoIndice();
+		indice.salvaMapaJogoCategorias();
+		indice.salvaListaCategorias();
+	}
+
 
 	public void exibeComentariosDeJogo(int jogoId) 
 	{
@@ -300,4 +313,101 @@ public class Repositorio extends FileHandler
 		this.desenvolvedorNovoJogo = j.getDesenvolvedorJogo();
 			
 	}
+	
+	public void verificaIntegridade() 
+	{
+		BufferedReader r;
+		try 
+		{
+			r = new BufferedReader(new FileReader("./etc/versoes.txt"));
+			String ln = r.readLine();
+			while(ln != null) 
+			{
+				String[] parsedLine = ln.split(",");
+				
+				int i = 0;
+				for(Jogo j: this.listaJogosObj) 
+				{	
+
+
+//					System.out.println("--------1");
+//					System.out.println(parsedLine[0]);
+//					System.out.println(parsedLine[1]);
+//					System.out.println(j.getNomeJogo());
+					if(j.getNomeJogo().equals(parsedLine[0])) 
+					{
+//						System.out.println("-------2");
+//						System.out.println(j.getNomeJogo());
+//						System.out.println(j.getVersao());
+//						System.out.println(parsedLine[1]);
+						if(!(this.listaJogosObj.get(i).getVersao().equals(parsedLine[1]))) 
+						{
+//							System.out.println("===");
+//							System.out.println(j.getNomeJogo());
+//							System.out.println(j.getVersao());
+//							System.out.println(parsedLine[1]);
+//							System.out.println("====");
+
+							String velhaVersao = this.listaJogosObj.get(i).getVersao().substring(1);
+							String novaVersao = parsedLine[1].substring(1);
+							double novo = Double.parseDouble(novaVersao);
+							double velho = Double.parseDouble(velhaVersao);
+//							
+//							System.out.println(j.getNomeJogo());
+//							System.out.println(j.getVersao());
+//							System.out.println(parsedLine[1]);
+//							System.out.println(novaVersao);
+//							System.out.println(velhaVersao);
+//							System.out.println("====");
+							if (novo > velho) 
+							{
+								j.setVersao(parsedLine[1]);
+								this.listaJogosObj.set(i, j);
+							}
+						}
+						i++;
+					}
+				}
+
+				ln = r.readLine();
+			}
+		}
+		catch(IOException e) {
+			System.out.println("Nao foi possivel verificar versao");
+		}
+	}
+	
+	
+	public void atualizaVersaoJogo(int jogoId, String novaVersao) 
+	{
+		int i = 0;
+		for (Jogo j: this.listaJogosObj) 
+		{
+			if (j.getIdJogo() == jogoId)
+			{	
+				j.setVersao(novaVersao);
+
+				this.listaJogosObj.set(i, j);
+
+			}
+			i++;
+		}
+			
+	}
+	
+	public String getVersaoJogo(int jogoId) 
+	{
+		int i = 0;
+		for (Jogo j : this.listaJogosObj)
+		{
+			if (jogoId == this.listaJogosObj.get(i).getIdJogo())
+			{
+				return this.listaJogosObj.get(i).getVersao();
+			}
+		i++;
+		}
+		return null;
+	}
+	
+	
 }

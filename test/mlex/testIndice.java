@@ -305,9 +305,10 @@ public class testIndice {
 			indiceTeste.adicionaJogoNoIndice(jogoTeste1);
 			indiceTeste.adicionaJogoNoIndice(jogoTeste2);
 			indiceTeste.adicionaJogoNoIndice(jogoTeste3);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			
+		}
+		catch (Exception e)
+		{
+			System.out.println("erro ao adicionar jogo no indice");
 		}
 		indiceTeste.adicionaCategoriaAoIndice("Jogos do verao passado");
 		indiceTeste.adicionaCategoriaAoIndice("Jogos do inverno passado");
@@ -342,12 +343,15 @@ public class testIndice {
 	@Test
 	public void testGetJogosPorCategoriaQueNaoTemJogos()
 	{
-		try {
+		try
+		{
 			indiceTeste.adicionaJogoNoIndice(jogoTeste1);
 			indiceTeste.adicionaJogoNoIndice(jogoTeste2);
 			indiceTeste.adicionaJogoNoIndice(jogoTeste3);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		}
+		catch (Exception e)
+		{
+			System.out.println("erro ao adicionar jogos no indice");
 			
 		}
 		indiceTeste.adicionaCategoriaAoIndice("Jogos do verao passado");
@@ -383,13 +387,15 @@ public class testIndice {
 	@Test
 	public void testGetJogosPorCategoriaQueSoTemUmJogo()
 	{
-		try {
+		try
+		{
 			indiceTeste.adicionaJogoNoIndice(jogoTeste1);
 			indiceTeste.adicionaJogoNoIndice(jogoTeste2);
 			indiceTeste.adicionaJogoNoIndice(jogoTeste3);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			
+		}
+		catch (Exception e)
+		{
+			System.out.println("erro ao adicionar jogos no indice");	
 		}
 		indiceTeste.adicionaCategoriaAoIndice("Jogos do verao passado");
 		indiceTeste.adicionaCategoriaAoIndice("Jogos do inverno passado");

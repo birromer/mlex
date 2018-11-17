@@ -1,22 +1,20 @@
 package mlex;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-public class Jogo extends FileHandler {
+public class Jogo extends FileHandler{
 	private int idJogo;
 	private String nomeJogo; 
 	private String lancamento; 
 	private String desenvolvedor;
-	private String versao = "valor indexistente";
-	private String genero = "valor indexistente";
+	private String versao;
+	private String genero = "valor inexistente";
 	private Comentario comentario;
+
 	Scanner scanner = new Scanner(System.in);
-	
+	String caminhoObjetoJogo;
 	
 	public Jogo(int id, String nomeJogo, String lancamento, String desenvolvedor)
 	{
@@ -24,6 +22,15 @@ public class Jogo extends FileHandler {
 		this.nomeJogo = nomeJogo; 
 		this.lancamento = lancamento; 
 		this.desenvolvedor = desenvolvedor;
+		this.versao = "v1.0";
+	}
+	
+	public String getVersao() {
+		return this.versao;
+	}
+	
+	public void setVersao(String novaVersao) {
+		this.versao = novaVersao;
 	}
 	
 	public String getNomeJogo()
@@ -56,21 +63,20 @@ public class Jogo extends FileHandler {
 		switch (opcao)
 		{
 			case 1:
-				this.nomeJogo = atributoAtualizado;
+				nomeJogo = atributoAtualizado;
 			case 2:
-				this.lancamento = atributoAtualizado;
+				lancamento = atributoAtualizado;
 			case 3:
-				this.desenvolvedor = atributoAtualizado;
+				desenvolvedor = atributoAtualizado;
 			case 4:
-				this.versao = atributoAtualizado;
+				versao = atributoAtualizado;
 			case 5:
-				this.genero = atributoAtualizado;
-		}
-		
-		//salva objeto no arquivo
+				genero = atributoAtualizado;
+		}		
+		caminhoObjetoJogo = "./etc/" + Integer.toString(idJogo);
+		System.out.println(caminhoObjetoJogo);
+		this.salvaObjetoEmArquivo(this, caminhoObjetoJogo);
 	}
-	
-	
 	
 	@Override
 	public String toString()

@@ -17,16 +17,20 @@ public class testeRepositorioComentario {
 		j0 = new Jogo(0,"e","ece","effgfg");
 		j1 = new Jogo(1, "Tetris","1980","a");
 		j2 = new Jogo(2, "Tetris Effect","2018","b");
+		
+		repo.setInfoJogo(j0);
+		repo.adicionaJogo();
+		repo.setInfoJogo(j1);
+		repo.adicionaJogo();
+		repo.setInfoJogo(j2);
+		repo.adicionaJogo();
 
 	}
 	
 	@Test
 	public void testAddComentarioEmJogo() 
 	{
-		repo.setInfoJogo(j1);
-		repo.adicionaJogo();
-		repo.setInfoJogo(j2);
-		repo.adicionaJogo();
+
 		repo.addComentarioEmJogo(j1.getIdJogo(), "tetris eh muito bom");
 	}
 	
@@ -39,8 +43,6 @@ public class testeRepositorioComentario {
 	@Test
 	public void testExibicao()
 	{
-		repo.setInfoJogo(j0);
-		repo.adicionaJogo();
 		repo.addComentarioEmJogo(j0.getIdJogo(), "jogo real oficial");
 		repo.exibeComentariosDeJogo(0);
 	}
