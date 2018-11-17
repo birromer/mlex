@@ -219,12 +219,12 @@ public class Repositorio extends FileHandler
 	{
 		indice.adicionaCategoriaAoIndice(nomeCateg);
 	}
-
-	public void addJogoNaCateg(Jogo jogo, String nomeCateg)
+	
+	public void addJogoNaCateg(int idDoJogo, String nomeCateg)
 	{
 		try
 		{
-			indice.adicionaCategoriaAoJogo(jogo.getIdJogo(), nomeCateg);
+			indice.adicionaCategoriaAoJogo(idDoJogo, nomeCateg);
 		}
 		catch (Exception e)
 		{
@@ -239,8 +239,15 @@ public class Repositorio extends FileHandler
 
 	public void atualizaAtributo(int idJogo, int opcao, String atributoAtualizado)
 	{
-
-		listaJogosObj.get(idJogo).atualizaAtributos(opcao, atributoAtualizado);
+		Jogo jogoModificado = listaJogosObj.get(idJogo).atualizaAtributos(opcao, atributoAtualizado);
+		try
+		{
+			indice.modificaJogoNoIndice(jogoModificado);
+		}
+		catch (Exception e)
+		{
+			System.out.println("tentativa de modificacao de jogo sobre jogo inexistente no indice");
+		}
 	}
 
 	private int menuFiltro()

@@ -19,6 +19,7 @@ public class UsuarioCommand
 	private String ordenacao = "n";
 	Jogo jogoAtual;
 	private String nomeJogoPesquisado;
+	private String nomeDaCategoria;
 	
 	public UsuarioCommand()
 	{
@@ -82,7 +83,7 @@ public class UsuarioCommand
 				//ve um jogo e pode:
 				//remove-lo, modifica-lo, adicionar comentario, verificar integridade, enviar por email
 				System.out.println("Digite o nome do jogo a ser pesquisado: ");
-				nomeJogoPesquisado = scanner.nextLine();
+				nomeJogoPesquisado = scanner.next();
 				int opcaoJogo = -1;
 				do
 				{
@@ -134,31 +135,39 @@ public class UsuarioCommand
 	
 	public int menuCategorias(int opcaoDeCategoria)
 	{
-		//exibe todas colecoes --- CICA FAZ ISSO AQUI
-		String nomeDeCategoria;
-				
+		//exibe todas colecoes --- CICA FAZ ISSO AQUI				
 		switch(opcaoDeCategoria)
 		{
 			case -1:
 				break;
 			case 0:
 				//exibe jogos em x colecao
-				nomeDeCategoria = scanner.nextLine();
-				repositorio.filtroDasCategorias(nomeDeCategoria, 0);
+				System.out.println("\nDigite o nome da colecao a ser pesquisada:");
+				nomeDaCategoria = scanner.next();
+				repositorio.filtroDasCategorias(nomeDaCategoria, 0);
 				break;
 			case 1:
 				//cria nova colecao
+				System.out.println("Digite o nome da colecao a ser criada:");
+				nomeDaCategoria = scanner.next();
+				repositorio.criaCateg(nomeDaCategoria);
 				break;
 			case 2:
 				//adiciona um jogo a uma colecao
+				System.out.println("Digite o nome da colecao:");
+				nomeDaCategoria = scanner.next();
+				System.out.println("Digite o nome do jogo:");
+				nomeJogoPesquisado = scanner.next();
+				int idJogoPesquisado = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
+				repositorio.addJogoNaCateg(idJogoPesquisado, nomeDaCategoria);
 				break;
 			case 3:
 				//remove um jogo de uma colecao
 				break;
 			case 4:
 				//filtra jogos dentro de uma colecao
-				nomeDeCategoria = scanner.nextLine();
-				repositorio.filtroDasCategorias(nomeDeCategoria, 1);
+				nomeDaCategoria = scanner.nextLine();
+				repositorio.filtroDasCategorias(nomeDaCategoria, 1);
 				break;
 			case 5:
 				break;
@@ -243,7 +252,7 @@ public class UsuarioCommand
 					//verificar integridade -- PACHEC0 FAZ AQUI
 					break;
 				case 4:
-					//enviar por email
+					//enviar por email -- fazer depois que comentarios e toString integrados
 					break;
 				case 5:
 					//volta
