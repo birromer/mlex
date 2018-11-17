@@ -327,46 +327,31 @@ public class Repositorio extends FileHandler
 				
 				int i = 0;
 				for(Jogo j: this.listaJogosObj) 
-				{	
-
-
-//					System.out.println("--------1");
-//					System.out.println(parsedLine[0]);
-//					System.out.println(parsedLine[1]);
-//					System.out.println(j.getNomeJogo());
+				{
 					if(j.getNomeJogo().equals(parsedLine[0])) 
 					{
-//						System.out.println("-------2");
-//						System.out.println(j.getNomeJogo());
-//						System.out.println(j.getVersao());
-//						System.out.println(parsedLine[1]);
+
 						if(!(this.listaJogosObj.get(i).getVersao().equals(parsedLine[1]))) 
 						{
-//							System.out.println("===");
-//							System.out.println(j.getNomeJogo());
-//							System.out.println(j.getVersao());
-//							System.out.println(parsedLine[1]);
-//							System.out.println("====");
+							System.out.println("===");
+							System.out.println(j.getNomeJogo());
+							System.out.println(j.getVersao());
+							System.out.println(parsedLine[1]);
+							System.out.println("====");
 
 							String velhaVersao = this.listaJogosObj.get(i).getVersao().substring(1);
 							String novaVersao = parsedLine[1].substring(1);
 							double novo = Double.parseDouble(novaVersao);
 							double velho = Double.parseDouble(velhaVersao);
-//							
-//							System.out.println(j.getNomeJogo());
-//							System.out.println(j.getVersao());
-//							System.out.println(parsedLine[1]);
-//							System.out.println(novaVersao);
-//							System.out.println(velhaVersao);
-//							System.out.println("====");
+
 							if (novo > velho) 
 							{
 								j.setVersao(parsedLine[1]);
 								this.listaJogosObj.set(i, j);
 							}
 						}
-						i++;
 					}
+					i++;
 				}
 
 				ln = r.readLine();
