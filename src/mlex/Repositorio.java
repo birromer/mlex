@@ -231,6 +231,11 @@ public class Repositorio extends FileHandler
 			System.out.println("falhou em adicionar jogo na categoria");
 		}
 	}
+	
+	public void removeJogoDaCateg(int idDoJogo, String nomeCateg)
+	{
+		indice.removeCategoriaDoJogo(idDoJogo, nomeCateg);
+	}
 
 	public int tamanho()
 	{

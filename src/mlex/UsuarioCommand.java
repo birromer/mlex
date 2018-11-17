@@ -20,6 +20,7 @@ public class UsuarioCommand
 	Jogo jogoAtual;
 	private String nomeJogoPesquisado;
 	private String nomeDaCategoria;
+	private int idJogoPesquisado;
 	
 	public UsuarioCommand()
 	{
@@ -158,11 +159,17 @@ public class UsuarioCommand
 				nomeDaCategoria = scanner.next();
 				System.out.println("Digite o nome do jogo:");
 				nomeJogoPesquisado = scanner.next();
-				int idJogoPesquisado = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
+				idJogoPesquisado = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
 				repositorio.addJogoNaCateg(idJogoPesquisado, nomeDaCategoria);
 				break;
 			case 3:
 				//remove um jogo de uma colecao
+				System.out.println("Digite o nome da colecao:");
+				nomeDaCategoria = scanner.next();
+				System.out.println("Digite o nome do jogo:");
+				nomeJogoPesquisado = scanner.next();
+				idJogoPesquisado = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
+				repositorio.removeJogoDaCateg(idJogoPesquisado, nomeDaCategoria);
 				break;
 			case 4:
 				//filtra jogos dentro de uma colecao
