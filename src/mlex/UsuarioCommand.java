@@ -127,6 +127,7 @@ public class UsuarioCommand
 				break;
 			case 666:
 				//encerra o programa
+				repositorio.encerraRepositorio();
 				break;
 			default: 
 				System.out.println("Nao eras, meu bruxo!");

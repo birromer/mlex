@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -96,7 +94,7 @@ public class Repositorio extends FileHandler
 				System.out.println("falha ao adicionar novo jogo no indice");
 			}
 
-			indice.novoJogoSendoAdicionado(idNovoJogo); //funciona quando restaurando jogo pq o indice restaura sobrescrevendo o mapa depois
+			indice.novoJogoSendoAdicionado(idNovoJogo); //funciona quando restaura jogo pq o indice restaura sobrescrevendo o mapa depois
 		}
 
 		this.salvaObjetoEmArquivo(novoJogo, caminhoParaJogo);
@@ -119,9 +117,9 @@ public class Repositorio extends FileHandler
 
 			listaJogosObj.set(idJogo, null);
 			
-			if (! new File("./etc/" + idJogo).delete())
+			if (! new File("./etc/jogos/" + idJogo).delete())
 			{
-				System.out.println("arquivo a ser deletado nao existe");
+				System.out.println("arquivo jogo a ser deletado nao existe");
 			}
 		}
 	}
@@ -271,10 +269,9 @@ public class Repositorio extends FileHandler
 		return listaJogosObj.size();
 	}
 
-	
 	public void addComentarioEmJogo(int jogoId, String txt)
 	{
-		for (Jogo j: this.listaJogosObj) {
+		for (Jogo j: Repositorio.listaJogosObj) {
 			if (j.getIdJogo() == jogoId){
 				j.addComentario(txt);
 				break;
@@ -284,7 +281,7 @@ public class Repositorio extends FileHandler
 		
 	public void addComentarioEmJogo(int jogoId, String txt, float nota)
 	{	
-		for (Jogo j: this.listaJogosObj) {
+		for (Jogo j: Repositorio.listaJogosObj) {
 			if (j.getIdJogo() == jogoId){
 				j.addComentario(txt, nota);
 				break;
@@ -337,7 +334,7 @@ public class Repositorio extends FileHandler
 	
 	public void removeComentariosDeJogo(int jogoId)
 	{
-		for (Jogo j: this.listaJogosObj) {
+		for (Jogo j: Repositorio.listaJogosObj) {
 			if (j.getIdJogo() == jogoId){
 				j.removeComentarios();
 				break;
@@ -349,20 +346,10 @@ public class Repositorio extends FileHandler
 	{
 		System.out.println((listaJogosObj.get(idJogoPesquisado)));
 	}
-	
-
-	public void encerraRepositorio()
-	{
-		indice.salvaObjetoIndice();
-		indice.salvaMapaJogoCategorias();
-		indice.salvaListaCategorias();
-	}
-	
-
 
 	public void exibeComentariosDeJogo(int jogoId) 
 	{
-		for (Jogo j: this.listaJogosObj) {
+		for (Jogo j: Repositorio.listaJogosObj) {
 			if (j.getIdJogo() == jogoId){
 				j.exibeComentarios();
 				break;
@@ -376,7 +363,6 @@ public class Repositorio extends FileHandler
 		this.nomeNovoJogo = j.getNomeJogo();
 		this.lancamentoNovoJogo = j.getLancamentoJogo();
 		this.desenvolvedorNovoJogo = j.getDesenvolvedorJogo();
-			
 	}
 	
 	public void verificaIntegridade() 
@@ -391,14 +377,14 @@ public class Repositorio extends FileHandler
 				String[] parsedLine = ln.split(",");
 				
 				int i = 0;
-				for(Jogo j: this.listaJogosObj) 
+				for(Jogo j: Repositorio.listaJogosObj) 
 				{
 					if(j.getNomeJogo().equals(parsedLine[0])) 
 					{
 
-						if(!(this.listaJogosObj.get(i).getVersao().equals(parsedLine[1]))) 
+						if(!(Repositorio.listaJogosObj.get(i).getVersao().equals(parsedLine[1]))) 
 						{
-							String velhaVersao = this.listaJogosObj.get(i).getVersao().substring(1);
+							String velhaVersao = Repositorio.listaJogosObj.get(i).getVersao().substring(1);
 							String novaVersao = parsedLine[1].substring(1);
 							double novo = Double.parseDouble(novaVersao);
 							double velho = Double.parseDouble(velhaVersao);
@@ -406,14 +392,13 @@ public class Repositorio extends FileHandler
 							if (novo > velho) 
 							{
 								j.setVersao(parsedLine[1]);
-								this.listaJogosObj.set(i, j);
+								Repositorio.listaJogosObj.set(i, j);
 								System.out.println(j.getNomeJogo() + " foi atualizado com sucesso para a vers�o " + parsedLine[1] +".");
 							}
 						}
 					}
 					i++;
 				}
-
 				ln = r.readLine();
 			}
 		}
@@ -426,33 +411,37 @@ public class Repositorio extends FileHandler
 	public void atualizaVersaoJogo(int jogoId, String novaVersao) 
 	{
 		int i = 0;
-		for (Jogo j: this.listaJogosObj) 
+		for (Jogo j: Repositorio.listaJogosObj) 
 		{
 			if (j.getIdJogo() == jogoId)
 			{	
 				j.setVersao(novaVersao);
 
-				this.listaJogosObj.set(i, j);
-
+				Repositorio.listaJogosObj.set(i, j);
 			}
 			i++;
 		}
-			
 	}
 	
 	public String getVersaoJogo(int jogoId) 
 	{
 		int i = 0;
-		for (Jogo j : this.listaJogosObj)
+		for (Jogo j : Repositorio.listaJogosObj)
 		{
-			if (jogoId == this.listaJogosObj.get(i).getIdJogo())
+			if (jogoId == Repositorio.listaJogosObj.get(i).getIdJogo())
 			{
-				return this.listaJogosObj.get(i).getVersao();
+				return Repositorio.listaJogosObj.get(i).getVersao();
 			}
-		i++;
+			i++;
 		}
 		return null;
 	}
 	
+	public void encerraRepositorio()
+	{
+		indice.salvaObjetoIndice();
+		indice.salvaMapaJogoCategorias();
+		indice.salvaListaCategorias();
+	}
 	
 }
