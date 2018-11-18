@@ -250,11 +250,18 @@ public class UsuarioCommand
 					switch(opcaoComentario)
 					{
 						case 1:
-							System.out.println("Digite o seu comentario");
-							String comentario = scanner.next();
-							repositorio.addComentarioEmJogo(idJogoPesquisado, comentario);
+							System.out.println("Digite o seu comentario:");
+							String comentarioSemNota = scanner.next();
+							repositorio.addComentarioEmJogo(idJogoPesquisado, comentarioSemNota);
+							System.out.println("Comentario adicionado com sucesso.");
 							break;
 						case 2:
+							System.out.println("Digite o seu comentario:");
+							String comentarioComNota = scanner.next();
+							System.out.println("Digite a nota:");
+							float nota = scanner.nextFloat();
+							repositorio.addComentarioEmJogo(idJogoPesquisado, comentarioComNota, nota);
+							System.out.println("Comentario adicionado com sucesso.");
 							break;
 						default:
 							break;
