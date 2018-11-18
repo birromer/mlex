@@ -120,7 +120,7 @@ public class Comentario extends FileHandler
 	
 	public void exibeComentarios() 
 	{
-		String fpath = this.path;
+		 String fpath = this.path;
 		 File f = new File(fpath);
 		 if (!(f.exists())) 
 		 {

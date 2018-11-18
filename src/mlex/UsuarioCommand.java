@@ -13,11 +13,8 @@ public class UsuarioCommand
 	private final static int OPCAO_VOLTAR = 5;
 	private static Repositorio repositorio = new Repositorio();
 	private Scanner scanner = new Scanner(System.in);
-	private Properties configuracoes = new Properties();
-	private String usuario = "admin";
-	private String senha = "admin";
-	private String ordenacao = "n";
 	Jogo jogoAtual;
+	private PlataformaConfiguracao config;
 	private String nomeJogoPesquisado;
 	private String nomeDaCategoria;
 	private int idJogoPesquisado;
@@ -26,49 +23,32 @@ public class UsuarioCommand
 	{	
 		if (new File("./.mlex.conf").exists() == false)
 		{
-			configuracoes.setProperty("usuario", "admin");
-			configuracoes.setProperty("senha", "admin");
-			configuracoes.setProperty("ordenado", "n");
-			
-			try
-			{
-				configuracoes.store(new FileOutputStream("./.mlex.conf"), null);
-			}
-			catch (IOException e) 
-			{
-				System.out.println("Problema escrevendo arquivo de configuracao default");
-			}
+			config.inicializaConfiguracaoDoUsuario();
 		}
 		else
 		{
-			try
-			{
-				configuracoes.load(new FileInputStream("./.mlex.conf"));
-			}
-			catch (IOException e)
-			{
-				System.out.println("Problema na leitura do arquivo de configuracao");
-			}
-			
-			usuario = configuracoes.getProperty("usuario");
-			senha = configuracoes.getProperty("senha");
-			ordenacao = configuracoes.getProperty("ordenacao");	
+			config.restauraConfiguracaoDoUsuario();
 		}
 	}
 	
 	String getUsuario()
 	{
-		return this.usuario;
+		return config.getUsuario();
 	}
 	
 	String getSenha()
 	{
-		return this.senha;
+		return config.getSenha();
 	}
 	
 	String getOrdenacao()
 	{
-		return this.ordenacao;
+		return config.getOrdenacao();
+	}
+	
+	String getEmailDoUsuario() 
+	{
+		return config.getEmailDoUsuario();
 	}
 	
 	public int menuInicial(int opcaoMenu)
@@ -353,7 +333,7 @@ public class UsuarioCommand
 	{
 		try
 		{
-			Runtime.getRuntime().exec("clear");
+			Runtime.getRuntime().exec("cls");
 		}
 		catch (IOException e)
 		{

@@ -1,16 +1,21 @@
 package mlex;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+import com.sun.xml.internal.fastinfoset.sax.Properties;
 
 public class Repositorio extends FileHandler
 {
@@ -441,6 +446,64 @@ public class Repositorio extends FileHandler
 		}
 		return null;
 	}
+	
+	public void enviaEmail(String emailTO, String emailFROM, int idJogo)
+	{
+		if (tabelaJogos.values().contains(idJogo))
+		{
+			
+			String fpath = "./etc/" + idJogo + "email";
+			File f = new File(fpath);
+			
+			if(!(f.exists()))
+			{
+				try {
+					f.createNewFile();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Não foi possível criar arquivo de email");
+				}
+			}
+			try
+			{
+				
+				Jogo jogoPorEmail = Repositorio.listaJogosObj.get(idJogo);
+				
+				BufferedReader br = new BufferedReader( new FileReader(fpath));
+				
+				FileWriter fw = new FileWriter (f.getPath());
+				BufferedWriter bw = new BufferedWriter(fw);
+
+				String nomeDoJogo = Repositorio.listaJogosObj.get(idJogo).getNomeJogo();
+				bw.write("Email sobre o jogo "+ nomeDoJogo+"\nFrom: "+emailFROM+"\nTo: "+emailTO+"\n");
+				
+				bw.write(jogoPorEmail.toString());
+				String ln = br.readLine();
+				while (ln != null)
+				{
+					bw.write(ln);
+					bw.newLine();
+
+					ln = br.readLine();
+				}
+				br.close();
+
+			} catch (FileNotFoundException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		else
+		{
+			System.out.println("Não foi possível criar email. Jogo não existe no repositório.");
+		}
+
+	 }
 	
 	
 }
