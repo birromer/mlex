@@ -11,7 +11,6 @@ import java.io.FileInputStream;
 
 public class Indice extends FileHandler
 {
-	String path = "./etc/indice.txt";
 	private Map<Integer, List<String>> indiceLocal = new HashMap<Integer, List<String>>(); //objeto local do indice
 	private String caminhoParaObjetoIndice = "./etc/objeto_indice";
 	private String caminhoParaMapaJogoCategorias = "./etc/mapa_jogo_categorias";
@@ -22,15 +21,15 @@ public class Indice extends FileHandler
 	public Indice()
 	{
 		this.restauraObjetoIndice();
-		this.restauraMapaJogoCategorias();
 		this.restauraListaCategorias();
+		this.restauraMapaJogoCategorias();
 	}
 
 	public void adicionaJogoNoIndice(Jogo jogo) throws Exception
+	/*adiciona objeto jogo no objeto local do indice*/
 	{
 		if (this.testaJogoNoIndice(jogo.getIdJogo()) == true)
 		{
-			System.out.println("Jogo ja existe no indice, sera ignorado");
 			throw new Exception("Jogo ja existe");
 		}
 
@@ -39,6 +38,7 @@ public class Indice extends FileHandler
 	}
 
 	public void modificaJogoNoIndice(Jogo jogo) throws Exception
+	/*atualiza objeto jogo no objeto local do indice de acordo com recebido*/
 	{
 		int idDoJogo = jogo.getIdJogo();
 
@@ -54,6 +54,7 @@ public class Indice extends FileHandler
 	}
 
 	public void removeJogoDoIndice(int id) throws Exception
+	/*remove objeto jogo no objeto local do indice*/
 	{
 		if (mapaJogoCategorias.containsKey(id) == false)
 		{
@@ -72,6 +73,7 @@ public class Indice extends FileHandler
 	}
 	
 	public String getCategorias(int id)
+	/*retorna string de 1's e 0's com as categorias pertencentes ao id recebido*/
 	{
 		String categs = mapaJogoCategorias.get(id);
 		if ( categs == null)
@@ -92,11 +94,13 @@ public class Indice extends FileHandler
 	}
 
 	public int getPosicaoCategoria(String categoria)
+	/*retorna posicao de determinada categoria na string de categorias*/
 	{
 		return listaCategorias.indexOf(categoria);
 	}
 
 	public boolean testaCategoria(int id, String categoria)
+	/*testa se jogo com id recebido possui a categoria parametro*/
 	{
 		int posicao = this.getPosicaoCategoria(categoria);
 		String categoriasDoJogo = this.getCategorias(id);
@@ -105,11 +109,13 @@ public class Indice extends FileHandler
 	}
 
 	int getNumeroJogos()
+	/*retorna numero de jogos armazenados no indice local*/
 	{
 		return indiceLocal.size();
 	}
 
 	public int getNumeroCategorias()
+	/*retorna numero de categorias armazenadas no objeto local que lista elas*/
 	{
 		if (listaCategorias == null)
 		{
@@ -122,11 +128,13 @@ public class Indice extends FileHandler
 	}
 
 	boolean testaJogoNoIndice(int id)
+	/*testa de jogo com id informado esta presente no indice*/
 	{
 		return indiceLocal.containsKey(id);
 	}
 
 	public void adicionaCategoriaAoIndice(String novaCategoria)
+	/*adiciona categoria parametro nas estruturas relacionadas ao indice*/
 	{	
 		if (listaCategorias.contains(novaCategoria) == true)
 		{
@@ -145,7 +153,7 @@ public class Indice extends FileHandler
 		}
 	}
 
-	List<String> getListaCategorias()
+	public List<String> getListaCategorias()
 	{
 		return listaCategorias;
 	}
@@ -156,6 +164,7 @@ public class Indice extends FileHandler
 	}
 
 	public void adicionaCategoriaAoJogo(int id, String categoria) throws Exception
+	/*adiciona uma categoria na lista de categorias do jogo com id informado, equivalente a adicionar um jogo a categoria, porem o processo que ocorre eh o contrario*/
 	{
 		if (listaCategorias.contains(categoria) == false)
 		{
@@ -170,6 +179,7 @@ public class Indice extends FileHandler
 	}
 
 	public void removeCategoriaDoJogo(int id, String categoria)
+	/*muda para 0 o char que representa a categoria no jogo com id informado, equivalente a remover o jogo da categoria para o usuario*/
 	{
 		if (listaCategorias.contains(categoria) == false)
 		{
@@ -184,16 +194,20 @@ public class Indice extends FileHandler
 	}
 
 	public void novoJogoSendoAdicionado(int id)
+	/*inicializa lista de categorias para os novos jogos sendo adicionados*/
 	{
 		mapaJogoCategorias.put(id, "0");
 	}
 
 	public List<String> getInformacoesJogoNoIndice(int id)
+	/*retorna informacoes associadas ao jogo no indice local identificado pelo if informado*/
 	{
 		return indiceLocal.get(id);
 	}
 	
-	public int getIdComNome(String nomeJogoProcurado) {
+	public int getIdComNome(String nomeJogoProcurado)
+	/*retorna id do jogo caso ele exista no indice local e -1 caso contrario*/
+	{
 		int id = -1;
 		for (Integer key : indiceLocal.keySet())
 		{
@@ -207,6 +221,7 @@ public class Indice extends FileHandler
 	}
 
 	public List<Integer> filtroPorAtributos(String nomeOpcaoDeBusca, int opcaoDeBusca)
+	/*retorna lista de ids validos dado filtro aplicado*/
 	{
 		List<Integer> ids = new ArrayList<Integer>();
 		nomeOpcaoDeBusca = nomeOpcaoDeBusca.replace("\n", "");
@@ -222,6 +237,7 @@ public class Indice extends FileHandler
 	}
 	
 	public void imprimeAlgunsJogos(List<Integer> idsProcurados)
+	/*imprime jogos e suas informacoes na tela a partir de lista de ids a serem exibidos*/
 	{
 		for(Integer key : indiceLocal.keySet())
 		{
@@ -233,6 +249,7 @@ public class Indice extends FileHandler
 	}
 	
 	public List<Integer> getIdsDoIndice()
+	/*retorna lista com todos ids dos jogos armazenados no indice*/
 	{
 		List<Integer> idsDosJogos = new ArrayList<Integer>();
 		for(Integer key : indiceLocal.keySet())
@@ -243,6 +260,7 @@ public class Indice extends FileHandler
 	}
 	
 	public int filtroPorCategoria(String nomeCateg, List<Integer> idsValidos)
+	/*verifica os ids validos e seleciona os que pertencem a categoria pesquisada*/
 	{
 		int resultados = -1;
 		if(listaCategorias.contains(nomeCateg) == false)
@@ -252,21 +270,12 @@ public class Indice extends FileHandler
 		
 		resultados = 0;
 		int posicaoDaCategoria = this.getPosicaoCategoria(nomeCateg);
-		
-		System.out.println(idsValidos);
-		
+				
 		for (int i=0;i<idsValidos.size();i++)
 		{
 			int key = idsValidos.get(i);
 			String listaCategoriasDoJogo = mapaJogoCategorias.get(key);
-			
-			System.out.println("aaaaaaaaaaaaaaaa " + listaCategoriasDoJogo);
-			
-			for (String ka : mapaJogoCategorias.values())
-			{
-				System.out.println(ka);
-			}
-			
+		
 			char categTestada = listaCategoriasDoJogo.charAt(posicaoDaCategoria);
 			if(categTestada == '1')
 			{
@@ -276,25 +285,30 @@ public class Indice extends FileHandler
 						+ "\nDesenvolvedor: " + this.getInformacoesJogoNoIndice(key).get(3));
 			}
 		}
+		
 		return resultados;
 	}
 	
 	public void salvaObjetoIndice()
+	/*salva o objeto do indice em arquivo binario na pasta /etc/ */
 	{
 		this.salvaObjetoEmArquivo(indiceLocal, caminhoParaObjetoIndice);
 	}
 
 	public void salvaMapaJogoCategorias()
+	/*salva o objeto que mapeia jogo e sua lista de categorias em arquivo binario na pasta /etc/ */
 	{
 		this.salvaObjetoEmArquivo(mapaJogoCategorias, caminhoParaMapaJogoCategorias);
 	}
 
 	public void salvaListaCategorias()
+	/*salva o objeto com a lista das categorias que existem em um arquivo binario na pasta /etc/ */
 	{
 		this.salvaObjetoEmArquivo(listaCategorias, caminhoParaListaCategorias);
 	}
 
 	public Object leArquivo(String caminhoParaArquivo)
+	/*retorna objeto armazenado no arquivo especificado como parametro*/
 	{
 		File arquivo = new File(caminhoParaArquivo);
 		try
@@ -317,6 +331,7 @@ public class Indice extends FileHandler
 	
 	@SuppressWarnings("unchecked")
 	public void restauraObjetoIndice()
+	/*restaura o objeto indice sempre a partir do mesmo arquivo*/
 	{
 		File arquivoObjetoIndice = new File(caminhoParaObjetoIndice);
 		if (arquivoObjetoIndice.exists() == false)
@@ -331,6 +346,7 @@ public class Indice extends FileHandler
 
 	@SuppressWarnings("unchecked")
 	public void restauraMapaJogoCategorias()
+	/*restaura o objeto mapa de jogo para sua lista de categorias sempre a partir do mesmo arquivo*/
 	{
 		File arquivoMapaJogoCategorias = new File(caminhoParaMapaJogoCategorias);
 		if (arquivoMapaJogoCategorias.exists() == false)
@@ -345,6 +361,7 @@ public class Indice extends FileHandler
 
 	@SuppressWarnings("unchecked")
 	public void restauraListaCategorias()
+	/*restaura o objeto com a lista de todas categorias do indice sempre a partir do mesmo arquivo*/
 	{
 		File arquivoListaCategorias = new File(caminhoParaListaCategorias);
 		if (arquivoListaCategorias.exists() == false)
@@ -356,6 +373,4 @@ public class Indice extends FileHandler
 			listaCategorias = (List<String>) (this.leArquivo(caminhoParaListaCategorias));
 		}
 	}
-
-
 }

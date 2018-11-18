@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class UsuarioCommand
 {		
-	private final static int OPCAO_VOLTAR = 5;
+	private final static int OPCAO_VOLTAR = 666;
 	private static Repositorio repositorio = new Repositorio();
 	private Scanner scanner = new Scanner(System.in);
 	Jogo jogoAtual;
@@ -52,13 +52,15 @@ public class UsuarioCommand
 			case -1:
 				break;
 			case 0:
+				repositorio.exibeJogosNoRepositorio();
 				//ver tds jogos
 				break;
 			case 1:
 				//ve um jogo e pode:
 				//remove-lo, modifica-lo, adicionar comentario, verificar integridade, enviar por email
 				limpaTela();
-				System.out.println("Digite o nome do jogo a ser pesquisado (Digite 5 para voltar): ");
+				System.out.println("Digite o nome do jogo a ser pesquisado: ");
+				
 				nomeJogoPesquisado = scanner.nextLine();
 				
 				if (repositorio.verificaId(nomeJogoPesquisado))
@@ -68,6 +70,7 @@ public class UsuarioCommand
 					{
 						this.menuJogo(opcaoJogo);
 						opcaoJogo = scanner.nextInt();
+						scanner.nextLine();
 					} while (opcaoJogo != OPCAO_VOLTAR);
 				}
 				else
@@ -87,14 +90,19 @@ public class UsuarioCommand
 				{
 					this.menuCategorias(opcaoCategoria);
 					opcaoCategoria = scanner.nextInt();
+					scanner.nextLine();
 				} while (opcaoCategoria != OPCAO_VOLTAR);
 				break;
 			case 4:
 				//filtroo
-
 				int filt = this.menuFiltro();
-				String nomefilt = scanner.nextLine();
-				repositorio.filtroPorAtributoDoJogo(nomefilt, filt);
+				scanner.reset();
+				if (filt != 4)
+				{
+					System.out.println("Digite o filtro:");
+					String nomefilt = scanner.nextLine();
+					repositorio.filtroPorAtributoDoJogo(nomefilt, filt);
+				}
 				break;
 			case 5:
 				System.out.println("\nConfiguracoes de usuario;\n"
@@ -173,6 +181,7 @@ public class UsuarioCommand
 				break;
 			case 666:
 				//encerra o programa
+				repositorio.salvaRepositorio();
 				break;
 			default: 
 				System.out.println("Nao eras, meu bruxo!");
@@ -199,18 +208,23 @@ public class UsuarioCommand
 			case -1:
 				break;
 			case 0:
-				//exibe jogos em x colecao
-				System.out.println("\nDigite o nome da colecao a ser pesquisada:");
-				nomeDaCategoria = scanner.next();
-				repositorio.filtroDasCategorias(nomeDaCategoria, 0);
+				repositorio.exibeColecoesNoIndice();
 				break;
 			case 1:
-				//cria nova colecao
-				System.out.println("Digite o nome da colecao a ser criada:");
-				nomeDaCategoria = scanner.next();
-				repositorio.criaCateg(nomeDaCategoria);
+				//exibe jogos em x colecao
+				System.out.println("\nDigite o nome da colecao a ser pesquisada:");
+				scanner.reset();
+				nomeDaCategoria = scanner.nextLine();
+				repositorio.filtroDasCategorias(nomeDaCategoria, 0);
 				break;
 			case 2:
+				//cria nova colecao
+				System.out.println("Digite o nome da colecao a ser criada:");
+				scanner.reset();
+				nomeDaCategoria = scanner.nextLine();
+				repositorio.criaCateg(nomeDaCategoria);
+				break;
+			case 3:
 				//adiciona um jogo a uma colecao
 				System.out.println("Digite o nome da colecao:");
 				nomeDaCategoria = scanner.next();
@@ -219,7 +233,7 @@ public class UsuarioCommand
 				idJogoPesquisado = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
 				repositorio.addJogoNaCateg(idJogoPesquisado, nomeDaCategoria);
 				break;
-			case 3:
+			case 4:
 				//remove um jogo de uma colecao
 				System.out.println("Digite o nome da colecao:");
 				nomeDaCategoria = scanner.next();
@@ -228,24 +242,27 @@ public class UsuarioCommand
 				idJogoPesquisado = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
 				repositorio.removeJogoDaCateg(idJogoPesquisado, nomeDaCategoria);
 				break;
-			case 4:
+			case 5:
 				//filtra jogos dentro de uma colecao
+				System.out.println("Digite o nome da colecao:");
+				scanner.reset();
 				nomeDaCategoria = scanner.nextLine();
 				repositorio.filtroDasCategorias(nomeDaCategoria, 1);
 				break;
-			case 5:
+			case 666:
 				break;
 			default: 
 				System.out.println("Nao eras, meu bruxo!");
 		}
 		
 		limpaTela();
-		System.out.println("\n0)Buscar jogos da colecao;\n"
-				+ "1)Criar colecao;\n"
-				+ "2)Adicionar um jogo a colecao;\n"
-				+ "3)Remover jogo de colecao;\n"
-				+ "4)Filtrar colecoes;\n"
-				+ "5)Voltar;\n"
+		System.out.println("0)Mostrar todas colecoes\n"
+				+ "1)Buscar jogos da colecao;\n"
+				+ "2)Criar colecao;\n"
+				+ "3)Adicionar um jogo a colecao;\n"
+				+ "4)Remover jogo de colecao;\n"
+				+ "5)Filtrar colecoes;\n"
+				+ "666)Voltar;\n"
 				+ "Escolha a acao que deseja realizar: ");
 		
 		
@@ -253,15 +270,17 @@ public class UsuarioCommand
 	}
 	
 	public int menuJogo(int opcaoDeJogo)
-	{
+	{		
 		int idJogoPesquisado = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
-		
+				
 		if (idJogoPesquisado == -1)
 		{
 			System.out.println("Jogo com esse nome nao existe no repositorio");
 		}
 		else
 		{
+			repositorio.exibeInformacoesJogo(idJogoPesquisado);
+			
 			switch(opcaoDeJogo)
 			{
 				case -1:
@@ -275,6 +294,7 @@ public class UsuarioCommand
 									+ "4 - versao\n"
 									+ "5 - genero\n");
 					int opcao = scanner.nextInt();
+					scanner.nextLine();
 					String atributoAtualizado = new String();
 					switch (opcao)
 					{
@@ -309,7 +329,17 @@ public class UsuarioCommand
 					break;
 				case 1:
 					repositorio.removeJogo(idJogoPesquisado);
-					break;
+					idJogoPesquisado = -1;
+					limpaTela();
+					System.out.println("\n0)Mostrar os jogos do repositorio;\n"
+							+ "1)Selecionar jogo;\n"
+							+ "2)Adicionar um jogo ao repositorio;\n"
+							+ "3)Acessar colecoes;\n"
+							+ "4)Filtrar jogos;\n"
+							+ "5)Configuracoes do usuario;\n"
+							+ "666)Sair;\n"
+							+ "Escolha a acao que deseja realizar: ");
+					return -1;
 				case 2:
 					//adicionar comentario
 					System.out.println("Comentarios:");
@@ -319,6 +349,7 @@ public class UsuarioCommand
 									+ "4 - Remover todos os comentarios do jogo\n"
 									+ "5 - Voltar");
 					int opcaoComentario = scanner.nextInt();
+					scanner.nextLine();
 					switch(opcaoComentario)
 					{
 						case 1:
@@ -377,7 +408,7 @@ public class UsuarioCommand
 					+ "2)Comentarios;\n"
 					+ "3)Verificar integridade;\n"
 					+ "4)Recomendar para um amigo;\n"
-					+ "5)Voltar;\n"
+					+ "666)Voltar;\n"
 					+ "Escolha a acao que deseja realizar: ");
 		
 			return opcaoDeJogo;
@@ -395,6 +426,7 @@ public class UsuarioCommand
 		
 		scanner.reset();
 		int opcaoDeFiltro = scanner.nextInt();
+		scanner.nextLine();
 		
 		return opcaoDeFiltro;
 	}
