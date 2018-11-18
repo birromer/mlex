@@ -294,7 +294,6 @@ public class Indice extends FileHandler
 		this.salvaObjetoEmArquivo(listaCategorias, caminhoParaListaCategorias);
 	}
 
-	@Override
 	public Object leArquivo(String caminhoParaArquivo)
 	{
 		File arquivo = new File(caminhoParaArquivo);

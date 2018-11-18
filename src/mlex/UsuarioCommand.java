@@ -86,12 +86,20 @@ public class UsuarioCommand
 				limpaTela();
 				System.out.println("Digite o nome do jogo a ser pesquisado: ");
 				nomeJogoPesquisado = scanner.next();
-				int opcaoJogo = -1;
-				do
+				
+				if (repositorio.verificaId(nomeJogoPesquisado))
 				{
-					this.menuJogo(opcaoJogo);
-					opcaoJogo = scanner.nextInt();
-				} while (opcaoJogo != OPCAO_VOLTAR);
+					int opcaoJogo = -1;
+					do
+					{
+						this.menuJogo(opcaoJogo);
+						opcaoJogo = scanner.nextInt();
+					} while (opcaoJogo != OPCAO_VOLTAR);
+				}
+				else
+				{
+					System.out.println("Jogo pesquisado nao existe, voltando para menu");
+				}
 				break;
 			case 2:
 				//add um jogo
@@ -101,7 +109,7 @@ public class UsuarioCommand
 			case 3:
 				//opcoes da colecoes
 				int opcaoCategoria = -1;
-				do
+			do
 				{
 					this.menuCategorias(opcaoCategoria);
 					opcaoCategoria = scanner.nextInt();
@@ -204,7 +212,6 @@ public class UsuarioCommand
 		if (idJogoPesquisado == -1)
 		{
 			System.out.println("Jogo com esse nome nao existe no repositorio");
-			return -1;
 		}
 		else
 		{
@@ -280,9 +287,10 @@ public class UsuarioCommand
 					+ "4)Recomendar para um amigo;\n"
 					+ "5)Voltar;\n"
 					+ "Escolha a acao que deseja realizar: ");
-		}
 		
-		return opcaoDeJogo;
+			return opcaoDeJogo;
+		}
+		return -1;
 	}
 	
 	public int menuFiltro()
