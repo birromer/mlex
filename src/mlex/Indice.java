@@ -196,6 +196,7 @@ public class Indice extends FileHandler
 		int id = -1;
 		for (Integer key : indiceLocal.keySet())
 		{
+			//System.out.println("indice  "+ key+"    "+ indiceLocal.get(key));
 			if (this.getInformacoesJogoNoIndice(key).get(1).equals(nomeJogoProcurado))
 			{
 				id = key;
@@ -252,20 +253,15 @@ public class Indice extends FileHandler
 		resultados = 0;
 		int posicaoDaCategoria = this.getPosicaoCategoria(nomeCateg);
 		
-		System.out.println(idsValidos);
+		//System.out.println(idsValidos);
 		
 		for (int i=0;i<idsValidos.size();i++)
 		{
 			int key = idsValidos.get(i);
-			System.out.println(this.getCategorias(i));
 			String listaCategoriasDoJogo = mapaJogoCategorias.get(key);
 			
-			System.out.println("aaaaaaaaaaaaaaaa " + listaCategoriasDoJogo);
-			
-			for (String ka : mapaJogoCategorias.values())
-			{
-				System.out.println(ka);
-			}
+			//System.out.println("lista de categorias  = " + listaCategoriasDoJogo);
+			//System.out.println("posicao da categoria pesquisada = " + posicaoDaCategoria);
 			
 			char categTestada = listaCategoriasDoJogo.charAt(posicaoDaCategoria);
 			if(categTestada == '1')
@@ -276,6 +272,7 @@ public class Indice extends FileHandler
 						+ "\nDesenvolvedor: " + this.getInformacoesJogoNoIndice(key).get(3));
 			}
 		}
+		//System.out.println("valor de resultados = " + resultados);
 		return resultados;
 	}
 	
