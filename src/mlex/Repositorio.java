@@ -1,5 +1,9 @@
 package mlex;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,85 +14,177 @@ public class Repositorio extends FileHandler
 {
 	private static List<Jogo> listaJogosObj = new ArrayList<Jogo>();
 	private static Map<String, Integer> tabelaJogos = new HashMap<String, Integer>();
-	private java.io.Console cnsl = System.console();
-	private static Indice indice =  new Indice();
+	private Indice indice =  new Indice();
 	private Scanner scanner = new Scanner(System.in);
+
+	private int idNovoJogo;
+	private String nomeNovoJogo;
+	private String lancamentoNovoJogo;
+	private String desenvolvedorNovoJogo;
+	private String versaoNovoJogo;
+
+	public Repositorio()
+	{
+		Jogo jogoASerSalvo;
+		File diretorioJogos = new File("./etc/jogos/");
+		File[] jogosSalvos = diretorioJogos.listFiles();
+		if (jogosSalvos != null)
+		{
+			for (File arquivoJogo : jogosSalvos)
+			{
+				jogoASerSalvo = (Jogo) this.leArquivo(arquivoJogo.getName(),  "./etc/jogos/");
+				this.adicionaJogoPassaTeste(jogoASerSalvo, 0);
+			}
+		}
+	}
 	
+
 	public boolean verificaId(String nomeJogo)
 	{
-		return tabelaJogos.containsKey(nomeJogo);
+		return tabelaJogos.keySet().contains(nomeJogo);
 	}
-	
-	private int getId(String nomeJogo)
+
+	public void getInformacoesJogo()
 	{
-		if(verificaId(nomeJogo) == true)
-		{
-			return tabelaJogos.get(nomeJogo);
-		}
-		else
-		{
-			return 1; //verifica arquivo pelo ultimo id usado
-		}
+		System.out.println("Nome do jogo a ser adicionado: ");
+		scanner.reset();
+		this.nomeNovoJogo = scanner.nextLine();
+
+		System.out.println("Data de lancamento do jogo a ser adicionado (DD/MM/AAAA): ");
+		scanner.reset();
+		this.lancamentoNovoJogo = scanner.nextLine();
+
+		System.out.println("Desenvolvedor do jogo a ser adicionado: ");
+		scanner.reset();
+		this.desenvolvedorNovoJogo = scanner.nextLine();
 	}
-	
+
 	public void criaJogo(Jogo jogo)
 	{
 		listaJogosObj.add(jogo);
+		tabelaJogos.put(jogo.getNomeJogo(), jogo.getIdJogo());
 	}
-	
+
 	public int adicionaJogo()
 	{
-		//coisas com arquivo
-		//buscaArquivo()
-		
-		
-		//coisas para criar novo jogo
-		String nomeNovoJogo = cnsl.readLine("Nome do jogo a ser adicionado: ");
-		String lancamentoNovoJogo = cnsl.readLine("Data de lancamento do jogo a ser adicionado (DD/MM/AAAA): ");
-		String desenvolvedorNovoJogo = cnsl.readLine("Desenvolvedor do jogo a ser adicionado: ");
-		
-		int idNovoJogo = this.tamanho();
-		
-		Jogo novoJogo = new Jogo(idNovoJogo, nomeNovoJogo, lancamentoNovoJogo, desenvolvedorNovoJogo);
-		tabelaJogos.put(nomeNovoJogo, idNovoJogo);
-		
-		criaJogo(novoJogo);
-		
-		try {
-			indice.adicionaJogoNoIndice(novoJogo);
-		} catch (Exception e) {
-			e.printStackTrace();
+		Jogo novoJogo = null;
+		idNovoJogo = indice.getIdComNome(nomeNovoJogo);
+		if (idNovoJogo == -1)
+		{
+			idNovoJogo = listaJogosObj.size();
 		}
-		indice.novoJogoSendoAdicionado(idNovoJogo);
+		String caminhoParaJogo = "./etc/jogos/" + Integer.toString(idNovoJogo);
+		
+		if (indice.getIdsDoIndice().contains(idNovoJogo))
+		{
+			System.out.println("tentativa de adicao de novo jogo falhou pois jogo ja existe");
+		}
+		else
+		{
+			novoJogo = new Jogo(this.idNovoJogo, this.nomeNovoJogo, this.lancamentoNovoJogo, this.desenvolvedorNovoJogo);
+			
+			criaJogo(novoJogo);
+
+			try
+			{
+				indice.adicionaJogoNoIndice(novoJogo);
+			}
+			catch (Exception e)
+			{
+				System.out.println("falha ao adicionar novo jogo no indice");
+			}
+
+			indice.novoJogoSendoAdicionado(idNovoJogo); //funciona quando restaura jogo pq o indice restaura sobrescrevendo o mapa depois
+		}
+
+		this.salvaObjetoEmArquivo(novoJogo, caminhoParaJogo);
+		
+		this.salvaRepositorio();
 		
 		return idNovoJogo;
+	}
+
+	public void removeJogo(int idJogo)
+	{
+		if (indice.getIdsDoIndice().contains(idJogo))
+		{
+			try
+			{
+				indice.removeJogoDoIndice(idJogo);
+			}
+			catch (Exception e)
+			{
+				System.out.println("Jogo nao existe no indice");
+			}
+			
+			tabelaJogos.remove(listaJogosObj.get(idJogo).getNomeJogo());
+
+			listaJogosObj.set(idJogo, null);
+			
+			if (! new File("./etc/jogos/" + idJogo).delete())
+			{
+				System.out.println("arquivo jogo a ser deletado nao existe");
+			}
+		}
+				
+		this.salvaRepositorio();
+	}
+
+	public void adicionaJogoPassaTeste(Jogo novoJogo, int op)
+	{
+		try
+		{
+			indice.adicionaJogoNoIndice(novoJogo);
+		}
+		catch (Exception e)
+		{
+			System.out.println("Jogo ja existe no indice");
+		}
+		
+		if (op == 1)
+		{
+			indice.novoJogoSendoAdicionado(novoJogo.getIdJogo());
+		}
+		
+		this.criaJogo(novoJogo);
+		
+		this.salvaRepositorio();
 	}
 	
 	public void adicionaJogoPassaTeste(Jogo novoJogo)
 	{
-		try {
+		try
+		{
 			indice.adicionaJogoNoIndice(novoJogo);
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
+		catch (Exception e)
+		{
+			System.out.println("Jogo ja existe no indice");
+		}
+
 		indice.novoJogoSendoAdicionado(novoJogo.getIdJogo());
+		
+		this.criaJogo(novoJogo);
+		
+		this.salvaRepositorio();
 	}
-	
+
 	public int getIdParaVerInfoDeJogo(String nomeJogoProcurado)
 	{
 		int id = -1;
-		
+
 		if(indice.getNumeroJogos() > 0)
 		{
 			id = indice.getIdComNome(nomeJogoProcurado);
 		}
+
 		return id;
 	}
-	
+
 	public List<Integer> filtroPorAtributoDoJogo(String nomeOpcaoDeBusca, int opcaoDeBusca)
 	{
 		List<Integer> ids = new ArrayList<Integer>();
-		
+
 		switch(opcaoDeBusca)
 		{
 			case 1:
@@ -124,13 +220,13 @@ public class Repositorio extends FileHandler
 				else
 					System.out.println("\nNenhum jogo encontrado, verifique se o nome do desenvolvedor foi digitado corretamente");
 				break;
-			default: 
+			default:
 				System.out.println("opcao invalida!");
 		}
-		
+
 		return ids;
 	}
-	
+
 	public int filtroDasCategorias(String nomeDeCategoria, int opcaoDeBuscaCateg)
 	{
 		List<Integer> ids = new ArrayList<Integer>();
@@ -141,60 +237,121 @@ public class Repositorio extends FileHandler
 				//sem subfiltro
 				ids = indice.getIdsDoIndice();
 				resultados = indice.filtroPorCategoria(nomeDeCategoria, ids);
-				if(resultados == -1)
-				{
-					System.out.println("\nNenhum jogo encontrado, verifique se o nome da colecao foi digitado corretamente.");
-					return resultados;
-				}
-				if(resultados == 0)
-				{
-					System.out.println("Nao ha jogos na colecao selecionada.");
-					return resultados;
-				}
-				System.out.println("\nResultados filtrados por colecao '" + nomeDeCategoria + "': ");
-				indice.imprimeAlgunsJogos(ids);
+				this.mostraResultadosDoFiltroDeCategorias(resultados, ids, nomeDeCategoria);
 				break;
-//			case 1:
-//				//com subfiltro
-				//menu do filtro
-//				ids = indice.filtroPorAtributos(nomeOpcaoDeBusca, opcaoDeBusca)
-//				int resultados = indice.filtroPorCategoria(nomeDeCategoria, ids);
-//				if(resultados == -1)
-//				{
-//					System.out.println("\nNenhum jogo encontrado, verifique se o nome da colecao foi digitado corretamente.");
-//					return ids;
-//				}
-//				if(resultados == 0)
-//				{
-//					System.out.println("Nao ha jogos na colecao selecionada.");
-//					return ids;
-//				}
-//				System.out.println("\nResultados filtrados por colecao '" + nomeDeCategoria + "': ");
-//				indice.imprimeAlgunsJogos(ids);
-//				break;
+			case 1:
+				//com subfiltro
+				int opcaoDeSubfiltro = menuFiltro();
+				System.out.println("\nDigite o parametro do subfiltro.");
+				String nomeOpcaoDeSubfiltro = scanner.next();
+				ids = indice.filtroPorAtributos(nomeOpcaoDeSubfiltro, opcaoDeSubfiltro);
+				resultados = indice.filtroPorCategoria(nomeDeCategoria, ids);
+
+				this.mostraResultadosDoFiltroDeCategorias(resultados, ids, nomeDeCategoria);
+				break;
 		}
 		return resultados;
 	}
-	
-	
+
+	private int mostraResultadosDoFiltroDeCategorias(int nroDeResultados, List<Integer> idsValidos, String nomeDeCategoria)
+	{
+		if(nroDeResultados == -1)
+		{
+			System.out.println("\nNenhum jogo encontrado, verifique se o nome da colecao foi digitado corretamente.");
+			return nroDeResultados;
+		}
+		if(nroDeResultados == 0)
+		{
+			System.out.println("Nao ha jogos na colecao selecionada.");
+			return nroDeResultados;
+		}
+		System.out.println("\nResultados filtrados por colecao '" + nomeDeCategoria + "': ");
+		indice.imprimeAlgunsJogos(idsValidos);
+		return nroDeResultados;
+	}
+
 	public void criaCateg(String nomeCateg)
 	{
 		indice.adicionaCategoriaAoIndice(nomeCateg);
+		this.salvaRepositorio();
 	}
 	
-	public void addJogoNaCateg(Jogo jogo, String nomeCateg)
+	public void addJogoNaCateg(int idDoJogo, String nomeCateg)
 	{
-		try {
-			indice.adicionaCategoriaAoJogo(jogo.getIdJogo(), nomeCateg);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		try
+		{
+			indice.adicionaCategoriaAoJogo(idDoJogo, nomeCateg);
 		}
+		catch (Exception e)
+		{
+			System.out.println("falhou em adicionar jogo na categoria");
+		}
+		
+		this.salvaRepositorio();
 	}
 	
+	public void removeJogoDaCateg(int idDoJogo, String nomeCateg)
+	{
+		indice.removeCategoriaDoJogo(idDoJogo, nomeCateg);
+		this.salvaRepositorio();
+	}
+
 	public int tamanho()
 	{
 		return listaJogosObj.size();
+	}
+
+	public void addComentarioEmJogo(int jogoId, String txt)
+	{
+		for (Jogo j: Repositorio.listaJogosObj) {
+			if (j.getIdJogo() == jogoId){
+				j.addComentario(txt);
+				break;
+			}
+		}
+	}
+		
+	public void addComentarioEmJogo(int jogoId, String txt, float nota)
+	{	
+		for (Jogo j: Repositorio.listaJogosObj) {
+			if (j.getIdJogo() == jogoId){
+				j.addComentario(txt, nota);
+				break;
+			}
+		}
+	}
+
+	public void atualizaAtributo(int idJogo, int opcao, String atributoAtualizado)
+	{
+		switch (opcao)
+		{
+			case 1:
+				this.nomeNovoJogo = atributoAtualizado;
+				break;
+			case 2:
+				this.lancamentoNovoJogo = atributoAtualizado;
+				break;
+			case 3:
+				this.desenvolvedorNovoJogo = atributoAtualizado;
+				break;
+			case 4:
+				this.versaoNovoJogo = atributoAtualizado;
+		}
+		
+		Jogo jogoModificado = listaJogosObj.get(idJogo).atualizaAtributos(opcao, atributoAtualizado);
+		
+		listaJogosObj.set(idJogo, jogoModificado);
+		
+		try
+		{
+			indice.modificaJogoNoIndice(jogoModificado);
+		}
+		catch (Exception e)
+		{
+			System.out.println("tentativa de modificacao de jogo sobre jogo inexistente no indice");
+		}
+		
+		this.salvaRepositorio();
 	}
 	
 	private int menuFiltro()
@@ -203,10 +360,154 @@ public class Repositorio extends FileHandler
 				+ "2)Filtrar data do lancamento do jogo;\n"
 				+ "3)Filtrar por nome do desenvolvedor do jogo;\n"
 				+ "4)Cancela;\n");
-		
+
 		int opcaoDeFiltro = scanner.nextInt();
-		
+
 		return opcaoDeFiltro;
 	}
+	
+	public void removeComentariosDeJogo(int jogoId)
+	{
+		for (Jogo j: Repositorio.listaJogosObj) {
+			if (j.getIdJogo() == jogoId){
+				j.removeComentarios();
+				break;
+			}
+		}
+	}
 
+	public void exibeInformacoesJogo(int idJogoPesquisado)
+	{
+		System.out.println((listaJogosObj.get(idJogoPesquisado)));
+	}
+
+	public void exibeComentariosDeJogo(int jogoId) 
+	{
+		for (Jogo j: Repositorio.listaJogosObj) {
+			if (j.getIdJogo() == jogoId){
+				j.exibeComentarios();
+				break;
+			}
+		}	
+	}
+	
+	public void setInfoJogo(Jogo j) 
+	{
+		this.idNovoJogo = j.getIdJogo();
+		this.nomeNovoJogo = j.getNomeJogo();
+		this.lancamentoNovoJogo = j.getLancamentoJogo();
+		this.desenvolvedorNovoJogo = j.getDesenvolvedorJogo();
+	}
+	
+	public void verificaIntegridade() 
+	{
+		BufferedReader r;
+		try 
+		{
+			r = new BufferedReader(new FileReader("./etc/versoes.txt"));
+			String ln = r.readLine();
+			while(ln != null) 
+			{
+				String[] parsedLine = ln.split(",");
+				
+				int i = 0;
+				for(Jogo j: Repositorio.listaJogosObj) 
+				{
+					if(j.getNomeJogo().equals(parsedLine[0])) 
+					{
+
+						if(!(Repositorio.listaJogosObj.get(i).getVersao().equals(parsedLine[1]))) 
+						{
+							String velhaVersao = Repositorio.listaJogosObj.get(i).getVersao().substring(1);
+							String novaVersao = parsedLine[1].substring(1);
+							double novo = Double.parseDouble(novaVersao);
+							double velho = Double.parseDouble(velhaVersao);
+
+							if (novo > velho) 
+							{
+								j.setVersao(parsedLine[1]);
+								Repositorio.listaJogosObj.set(i, j);
+								System.out.println(j.getNomeJogo() + " foi atualizado com sucesso para a vers�o " + parsedLine[1] +".");
+							}
+						}
+					}
+					i++;
+				}
+				ln = r.readLine();
+			}
+		}
+		catch(IOException e) {
+			System.out.println("Nao foi possivel verificar versao");
+		}
+	}
+	
+	
+	public void atualizaVersaoJogo(int jogoId, String novaVersao) 
+	{
+		int i = 0;
+		for (Jogo j: Repositorio.listaJogosObj) 
+		{
+			if (j.getIdJogo() == jogoId)
+			{	
+				j.setVersao(novaVersao);
+
+				Repositorio.listaJogosObj.set(i, j);
+			}
+			i++;
+		}
+	}
+	
+	public String getVersaoJogo(int jogoId) 
+	{
+		int i = 0;
+		for (Jogo j : Repositorio.listaJogosObj)
+		{
+			if (jogoId == Repositorio.listaJogosObj.get(i).getIdJogo())
+			{
+				return Repositorio.listaJogosObj.get(i).getVersao();
+			}
+			i++;
+		}
+		return null;
+	}
+	
+	public void exibeJogosNoRepositorio()
+	{
+		if (tabelaJogos.size() == 0)
+		{
+			System.out.println("Nao existem jogos a serem exibidos");
+		}
+		else
+		{
+			for (String nomeJogo : tabelaJogos.keySet())
+			{
+				System.out.println(" - " + nomeJogo);
+			}
+		}
+	}
+	
+	public void exibeColecoesNoIndice()
+	{
+		List <String> colecoes = indice.getListaCategorias();
+		
+		if (colecoes.size() == 0)
+		{
+			System.out.println("Nao existem colecoes a serem exibidas\n");
+		}
+		else
+		{
+			for (int i=0; i< colecoes.size(); i++)
+			{
+				System.out.println(" - " + colecoes.get(i));
+			}
+		}
+	}
+	
+	public void salvaRepositorio()
+	{
+		indice.salvaObjetoIndice();
+		indice.salvaMapaJogoCategorias();
+		indice.salvaListaCategorias();
+	}
+	
 }

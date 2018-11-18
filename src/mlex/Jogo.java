@@ -1,24 +1,20 @@
 package mlex;
 
-import java.io.File;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
-public class Jogo extends FileHandler {
+public class Jogo extends FileHandler implements Serializable
+{
+	private static final long serialVersionUID = 1L;
 	private int idJogo;
 	private String nomeJogo; 
 	private String lancamento; 
 	private String desenvolvedor;
-	private double tamanho;
-	private double nota;
 	private String versao;
-	private String genero;
-	private String comentarios;
-	private int tempoJogado;
-	
-	
+	private String genero = "valor inexistente";
+	private Comentario comentario;
+	String caminhoObjetoJogo;
 	
 	public Jogo(int id, String nomeJogo, String lancamento, String desenvolvedor)
 	{
@@ -26,6 +22,15 @@ public class Jogo extends FileHandler {
 		this.nomeJogo = nomeJogo; 
 		this.lancamento = lancamento; 
 		this.desenvolvedor = desenvolvedor;
+		this.versao = "v1.0";
+	}
+	
+	public String getVersao() {
+		return this.versao;
+	}
+	
+	public void setVersao(String novaVersao) {
+		this.versao = novaVersao;
 	}
 	
 	public String getNomeJogo()
@@ -37,6 +42,15 @@ public class Jogo extends FileHandler {
 	{
 		return this.idJogo;
 	}
+
+	public String getLancamentoJogo() {
+		return this.lancamento;
+	}
+	
+	public String getDesenvolvedorJogo() {
+				return this.desenvolvedor;
+	}
+
 	
 	public List<String> retornaListaAtributosRelevantes()
 	{
@@ -45,11 +59,62 @@ public class Jogo extends FileHandler {
 		return listaAtributosRelevantes;
 	}
 	
+	public Jogo atualizaAtributos(int opcao, String atributoAtualizado)
+	{
+		switch (opcao)
+		{
+			case 1:
+				nomeJogo = atributoAtualizado;
+				break;
+			case 2:
+				lancamento = atributoAtualizado;
+				break;
+			case 3:
+				desenvolvedor = atributoAtualizado;
+				break;
+			case 4:
+				versao = atributoAtualizado;
+				break;
+			case 5:
+				genero = atributoAtualizado;
+				break;
+		}		
+		caminhoObjetoJogo = "./etc/jogos/" + Integer.toString(idJogo);
+		this.salvaObjetoEmArquivo(this, caminhoObjetoJogo);
+		
+		return this;
+	}
+	
+	
 	@Override
 	public String toString()
 	{
-		//refazer para ficar bonito
-		return ( Integer.toString(this.idJogo) + ',' + this.nomeJogo + ',' + this.lancamento + ',' + this.desenvolvedor); 
+		return ("\nNome: "+ this.nomeJogo
+				+ "\nData lancamento: " +this.lancamento
+				+ "\nDesenvolvedor: " + this.desenvolvedor
+				+ "\nVersao: " + this.versao
+				+ "\nGenero: " + this.genero); 
+	}
+	
+	public void addComentario(String texto) {
+		this.comentario = new Comentario(texto, this.idJogo);
+		comentario.salvaComentario();
+	}
+	
+	public void addComentario(String texto, float nota) {
+		this.comentario = new Comentario("",this.idJogo);
+		this.comentario = new Comentario(texto, this.idJogo, nota);
+		this.comentario.salvaComentario();
+	}
+	
+	public void removeComentarios() {
+		this.comentario = new Comentario("",this.idJogo);
+		this.comentario.removeComentarios();
+	}
+	
+	public void exibeComentarios() {
+		this.comentario = new Comentario("",this.idJogo);
+		this.comentario.exibeComentarios();
 	}
 	
 

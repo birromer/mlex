@@ -1,9 +1,6 @@
 package mlex;
 
 import java.io.File;
-//import java.io.FileNotFoundException;
-//import java.io.IOException;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,8 +11,8 @@ import java.io.ObjectOutputStream;
 abstract public class FileHandler
 {
 	static String path = "./etc/";
-	private FileOutputStream saidaArquivoEscrita;
-	private ObjectOutputStream saidaObjetoEscrita;
+	private transient FileOutputStream saidaArquivoEscrita;
+	private transient ObjectOutputStream saidaObjetoEscrita;
 	File arquivoUsado;
 	
 	static public boolean verificaArquivo(int nome)
@@ -25,9 +22,9 @@ abstract public class FileHandler
 		return arquivo.exists();
 	}
 	
-	public Object leArquivo(int nome)
+	public Object leArquivo(String nome, String caminhoParaArquivo)
 	{
-		File arquivo =  new File(path + nome);
+		File arquivo =  new File(caminhoParaArquivo + nome);
 		try
 		{
 			FileInputStream fileIn = new FileInputStream(arquivo);
@@ -78,18 +75,24 @@ abstract public class FileHandler
 		}
 		catch (IOException e)
 		{
-			System.out.println("erro ao escrever objeto indice no arquivo");
+			System.out.println("erro ao escrever objeto no arquivo");
+			e.printStackTrace();
 		}
+		
+		try
+		{
+			saidaArquivoEscrita.close();
+		}
+		catch (IOException e)
+		{
+			System.out.println("erro ao fechar stream de saida do arquivo");
+		}
+
 	}
 	
 	public File buscaArquivo(int nome, int op)
 	{
 		return null;
-	}
-	
-	public void atualizaArquivo(int nome, int op)
-	{
-		
 	}
 	
 }
