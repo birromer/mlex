@@ -18,6 +18,8 @@ public class Main
 			usuario.menuInicial(opcaoMenu);
 			opcaoMenu = scanner.nextInt();
 		} while (opcaoMenu != 666);
+		
+		System.out.println("\n\nAte a proxima! :)\n");
 	}
 	
 	public static void criaDiretorios()
