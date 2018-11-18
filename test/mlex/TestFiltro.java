@@ -22,6 +22,9 @@ public class TestFiltro {
 		jogoTeste1 = new Jogo(0, "Jogo Legal", "01/09/94", "Klei");
 		jogoTeste2 = new Jogo(666, "Jogo Chato", "01/09/94", "Despacito");
 		jogoTeste3 = new Jogo(3, "Aladdin", "16/08/94", "Despacito");
+		repoTeste.adicionaJogoPassaTeste(jogoTeste1);
+		repoTeste.adicionaJogoPassaTeste(jogoTeste2);
+		repoTeste.adicionaJogoPassaTeste(jogoTeste3);
 	}
 
 	@Test
@@ -70,7 +73,7 @@ public class TestFiltro {
 	}
 	
 	@Test
-	public void testGetJogosPorCategoriaSemSubFiltro()
+	public void testGetJogosPorCategoriaSemSubfiltro()
 	{
 		repoTeste.criaCateg("Jogos do verao passado");
 		repoTeste.criaCateg("Jogos do inverno passado");
@@ -78,19 +81,34 @@ public class TestFiltro {
 		repoTeste.addJogoNaCateg(jogoTeste1.getIdJogo(), "Jogos do verao passado");
 		repoTeste.addJogoNaCateg(jogoTeste2.getIdJogo(), "Jogos do verao passado");
 		repoTeste.addJogoNaCateg(jogoTeste2.getIdJogo(), "Jogos do equinocio passado");
-//		System.out.println("\nfiltro por colecao 'Jogo Chato':");
+		repoTeste.addJogoNaCateg(jogoTeste3.getIdJogo(), "Jogos do verao passado");
+		System.out.println("\nfiltro por colecao 'Jogo Chato':");
 		assertTrue(repoTeste.filtroDasCategorias("Jogo Chato", 0) == -1);
-//		System.out.println("\nfiltro por colecao 'Jogos do inverno passado':");
-		assertTrue(repoTeste.filtroDasCategorias("Jogos do inverno passado", 0) == 0);
-//		System.out.println("\nfiltro por colecao 'Jogos do equinocio passado':");
+		System.out.println("\nfiltro por colecao 'Jogos do equinocio passado':");
 		assertTrue(repoTeste.filtroDasCategorias("Jogos do equinocio passado", 0) == 1);
-//		System.out.println("\nfiltro por colecao 'Jogos do verao passado':");
-		assertTrue(repoTeste.filtroDasCategorias("Jogos do verao passado", 0) == 2);
+		System.out.println("\nfiltro por colecao 'Jogos do verao passado':");
+		assertTrue(repoTeste.filtroDasCategorias("Jogos do verao passado", 0) == 3);
 	}
 	
+	@Test
+	public void testGetJogosPorCategoriaComSubfiltro()
+	{
+		repoTeste.criaCateg("Jogos do verao passado");
+		repoTeste.criaCateg("Jogos do inverno passado");
+		repoTeste.criaCateg("Jogos do equinocio passado");
+		repoTeste.addJogoNaCateg(jogoTeste1.getIdJogo(), "Jogos do verao passado");
+		repoTeste.addJogoNaCateg(jogoTeste2.getIdJogo(), "Jogos do verao passado");
+		repoTeste.addJogoNaCateg(jogoTeste2.getIdJogo(), "Jogos do equinocio passado");
+		repoTeste.addJogoNaCateg(jogoTeste3.getIdJogo(), "Jogos do equinocio passado");
+		System.out.println("\nfiltro por colecao 'Jogo Chato' com qualquer parametro:");
+		assertTrue(repoTeste.filtroDasCategorias("Jogo Chato", 1) == -1);
+		System.out.println("\nfiltro por colecao 'Jogos do inverno passado' com qualquer parametro:");
+		assertTrue(repoTeste.filtroDasCategorias("Jogos do inverno passado", 1) == 0);
+		System.out.println("\nfiltro por colecao 'Jogos do equinocio passado' com parametro nome Aladdin:");
+		assertTrue(repoTeste.filtroDasCategorias("Jogos do equinocio passado" , 1) == 1);
+		System.out.println("\nfiltro por colecao 'Jogos do equinocio passado'com parametro dev Despacito:");
+		assertTrue(repoTeste.filtroDasCategorias("Jogos do equinocio passado", 1) == 2);
+	}
 
-	
-	
-	
 
 }

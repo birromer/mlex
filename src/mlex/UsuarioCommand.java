@@ -13,62 +13,36 @@ public class UsuarioCommand
 	private final static int OPCAO_VOLTAR = 666;
 	private static Repositorio repositorio = new Repositorio();
 	private Scanner scanner = new Scanner(System.in);
-	private Properties configuracoes = new Properties();
-	private String usuario = "admin";
-	private String senha = "admin";
-	private String ordenacao = "n";
+
 	Jogo jogoAtual;
+	private PlataformaConfiguracao config;
 	private String nomeJogoPesquisado;
 	private String nomeDaCategoria;
 	private int idJogoPesquisado;
 	
 	public UsuarioCommand()
 	{	
-		if (new File("./.mlex.conf").exists() == false)
-		{
-			configuracoes.setProperty("usuario", "admin");
-			configuracoes.setProperty("senha", "admin");
-			configuracoes.setProperty("ordenado", "n");
-			
-			try
-			{
-				configuracoes.store(new FileOutputStream("./.mlex.conf"), null);
-			}
-			catch (IOException e) 
-			{
-				System.out.println("Problema escrevendo arquivo de configuracao default");
-			}
-		}
-		else
-		{
-			try
-			{
-				configuracoes.load(new FileInputStream("./.mlex.conf"));
-			}
-			catch (IOException e)
-			{
-				System.out.println("Problema na leitura do arquivo de configuracao");
-			}
-			
-			usuario = configuracoes.getProperty("usuario");
-			senha = configuracoes.getProperty("senha");
-			ordenacao = configuracoes.getProperty("ordenacao");	
-		}
+		config = new PlataformaConfiguracao();
 	}
 	
 	String getUsuario()
 	{
-		return this.usuario;
+		return config.getUsuario();
 	}
 	
 	String getSenha()
 	{
-		return this.senha;
+		return config.getSenha();
 	}
 	
 	String getOrdenacao()
 	{
-		return this.ordenacao;
+		return config.getOrdenacao();
+	}
+	
+	String getEmailDoUsuario() 
+	{
+		return config.getEmailDoUsuario();
 	}
 	
 	public int menuInicial(int opcaoMenu)
@@ -92,12 +66,13 @@ public class UsuarioCommand
 				if (repositorio.verificaId(nomeJogoPesquisado))
 				{
 					int opcaoJogo = -1;
+					int temp;
 					do
 					{
-						this.menuJogo(opcaoJogo);
+						temp = this.menuJogo(opcaoJogo);
 						opcaoJogo = scanner.nextInt();
 						scanner.nextLine();
-					} while (opcaoJogo != OPCAO_VOLTAR);
+					} while (opcaoJogo != OPCAO_VOLTAR && temp != -2);
 				}
 				else
 				{
@@ -121,15 +96,89 @@ public class UsuarioCommand
 				break;
 			case 4:
 				//filtroo
-
 				int filt = this.menuFiltro();
-				System.out.println("Digite o atributo a ser filtrado:");
 				scanner.reset();
-				String nomefilt = scanner.nextLine();
-				repositorio.filtroPorAtributoDoJogo(nomefilt, filt);
+				if (filt != 4)
+				{
+					System.out.println("Digite o filtro:");
+					String nomefilt = scanner.nextLine();
+					repositorio.filtroPorAtributoDoJogo(nomefilt, filt);
+				}
 				break;
 			case 5:
-				//configs
+				System.out.println("\nConfiguracoes de usuario;\n"
+						+ "0)Alterar nome;\n"
+						+ "1)Alterar senha\n"
+						+ "2)Alterar email\n"
+						+ "3)Alterar ordenacao");
+				int opcaoConfiguracao = scanner.nextInt();
+				switch(opcaoConfiguracao)
+				{
+				case 0:
+					if(config.validacaoUsuario()) 
+					{
+						System.out.println("Digite o novo nome: ");
+						scanner.nextLine();
+						String novoNome = scanner.nextLine();
+						config.setUsuario(novoNome);
+						System.out.println("Nome atualizado com sucesso.");
+					}
+					else
+					{
+						System.out.println("Senha invalida.");
+					}
+						
+
+					break;
+				case 1:
+					if(config.validacaoUsuario()) 
+					{
+						System.out.println("Digite a nova senha: ");
+						scanner.nextLine();
+						String novaSenha = scanner.nextLine();
+						config.setUsuario(novaSenha);	
+						System.out.println("Senha atualizada com sucesso.");
+					}
+					else
+					{
+						System.out.println("Senha invalida.");
+					}
+
+					break;
+				case 2:
+					if(config.validacaoUsuario())
+					{
+						System.out.println("Digite o novo email: ");
+						scanner.nextLine();
+						String novoEmail = scanner.nextLine();
+						config.setUsuario(novoEmail);
+						System.out.println("Email atualizado com sucesso.");
+					}
+					else
+					{
+						System.out.println("Senha invalida.");
+					}
+
+					break;
+				case 3:
+					if(config.validacaoUsuario())
+					{
+						System.out.println("Digite a nova ordenacao: ");
+						scanner.nextLine();
+						String novaOrdenacao = scanner.nextLine();
+						config.setUsuario(novaOrdenacao);
+						System.out.println("Ordenacao atualizada com sucesso.");
+					}
+					else
+					{
+						System.out.println("Senha invalida.");
+					}
+
+					break;
+				default:
+					break;
+				}
+
 				break;
 			case 666:
 				//encerra o programa
@@ -223,8 +272,10 @@ public class UsuarioCommand
 	public int menuJogo(int opcaoDeJogo)
 	{		
 		int idJogoPesquisado = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
-		//System.out.println("Id do jogo pesquisado:" + idJogoPesquisado);
-				
+
+		System.out.println("id do jogo que acabou de ser pesquisado = " + idJogoPesquisado);
+		System.out.println("jogos no indice atualmente na ordem = + ");
+		
 		if (idJogoPesquisado == -1)
 		{
 			System.out.println("Jogo com esse nome nao existe no repositorio");
@@ -291,7 +342,8 @@ public class UsuarioCommand
 							+ "5)Configuracoes do usuario;\n"
 							+ "666)Sair;\n"
 							+ "Escolha a acao que deseja realizar: ");
-					return -1;
+
+					return -2;
 				case 2:
 					//adicionar comentario
 					System.out.println("Comentarios:");
@@ -300,6 +352,7 @@ public class UsuarioCommand
 									+ "3 - Exibir todos os comentarios do jogo\n"
 									+ "4 - Remover todos os comentarios do jogo\n"
 									+ "5 - Voltar\n");
+
 					int opcaoComentario = scanner.nextInt();
 					scanner.nextLine();
 					switch(opcaoComentario)
@@ -324,6 +377,8 @@ public class UsuarioCommand
 						case 3:
 							repositorio.exibeComentariosDeJogo(idJogoPesquisado);
 							System.out.println("Aperte (ENTER) para voltar");
+
+							scanner.nextLine();
 							break;
 						case 4:
 							repositorio.removeComentariosDeJogo(idJogoPesquisado);
@@ -339,6 +394,10 @@ public class UsuarioCommand
 					break;
 				case 4:
 					//enviar por email -- fazer depois que comentarios e toString integrados
+					System.out.println("Digite email do destinatario: \n");
+					scanner.nextLine();
+					String emailTO = scanner.nextLine();
+					repositorio.enviaEmail(emailTO, config.getEmailDoUsuario(), idJogoPesquisado);
 					break;
 				case 5:
 					//volta
