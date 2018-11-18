@@ -33,7 +33,7 @@ public class Repositorio extends FileHandler
 			for (File arquivoJogo : jogosSalvos)
 			{
 				jogoASerSalvo = (Jogo) this.leArquivo(arquivoJogo.getName(),  "./etc/jogos/");
-				this.adicionaJogoPassaTeste(jogoASerSalvo);
+				this.adicionaJogoPassaTeste(jogoASerSalvo, 0);
 			}
 		}
 	}
@@ -99,6 +99,8 @@ public class Repositorio extends FileHandler
 
 		this.salvaObjetoEmArquivo(novoJogo, caminhoParaJogo);
 		
+		this.salvaRepositorio();
+		
 		return idNovoJogo;
 	}
 
@@ -122,8 +124,31 @@ public class Repositorio extends FileHandler
 				System.out.println("arquivo jogo a ser deletado nao existe");
 			}
 		}
+		
+		this.salvaRepositorio();
 	}
 
+	public void adicionaJogoPassaTeste(Jogo novoJogo, int op)
+	{
+		try
+		{
+			indice.adicionaJogoNoIndice(novoJogo);
+		}
+		catch (Exception e)
+		{
+			System.out.println("Jogo ja existe no indice");
+		}
+		
+		if (op == 1)
+		{
+			indice.novoJogoSendoAdicionado(novoJogo.getIdJogo());
+		}
+		
+		this.criaJogo(novoJogo);
+		
+		this.salvaRepositorio();
+	}
+	
 	public void adicionaJogoPassaTeste(Jogo novoJogo)
 	{
 		try
@@ -132,14 +157,15 @@ public class Repositorio extends FileHandler
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			System.out.println("Jogo ja existe no indice");
 		}
 
 		indice.novoJogoSendoAdicionado(novoJogo.getIdJogo());
 		
 		this.criaJogo(novoJogo);
+		
+		this.salvaRepositorio();
 	}
-
 
 	public int getIdParaVerInfoDeJogo(String nomeJogoProcurado)
 	{
@@ -245,6 +271,7 @@ public class Repositorio extends FileHandler
 	public void criaCateg(String nomeCateg)
 	{
 		indice.adicionaCategoriaAoIndice(nomeCateg);
+		this.salvaRepositorio();
 	}
 	
 	public void addJogoNaCateg(int idDoJogo, String nomeCateg)
@@ -257,11 +284,14 @@ public class Repositorio extends FileHandler
 		{
 			System.out.println("falhou em adicionar jogo na categoria");
 		}
+		
+		this.salvaRepositorio();
 	}
 	
 	public void removeJogoDaCateg(int idDoJogo, String nomeCateg)
 	{
 		indice.removeCategoriaDoJogo(idDoJogo, nomeCateg);
+		this.salvaRepositorio();
 	}
 
 	public int tamanho()
@@ -318,6 +348,8 @@ public class Repositorio extends FileHandler
 		{
 			System.out.println("tentativa de modificacao de jogo sobre jogo inexistente no indice");
 		}
+		
+		this.salvaRepositorio();
 	}
 	
 	private int menuFiltro()
@@ -437,7 +469,30 @@ public class Repositorio extends FileHandler
 		return null;
 	}
 	
-	public void encerraRepositorio()
+	public void exibeJogosNoRepositorio()
+	{
+		for (String nomeJogo : tabelaJogos.keySet())
+		{
+			System.out.println(" - " + nomeJogo);
+		}
+	}
+	
+	public void exibeColecoesNoIndice()
+	{
+		List <String> colecoes = indice.getListaCategorias();
+		
+		if (colecoes.size() == 0)
+		{
+			System.out.println("Nao existem colecoes a serem exibidas\n");
+		}
+		
+		for (int i=0; i< colecoes.size(); i++)
+		{
+			System.out.println(" - " + colecoes.get(i));
+		}
+	}
+	
+	public void salvaRepositorio()
 	{
 		indice.salvaObjetoIndice();
 		indice.salvaMapaJogoCategorias();

@@ -78,6 +78,7 @@ public class UsuarioCommand
 			case -1:
 				break;
 			case 0:
+				repositorio.exibeJogosNoRepositorio();
 				//ver tds jogos
 				break;
 			case 1:
@@ -127,7 +128,7 @@ public class UsuarioCommand
 				break;
 			case 666:
 				//encerra o programa
-				repositorio.encerraRepositorio();
+				repositorio.salvaRepositorio();
 				break;
 			default: 
 				System.out.println("Nao eras, meu bruxo!");
@@ -154,18 +155,21 @@ public class UsuarioCommand
 			case -1:
 				break;
 			case 0:
+				repositorio.exibeColecoesNoIndice();
+				break;
+			case 1:
 				//exibe jogos em x colecao
 				System.out.println("\nDigite o nome da colecao a ser pesquisada:");
 				nomeDaCategoria = scanner.next();
 				repositorio.filtroDasCategorias(nomeDaCategoria, 0);
 				break;
-			case 1:
+			case 2:
 				//cria nova colecao
 				System.out.println("Digite o nome da colecao a ser criada:");
 				nomeDaCategoria = scanner.next();
 				repositorio.criaCateg(nomeDaCategoria);
 				break;
-			case 2:
+			case 3:
 				//adiciona um jogo a uma colecao
 				System.out.println("Digite o nome da colecao:");
 				nomeDaCategoria = scanner.next();
@@ -174,7 +178,7 @@ public class UsuarioCommand
 				idJogoPesquisado = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
 				repositorio.addJogoNaCateg(idJogoPesquisado, nomeDaCategoria);
 				break;
-			case 3:
+			case 4:
 				//remove um jogo de uma colecao
 				System.out.println("Digite o nome da colecao:");
 				nomeDaCategoria = scanner.next();
@@ -183,24 +187,25 @@ public class UsuarioCommand
 				idJogoPesquisado = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
 				repositorio.removeJogoDaCateg(idJogoPesquisado, nomeDaCategoria);
 				break;
-			case 4:
+			case 5:
 				//filtra jogos dentro de uma colecao
 				nomeDaCategoria = scanner.nextLine();
 				repositorio.filtroDasCategorias(nomeDaCategoria, 1);
 				break;
-			case 5:
+			case 666:
 				break;
 			default: 
 				System.out.println("Nao eras, meu bruxo!");
 		}
 		
 		limpaTela();
-		System.out.println("\n0)Buscar jogos da colecao;\n"
-				+ "1)Criar colecao;\n"
-				+ "2)Adicionar um jogo a colecao;\n"
-				+ "3)Remover jogo de colecao;\n"
-				+ "4)Filtrar colecoes;\n"
-				+ "5)Voltar;\n"
+		System.out.println("0)Mostrar todas colecoes\n"
+				+ "1)Buscar jogos da colecao;\n"
+				+ "2)Criar colecao;\n"
+				+ "3)Adicionar um jogo a colecao;\n"
+				+ "4)Remover jogo de colecao;\n"
+				+ "5)Filtrar colecoes;\n"
+				+ "666)Voltar;\n"
 				+ "Escolha a acao que deseja realizar: ");
 		
 		

@@ -22,15 +22,14 @@ public class Indice extends FileHandler
 	public Indice()
 	{
 		this.restauraObjetoIndice();
-		this.restauraMapaJogoCategorias();
 		this.restauraListaCategorias();
+		this.restauraMapaJogoCategorias();
 	}
 
 	public void adicionaJogoNoIndice(Jogo jogo) throws Exception
 	{
 		if (this.testaJogoNoIndice(jogo.getIdJogo()) == true)
 		{
-			System.out.println("Jogo ja existe no indice, sera ignorado");
 			throw new Exception("Jogo ja existe");
 		}
 
@@ -145,7 +144,7 @@ public class Indice extends FileHandler
 		}
 	}
 
-	List<String> getListaCategorias()
+	public List<String> getListaCategorias()
 	{
 		return listaCategorias;
 	}
@@ -258,6 +257,7 @@ public class Indice extends FileHandler
 		for (int i=0;i<idsValidos.size();i++)
 		{
 			int key = idsValidos.get(i);
+			System.out.println(this.getCategorias(i));
 			String listaCategoriasDoJogo = mapaJogoCategorias.get(key);
 			
 			System.out.println("aaaaaaaaaaaaaaaa " + listaCategoriasDoJogo);
@@ -356,6 +356,4 @@ public class Indice extends FileHandler
 			listaCategorias = (List<String>) (this.leArquivo(caminhoParaListaCategorias));
 		}
 	}
-
-
 }
