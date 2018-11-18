@@ -207,8 +207,10 @@ public class UsuarioCommand
 	}
 	
 	public int menuJogo(int opcaoDeJogo)
-	{
+	{		
 		int idJogoPesquisado = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
+		
+		repositorio.exibeInformacoesJogo(idJogoPesquisado);
 		
 		if (idJogoPesquisado == -1)
 		{

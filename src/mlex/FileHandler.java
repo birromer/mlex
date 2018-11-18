@@ -7,11 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
-abstract public class FileHandler implements Serializable
+abstract public class FileHandler
 {
-	private static final long serialVersionUID = 1L;
 	static String path = "./etc/";
 	private transient FileOutputStream saidaArquivoEscrita;
 	private transient ObjectOutputStream saidaObjetoEscrita;
@@ -95,10 +93,6 @@ abstract public class FileHandler implements Serializable
 	public File buscaArquivo(int nome, int op)
 	{
 		return null;
-	}
-	
-	public void atualizaArquivo(int nome, int op) 
-	{
 	}
 	
 }

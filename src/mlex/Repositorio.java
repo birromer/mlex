@@ -23,6 +23,7 @@ public class Repositorio extends FileHandler
 	private String nomeNovoJogo;
 	private String lancamentoNovoJogo;
 	private String desenvolvedorNovoJogo;
+	private String versaoNovoJogo;
 
 	public Repositorio()
 	{
@@ -303,9 +304,13 @@ public class Repositorio extends FileHandler
 			case 3:
 				this.desenvolvedorNovoJogo = atributoAtualizado;
 				break;
+			case 4:
+				this.versaoNovoJogo = atributoAtualizado;
 		}
 		
 		Jogo jogoModificado = listaJogosObj.get(idJogo).atualizaAtributos(opcao, atributoAtualizado);
+		
+		listaJogosObj.set(idJogo, jogoModificado);
 		
 		try
 		{
@@ -316,7 +321,7 @@ public class Repositorio extends FileHandler
 			System.out.println("tentativa de modificacao de jogo sobre jogo inexistente no indice");
 		}
 	}
-
+	
 	private int menuFiltro()
 	{
 		System.out.println("\n1)Filtrar por nome do jogo;\n"
@@ -338,6 +343,12 @@ public class Repositorio extends FileHandler
 			}
 		}
 	}
+
+	public void exibeInformacoesJogo(int idJogoPesquisado)
+	{
+		System.out.println((listaJogosObj.get(idJogoPesquisado)));
+	}
+	
 
 	public void encerraRepositorio()
 	{
@@ -395,7 +406,7 @@ public class Repositorio extends FileHandler
 							{
 								j.setVersao(parsedLine[1]);
 								this.listaJogosObj.set(i, j);
-								System.out.println(j.getNomeJogo() + " foi atualizado com sucesso para a versão " + parsedLine[1] +".");
+								System.out.println(j.getNomeJogo() + " foi atualizado com sucesso para a versï¿½o " + parsedLine[1] +".");
 							}
 						}
 					}
