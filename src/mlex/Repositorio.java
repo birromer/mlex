@@ -48,7 +48,6 @@ public class Repositorio extends FileHandler
 			{
 				while (i != jogo.getIdJogo())
 				{
-					System.out.println(i);
 					listaJogosObj.add(null);
 					i++;
 				}
@@ -97,7 +96,7 @@ public class Repositorio extends FileHandler
 		
 		if (indice.getIdsDoIndice().contains(idNovoJogo))
 		{
-			System.out.println("tentativa de adicao de novo jogo falhou pois jogo ja existe");
+			System.out.println("tentativa de adicao de novo jogo falhou pois jogo ja existe\n");
 		}
 		else
 		{
@@ -111,7 +110,7 @@ public class Repositorio extends FileHandler
 			}
 			catch (Exception e)
 			{
-				System.out.println("falha ao adicionar novo jogo no indice");
+				System.out.println("falha ao adicionar novo jogo no indice\n");
 			}
 
 			indice.novoJogoSendoAdicionado(idNovoJogo); //funciona quando restaura jogo pq o indice restaura sobrescrevendo o mapa depois
@@ -134,18 +133,16 @@ public class Repositorio extends FileHandler
 			}
 			catch (Exception e)
 			{
-				System.out.println("Jogo nao existe no indice");
+				System.out.println("Jogo nao existe no indice\n");
 			}
 			
 			tabelaJogos.remove(listaJogosObj.get(idJogo).getNomeJogo());
 
 			listaJogosObj.set(idJogo, null);
-			
-			System.out.println("tamanho da lista de objetos agora = " + Integer.toString(listaJogosObj.size()));
-			
+						
 			if (! new File("./etc/jogos/" + idJogo).delete())
 			{
-				System.out.println("arquivo jogo a ser deletado nao existe");
+				System.out.println("arquivo jogo a ser deletado nao existe\n");
 			}
 		}
 				
@@ -218,7 +215,7 @@ public class Repositorio extends FileHandler
 					indice.imprimeAlgunsJogos(ids);
 				}
 				else
-					System.out.println("\nNenhum jogo encontrado, verifique se o nome foi digitado corretamente");
+					System.out.println("\nNenhum jogo encontrado, verifique se o nome foi digitado corretamente\n");
 				break;
 			case 2:
 				//lanc
@@ -229,7 +226,7 @@ public class Repositorio extends FileHandler
 					indice.imprimeAlgunsJogos(ids);
 				}
 				else
-					System.out.println("\nNenhum jogo encontrado, verifique se a data foi digitada corretamente");
+					System.out.println("\nNenhum jogo encontrado, verifique se a data foi digitada corretamente\n");
 				break;
 			case 3:
 				//desenv
@@ -240,10 +237,10 @@ public class Repositorio extends FileHandler
 					indice.imprimeAlgunsJogos(ids);
 				}
 				else
-					System.out.println("\nNenhum jogo encontrado, verifique se o nome do desenvolvedor foi digitado corretamente");
+					System.out.println("\nNenhum jogo encontrado, verifique se o nome do desenvolvedor foi digitado corretamente\n");
 				break;
 			default:
-				System.out.println("opcao invalida!");
+				System.out.println("opcao invalida!\n");
 		}
 
 		return ids;
@@ -323,7 +320,7 @@ public class Repositorio extends FileHandler
 		}
 		catch (Exception e)
 		{
-			System.out.println("falhou em adicionar jogo na categoria");
+			System.out.println("falhou em adicionar jogo na categoria\n");
 		}
 		
 		this.salvaRepositorio();
@@ -484,7 +481,7 @@ public class Repositorio extends FileHandler
 			}
 		}
 		catch(IOException e) {
-			System.out.println("Nao foi possivel verificar versao");
+			System.out.println("Nao foi possivel verificar versao\n");
 		}
 	}
 	
@@ -511,7 +508,7 @@ public class Repositorio extends FileHandler
 	{
 		if (idJogoPesquisado == -1)
 		{
-			System.out.println("Este jogo foi removido");
+			System.out.println("Este jogo foi removido\n");
 		}
 		else
 		{	
@@ -559,11 +556,13 @@ public class Repositorio extends FileHandler
 			
 			if(!(f.exists()))
 			{
-				try {
+				try
+				{
 					f.createNewFile();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					System.out.println("N�o foi poss�vel criar arquivo de email");
+				}
+				catch (IOException e)
+				{
+					System.out.println("Nao foi possivel criar arquivo de email\n");
 				}
 			}
 			try
@@ -619,7 +618,7 @@ public class Repositorio extends FileHandler
 		}
 		else
 		{
-			System.out.println("Nao foi possivel criar email. Jogo nao existe no repositorio.");
+			System.out.println("Nao foi possivel criar email. Jogo nao existe no repositorio.\n");
 		}
 
 	 }
@@ -638,10 +637,10 @@ public class Repositorio extends FileHandler
 			bw.write("Genero: " +Repositorio.listaJogosObj.get(idJogo).getGeneroJogo());
 			bw.newLine();
 			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("Nao foi possivel escrever dados do jogo em arquivo de email");
+		}
+		catch (IOException e)
+		{
+			System.out.println("Nao foi possivel escrever dados do jogo em arquivo de email\n");
 		}
 	}
 	
