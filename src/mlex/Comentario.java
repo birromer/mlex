@@ -86,7 +86,7 @@ public class Comentario extends FileHandler
 					bw.write(Float.toString(this.getNota()));
 					bw.newLine();
 				}
-				
+        
 				bw.write(txt);
 				bw.newLine();
 				
@@ -145,7 +145,6 @@ public class Comentario extends FileHandler
 				e.printStackTrace();
 			}
 		 }
-		
 	}
 	
 	public void removeComentarios()
@@ -155,7 +154,7 @@ public class Comentario extends FileHandler
 			System.out.println("Comentarios deletados com sucesso");
 		}
 		else {
-			System.out.println("Arquivo n„o existe");
+			System.out.println("Arquivo n√£o existe");
 		}
 		
 	}

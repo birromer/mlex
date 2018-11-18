@@ -270,12 +270,12 @@ public class Indice extends FileHandler
 		
 		resultados = 0;
 		int posicaoDaCategoria = this.getPosicaoCategoria(nomeCateg);
-				
+
 		for (int i=0;i<idsValidos.size();i++)
 		{
 			int key = idsValidos.get(i);
 			String listaCategoriasDoJogo = mapaJogoCategorias.get(key);
-		
+
 			char categTestada = listaCategoriasDoJogo.charAt(posicaoDaCategoria);
 			if(categTestada == '1')
 			{
@@ -285,7 +285,7 @@ public class Indice extends FileHandler
 						+ "\nDesenvolvedor: " + this.getInformacoesJogoNoIndice(key).get(3));
 			}
 		}
-		
+
 		return resultados;
 	}
 	

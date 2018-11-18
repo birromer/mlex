@@ -13,6 +13,7 @@ public class UsuarioCommand
 	private final static int OPCAO_VOLTAR = 666;
 	private static Repositorio repositorio = new Repositorio();
 	private Scanner scanner = new Scanner(System.in);
+
 	Jogo jogoAtual;
 	private PlataformaConfiguracao config;
 	private String nomeJogoPesquisado;
@@ -22,7 +23,6 @@ public class UsuarioCommand
 	public UsuarioCommand()
 	{	
 		config = new PlataformaConfiguracao();
-
 	}
 	
 	String getUsuario()
@@ -202,8 +202,7 @@ public class UsuarioCommand
 	}
 	
 	public int menuCategorias(int opcaoDeCategoria)
-	{
-		//exibe todas colecoes --- CICA FAZ ISSO AQUI				
+	{				
 		switch(opcaoDeCategoria)
 		{
 			case -1:
@@ -273,10 +272,9 @@ public class UsuarioCommand
 	public int menuJogo(int opcaoDeJogo)
 	{		
 		int idJogoPesquisado = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
-		
+
 		System.out.println("id do jogo que acabou de ser pesquisado = " + idJogoPesquisado);
 		System.out.println("jogos no indice atualmente na ordem = + ");
-		
 		
 		if (idJogoPesquisado == -1)
 		{
@@ -344,6 +342,7 @@ public class UsuarioCommand
 							+ "5)Configuracoes do usuario;\n"
 							+ "666)Sair;\n"
 							+ "Escolha a acao que deseja realizar: ");
+
 					return -2;
 				case 2:
 					//adicionar comentario
@@ -352,7 +351,8 @@ public class UsuarioCommand
 									+ "2 - Adicionar comentario sem Nota\n"
 									+ "3 - Exibir todos os comentarios do jogo\n"
 									+ "4 - Remover todos os comentarios do jogo\n"
-									+ "5 - Voltar");
+									+ "5 - Voltar\n");
+
 					int opcaoComentario = scanner.nextInt();
 					scanner.nextLine();
 					switch(opcaoComentario)
@@ -376,10 +376,9 @@ public class UsuarioCommand
 							break;
 						case 3:
 							repositorio.exibeComentariosDeJogo(idJogoPesquisado);
-							System.out.println("Digite ENTER para voltar");
-							scanner.nextLine();
-							scanner.nextLine();
+							System.out.println("Aperte (ENTER) para voltar");
 
+							scanner.nextLine();
 							break;
 						case 4:
 							repositorio.removeComentariosDeJogo(idJogoPesquisado);

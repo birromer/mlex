@@ -19,6 +19,23 @@ public class Main
 			opcaoMenu = scanner.nextInt();
 			scanner.nextLine();
 		} while (opcaoMenu != 666);
+		
+		System.out.println("\n\nAte a proxima! :)\n");
+	}
+	
+	public static void criaDiretorios()
+	{
+		File diretorio1 = new File("./etc/");
+		File diretorio2 = new File("./etc/jogos/");
+		
+		if (diretorio1.exists() == false)
+		{
+			diretorio1.mkdir();
+			if (diretorio2.exists() == false)
+			{
+				diretorio2.mkdir();
+			}
+		}
 	}
 	
 	public static void criaDiretorios()
