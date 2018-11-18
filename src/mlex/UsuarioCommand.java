@@ -121,11 +121,14 @@ public class UsuarioCommand
 				break;
 			case 4:
 				//filtroo
-
 				int filt = this.menuFiltro();
 				scanner.reset();
-				String nomefilt = scanner.nextLine();
-				repositorio.filtroPorAtributoDoJogo(nomefilt, filt);
+				if (filt != 4)
+				{
+					System.out.println("Digite o filtro:");
+					String nomefilt = scanner.nextLine();
+					repositorio.filtroPorAtributoDoJogo(nomefilt, filt);
+				}
 				break;
 			case 5:
 				//configs

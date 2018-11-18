@@ -261,11 +261,11 @@ public class Repositorio extends FileHandler
 		}
 		if(nroDeResultados == 0)
 		{
-			System.out.println("Nao ha jogos na colecao selecionada.");
+			System.out.println("\nNao ha jogos na colecao selecionada.\n");
 			return nroDeResultados;
 		}
-		System.out.println("\nResultados filtrados por colecao '" + nomeDeCategoria + "': ");
-		indice.imprimeAlgunsJogos(idsValidos);
+		//System.out.println("\nResultados filtrados por colecao '" + nomeDeCategoria + "': ");
+		//indice.imprimeAlgunsJogos(idsValidos);
 		return nroDeResultados;
 	}
 
