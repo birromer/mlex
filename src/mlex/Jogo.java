@@ -57,14 +57,19 @@ public class Jogo extends FileHandler implements Serializable
 		{
 			case 1:
 				nomeJogo = atributoAtualizado;
+				break;
 			case 2:
 				lancamento = atributoAtualizado;
+				break;
 			case 3:
 				desenvolvedor = atributoAtualizado;
+				break;
 			case 4:
 				versao = atributoAtualizado;
+				break;
 			case 5:
 				genero = atributoAtualizado;
+				break;
 		}		
 		caminhoObjetoJogo = "./etc/jogos/" + Integer.toString(idJogo);
 		this.salvaObjetoEmArquivo(this, caminhoObjetoJogo);
@@ -76,11 +81,11 @@ public class Jogo extends FileHandler implements Serializable
 	@Override
 	public String toString()
 	{
-		return ("Nome: "+ this.nomeJogo
-				+ "Data lancamento: " +this.lancamento
-				+ "Desenvolvedor: " + this.desenvolvedor
-				+ "Versao: " + this.versao
-				+ "Genero: " + this.genero); 
+		return ("\nNome: "+ this.nomeJogo
+				+ "\nData lancamento: " +this.lancamento
+				+ "\nDesenvolvedor: " + this.desenvolvedor
+				+ "\nVersao: " + this.versao
+				+ "\nGenero: " + this.genero); 
 	}
 	
 
