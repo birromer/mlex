@@ -452,8 +452,10 @@ public class Repositorio extends FileHandler
 		if (tabelaJogos.values().contains(idJogo))
 		{
 			
-			String fpath = "./etc/" + idJogo + "email";
+			String fpath = "./etc/" + idJogo + "email.txt";
+			String commentsPath = "./etc/" + idJogo + "comentario.txt";
 			File f = new File(fpath);
+			File f2 = new File(commentsPath);
 			
 			if(!(f.exists()))
 			{
@@ -468,25 +470,42 @@ public class Repositorio extends FileHandler
 			{
 				
 				Jogo jogoPorEmail = Repositorio.listaJogosObj.get(idJogo);
-				
-				BufferedReader br = new BufferedReader( new FileReader(fpath));
+
 				
 				FileWriter fw = new FileWriter (f.getPath());
 				BufferedWriter bw = new BufferedWriter(fw);
 
 				String nomeDoJogo = Repositorio.listaJogosObj.get(idJogo).getNomeJogo();
-				bw.write("Email sobre o jogo "+ nomeDoJogo+"\nFrom: "+emailFROM+"\nTo: "+emailTO+"\n");
+
+				bw.write("Email sobre o jogo "+ nomeDoJogo);
+				bw.newLine();
+				bw.write("From: "+emailFROM);
+				bw.newLine();
+				bw.write("To: "+emailTO);
+				bw.newLine();
 				
 				bw.write(jogoPorEmail.toString());
-				String ln = br.readLine();
-				while (ln != null)
+				bw.newLine();
+				
+				if(f2.exists())
 				{
-					bw.write(ln);
-					bw.newLine();
+					
+					BufferedReader br = new BufferedReader( new FileReader(commentsPath));
+					
+					String ln = br.readLine();
+					while (ln != null)
+					{
+						bw.write(ln);
+						bw.newLine();
 
-					ln = br.readLine();
+						ln = br.readLine();
+					}
+					br.close();
 				}
-				br.close();
+
+				bw.close();
+				
+				System.out.println("Email enviado com sucesso. \n");
 
 			} catch (FileNotFoundException e) 
 			{

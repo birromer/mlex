@@ -1,37 +1,48 @@
 package mlex;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Scanner;
 
 public class PlataformaConfiguracao extends FileHandler
 {
+	private Scanner scanner = new Scanner(System.in);
 	private Properties configuracoes = new Properties();
 	private String usuario = "admin";
 	private String senha = "admin";
-	private String emailDoUsuario;
+	private String emailDoUsuario = "admin@mlex";
 	private String ordenacao = "n";
 	
 	
-	public PlataformaConfiguracao() {
-		inicializaConfiguracaoDoUsuario();
+	public PlataformaConfiguracao() 
+	{
+		inicializaConfiguracao();
 	}
 	
-	public void inicializaConfiguracaoDoUsuario()
+	public void inicializaConfiguracao()
 	{
-		configuracoes.setProperty("usuario", "admin");
-		configuracoes.setProperty("senha", "admin");
-		configuracoes.setProperty("ordenado", "n");
-		configuracoes.setProperty("emailDoUsuario", "admin@mlex");
-		
-		try
+		if (new File("./.mlex.conf").exists() == false)
 		{
-			configuracoes.store(new FileOutputStream("./.mlex.conf"), null);
+			configuracoes.setProperty("usuario", "admin");
+			configuracoes.setProperty("senha", "admin");
+			configuracoes.setProperty("ordenacao", "n");
+			configuracoes.setProperty("emailDoUsuario", "admin@mlex");
+			
+			try
+			{
+				configuracoes.store(new FileOutputStream("./.mlex.conf"), null);
+			}
+			catch (IOException e) 
+			{
+				System.out.println("Problema escrevendo arquivo de configuracao default");
+			}
 		}
-		catch (IOException e) 
+		else
 		{
-			System.out.println("Problema escrevendo arquivo de configuracao default");
+			this.restauraConfiguracaoDoUsuario();
 		}
 	}
 	
@@ -52,8 +63,10 @@ public class PlataformaConfiguracao extends FileHandler
 		this.emailDoUsuario = configuracoes.getProperty("emailDoUsuario");
 	}
 	
-	public boolean validacaoUsuario(String pw)
+	public boolean validacaoUsuario()
 	{
+		System.out.println("Digite a sua senha para validar a operacao: ");
+		String pw = scanner.nextLine();
 		return(this.getSenha().equals(pw));
 	}
 	

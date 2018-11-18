@@ -21,14 +21,8 @@ public class UsuarioCommand
 	
 	public UsuarioCommand()
 	{	
-		if (new File("./.mlex.conf").exists() == false)
-		{
-			config.inicializaConfiguracaoDoUsuario();
-		}
-		else
-		{
-			config.restauraConfiguracaoDoUsuario();
-		}
+		config = new PlataformaConfiguracao();
+
 	}
 	
 	String getUsuario()
@@ -103,7 +97,79 @@ public class UsuarioCommand
 				repositorio.filtroPorAtributoDoJogo(nomefilt, filt);
 				break;
 			case 5:
-				//configs
+				System.out.println("\nConfiguracoes de usuario;\n"
+						+ "0)Alterar nome;\n"
+						+ "1)Alterar senha\n"
+						+ "2)Alterar email\n"
+						+ "3)Alterar ordenacao");
+				int opcaoConfiguracao = scanner.nextInt();
+				switch(opcaoConfiguracao)
+				{
+				case 0:
+					if(config.validacaoUsuario()) 
+					{
+						System.out.println("Digite o novo nome: ");
+						scanner.nextLine();
+						String novoNome = scanner.nextLine();
+						config.setUsuario(novoNome);
+						System.out.println("Nome atualizado com sucesso.");
+					}
+					else
+					{
+						System.out.println("Senha invalida.");
+					}
+						
+
+					break;
+				case 1:
+					if(config.validacaoUsuario()) 
+					{
+						System.out.println("Digite a nova senha: ");
+						scanner.nextLine();
+						String novaSenha = scanner.nextLine();
+						config.setUsuario(novaSenha);	
+						System.out.println("Senha atualizada com sucesso.");
+					}
+					else
+					{
+						System.out.println("Senha invalida.");
+					}
+
+					break;
+				case 2:
+					if(config.validacaoUsuario())
+					{
+						System.out.println("Digite o novo email: ");
+						scanner.nextLine();
+						String novoEmail = scanner.nextLine();
+						config.setUsuario(novoEmail);
+						System.out.println("Email atualizado com sucesso.");
+					}
+					else
+					{
+						System.out.println("Senha invalida.");
+					}
+
+					break;
+				case 3:
+					if(config.validacaoUsuario())
+					{
+						System.out.println("Digite a nova ordenacao: ");
+						scanner.nextLine();
+						String novaOrdenacao = scanner.nextLine();
+						config.setUsuario(novaOrdenacao);
+						System.out.println("Ordenacao atualizada com sucesso.");
+					}
+					else
+					{
+						System.out.println("Senha invalida.");
+					}
+
+					break;
+				default:
+					break;
+				}
+
 				break;
 			case 666:
 				//encerra o programa
@@ -293,6 +359,9 @@ public class UsuarioCommand
 					break;
 				case 4:
 					//enviar por email -- fazer depois que comentarios e toString integrados
+					System.out.println("Digite email do destinatario: \n");
+					String emailTO = scanner.nextLine();
+					repositorio.enviaEmail(emailTO, config.getEmailDoUsuario(), idJogoPesquisado);
 					break;
 				case 5:
 					//volta
