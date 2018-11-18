@@ -257,15 +257,10 @@ public class Indice extends FileHandler
 		for (int i=0;i<idsValidos.size();i++)
 		{
 			int key = idsValidos.get(i);
-			System.out.println(this.getCategorias(i));
 			String listaCategoriasDoJogo = mapaJogoCategorias.get(key);
 			
-			System.out.println("aaaaaaaaaaaaaaaa " + listaCategoriasDoJogo);
-			
-			for (String ka : mapaJogoCategorias.values())
-			{
-				System.out.println(ka);
-			}
+			System.out.println("lista de categorias  = " + listaCategoriasDoJogo);
+			System.out.println("posicao da categoria pesquisada = " + posicaoDaCategoria);
 			
 			char categTestada = listaCategoriasDoJogo.charAt(posicaoDaCategoria);
 			if(categTestada == '1')
@@ -276,6 +271,7 @@ public class Indice extends FileHandler
 						+ "\nDesenvolvedor: " + this.getInformacoesJogoNoIndice(key).get(3));
 			}
 		}
+		System.out.println("valor de resultados = " + resultados);
 		return resultados;
 	}
 	

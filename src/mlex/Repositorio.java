@@ -38,7 +38,6 @@ public class Repositorio extends FileHandler
 		}
 	}
 	
-
 	public boolean verificaId(String nomeJogo)
 	{
 		return tabelaJogos.keySet().contains(nomeJogo);
@@ -243,7 +242,7 @@ public class Repositorio extends FileHandler
 				//com subfiltro
 				int opcaoDeSubfiltro = menuFiltro();
 				System.out.println("\nDigite o parametro do subfiltro.");
-				String nomeOpcaoDeSubfiltro = scanner.next();
+				String nomeOpcaoDeSubfiltro = scanner.nextLine();
 				ids = indice.filtroPorAtributos(nomeOpcaoDeSubfiltro, opcaoDeSubfiltro);
 				resultados = indice.filtroPorCategoria(nomeDeCategoria, ids);
 
@@ -362,7 +361,8 @@ public class Repositorio extends FileHandler
 				+ "4)Cancela;\n");
 
 		int opcaoDeFiltro = scanner.nextInt();
-
+		scanner.nextLine();
+		
 		return opcaoDeFiltro;
 	}
 	
@@ -378,7 +378,14 @@ public class Repositorio extends FileHandler
 
 	public void exibeInformacoesJogo(int idJogoPesquisado)
 	{
-		System.out.println((listaJogosObj.get(idJogoPesquisado)));
+		if (idJogoPesquisado == -1)
+		{
+			System.out.println("Este jogo foi removido");
+		}
+		else
+		{		
+			System.out.println((listaJogosObj.get(idJogoPesquisado)));
+		}
 	}
 
 	public void exibeComentariosDeJogo(int jogoId) 
@@ -475,10 +482,11 @@ public class Repositorio extends FileHandler
 	{
 		if (tabelaJogos.size() == 0)
 		{
-			System.out.println("Nao existem jogos a serem exibidos");
+			System.out.println("\nNao existem jogos a serem exibidos\n");
 		}
 		else
 		{
+			System.out.println("\nJogos armazenados no repositorio:");
 			for (String nomeJogo : tabelaJogos.keySet())
 			{
 				System.out.println(" - " + nomeJogo);
