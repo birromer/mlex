@@ -13,7 +13,7 @@ public class PlataformaConfiguracao extends FileHandler
 	private Properties configuracoes = new Properties();
 	private String usuario = "admin";
 	private String senha = "admin";
-	private String emailDoUsuario = "admin@mlex";
+	private String emailDoUsuario = "admin@mlex.com";
 	private String ordenacao = "n";
 	
 	
@@ -72,36 +72,36 @@ public class PlataformaConfiguracao extends FileHandler
 	
 	public String getUsuario() 
 	{
-		return this.usuario;
+		return configuracoes.getProperty("usuario");
 	}
 	public String getSenha() 
 	{
-		return this.senha;
+		return configuracoes.getProperty("senha");
 	}
 	public String getEmailDoUsuario() 
 	{
-		return this.emailDoUsuario;
+		return configuracoes.getProperty("emailDoUsuario");
 	}
 	public String getOrdenacao() 
 	{
-		return this.ordenacao;
+		return configuracoes.getProperty("ordenacao");
 	}
 	
 	public void setUsuario(String usuario) 
 	{
-		this.usuario = usuario;
+		configuracoes.setProperty("usuario", usuario);
 	}
 	public void setSenha(String senha) 
 	{
-		this.senha = senha;
+		configuracoes.setProperty("senha", senha);
 	}
 	public void setEmailDoUsuario(String emailDoUsuario) 
 	{
-		this.emailDoUsuario = emailDoUsuario;
+		configuracoes.setProperty("emailDoUsuario", emailDoUsuario);
 	}
 	public void setOrdenacao(String ordenacao) 
 	{
-		this.ordenacao = ordenacao;
+		configuracoes.setProperty("ordenacao", ordenacao);
 	}
 
 

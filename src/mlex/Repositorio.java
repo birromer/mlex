@@ -483,12 +483,15 @@ public class Repositorio extends FileHandler
 				bw.newLine();
 				bw.write("To: "+emailTO);
 				bw.newLine();
+				bw.newLine();
 				
-				bw.write(jogoPorEmail.toString());
+				this.escreveInfoEmEmail(jogoPorEmail.getIdJogo(), bw);
 				bw.newLine();
 				
 				if(f2.exists())
 				{
+					bw.write("Comentarios:");
+					bw.newLine();
 					
 					BufferedReader br = new BufferedReader( new FileReader(commentsPath));
 					
@@ -519,10 +522,31 @@ public class Repositorio extends FileHandler
 		}
 		else
 		{
-			System.out.println("Não foi possível criar email. Jogo não existe no repositório.");
+			System.out.println("Nao foi possivel criar email. Jogo nao existe no repositorio.");
 		}
 
 	 }
+	
+	public void escreveInfoEmEmail(int idJogo, BufferedWriter bw)
+	{
+		try {
+			bw.write("Nome do jogo: " + Repositorio.listaJogosObj.get(idJogo).getNomeJogo());
+			bw.newLine();
+			bw.write("Data de lancamento: " + Repositorio.listaJogosObj.get(idJogo).getLancamentoJogo());
+			bw.newLine();
+			bw.write("Desenvolvedor: " +Repositorio.listaJogosObj.get(idJogo).getDesenvolvedorJogo());
+			bw.newLine();
+			bw.write("Versao do jogo: " +Repositorio.listaJogosObj.get(idJogo).getVersao());
+			bw.newLine();
+			bw.write("Genero: " +Repositorio.listaJogosObj.get(idJogo).getGeneroJogo());
+			bw.newLine();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Nao foi possivel escrever dados do jogo em arquivo de email");
+		}
+	}
 	
 	
 }

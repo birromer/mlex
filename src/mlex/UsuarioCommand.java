@@ -360,6 +360,7 @@ public class UsuarioCommand
 				case 4:
 					//enviar por email -- fazer depois que comentarios e toString integrados
 					System.out.println("Digite email do destinatario: \n");
+					scanner.nextLine();
 					String emailTO = scanner.nextLine();
 					repositorio.enviaEmail(emailTO, config.getEmailDoUsuario(), idJogoPesquisado);
 					break;
