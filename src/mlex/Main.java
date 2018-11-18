@@ -37,20 +37,4 @@ public class Main
 			}
 		}
 	}
-	
-	public static void criaDiretorios()
-	{
-		File diretorio1 = new File("./etc/");
-		File diretorio2 = new File("./etc/jogos/");
-		
-		if (diretorio1.exists() == false)
-		{
-			diretorio1.mkdir();
-			if (diretorio2.exists() == false)
-			{
-				diretorio2.mkdir();
-			}
-		}
-	}
-
 }

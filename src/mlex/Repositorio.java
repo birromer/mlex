@@ -406,10 +406,6 @@ public class Repositorio extends FileHandler
 		}
 	}
 
-	public void exibeInformacoesJogo(int idJogoPesquisado)
-	{
-		System.out.println((listaJogosObj.get(idJogoPesquisado)));
-	}
 
 	public void exibeComentariosDeJogo(int jogoId) 
 	{
@@ -419,14 +415,6 @@ public class Repositorio extends FileHandler
 				break;
 			}
 		}	
-	}
-	
-	public void setInfoJogo(Jogo j) 
-	{
-		this.idNovoJogo = j.getIdJogo();
-		this.nomeNovoJogo = j.getNomeJogo();
-		this.lancamentoNovoJogo = j.getLancamentoJogo();
-		this.desenvolvedorNovoJogo = j.getDesenvolvedorJogo();
 	}
 	
 	public void verificaIntegridade() 
@@ -487,20 +475,8 @@ public class Repositorio extends FileHandler
 		}
 	}
 	
-	public String getVersaoJogo(int jogoId) 
+	public void exibeInformacoesJogo(int idJogoPesquisado)
 	{
-		int i = 0;
-		for (Jogo j : Repositorio.listaJogosObj)
-		{
-			if (jogoId == Repositorio.listaJogosObj.get(i).getIdJogo())
-			{
-				return Repositorio.listaJogosObj.get(i).getVersao();
-			}
-			i++;
-		}
-		return null;
-    }
-
 		if (idJogoPesquisado == -1)
 		{
 			System.out.println("Este jogo foi removido");
@@ -510,16 +486,6 @@ public class Repositorio extends FileHandler
 			System.out.println((Repositorio.listaJogosObj.get(idJogoPesquisado)));
 		}
 	}
-
-	public void exibeComentariosDeJogo(int jogoId) 
-	{
-		for (Jogo j: Repositorio.listaJogosObj) {
-			if (j.getIdJogo() == jogoId){
-				j.exibeComentarios();
-				break;
-			}
-		}	
-	}
 	
 	public void setInfoJogo(Jogo j) 
 	{
@@ -527,64 +493,6 @@ public class Repositorio extends FileHandler
 		this.nomeNovoJogo = j.getNomeJogo();
 		this.lancamentoNovoJogo = j.getLancamentoJogo();
 		this.desenvolvedorNovoJogo = j.getDesenvolvedorJogo();
-	}
-	
-	public void verificaIntegridade() 
-	{
-		BufferedReader r;
-		try 
-		{
-			r = new BufferedReader(new FileReader("./etc/versoes.txt"));
-			String ln = r.readLine();
-			while(ln != null) 
-			{
-				String[] parsedLine = ln.split(",");
-				
-				int i = 0;
-				for(Jogo j: Repositorio.listaJogosObj) 
-				{
-					if(j.getNomeJogo().equals(parsedLine[0])) 
-					{
-
-						if(!(Repositorio.listaJogosObj.get(i).getVersao().equals(parsedLine[1]))) 
-						{
-							String velhaVersao = Repositorio.listaJogosObj.get(i).getVersao().substring(1);
-							String novaVersao = parsedLine[1].substring(1);
-							double novo = Double.parseDouble(novaVersao);
-							double velho = Double.parseDouble(velhaVersao);
-
-							if (novo > velho) 
-							{
-								j.setVersao(parsedLine[1]);
-								Repositorio.listaJogosObj.set(i, j);
-								System.out.println(j.getNomeJogo() + " foi atualizado com sucesso para a vers�o " + parsedLine[1] +".");
-							}
-						}
-					}
-					i++;
-				}
-				ln = r.readLine();
-			}
-		}
-		catch(IOException e) {
-			System.out.println("Nao foi possivel verificar versao");
-		}
-	}
-	
-	
-	public void atualizaVersaoJogo(int jogoId, String novaVersao) 
-	{
-		int i = 0;
-		for (Jogo j: Repositorio.listaJogosObj) 
-		{
-			if (j.getIdJogo() == jogoId)
-			{	
-				j.setVersao(novaVersao);
-
-				Repositorio.listaJogosObj.set(i, j);
-			}
-			i++;
-		}
 	}
 	
 	public String getVersaoJogo(int jogoId) 
@@ -697,6 +605,7 @@ public class Repositorio extends FileHandler
 			e.printStackTrace();
 			System.out.println("Nao foi possivel escrever dados do jogo em arquivo de email");
 		}
+	}
 	
 	public void exibeJogosNoRepositorio()
 	{
