@@ -17,6 +17,7 @@ public class Main
 		{
 			usuario.menuInicial(opcaoMenu);
 			opcaoMenu = scanner.nextInt();
+			scanner.nextLine();
 		} while (opcaoMenu != 666);
 	}
 	
