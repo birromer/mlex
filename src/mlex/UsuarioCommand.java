@@ -261,7 +261,7 @@ public class UsuarioCommand
 					//adicionar comentario
 					System.out.println("Tipo de comentario:");
 					System.out.println("1 - Com Nota\n"
-									+ "2 - Sem Nota\n");
+									+ "2 - Sem Nota");
 					int opcaoComentario = scanner.nextInt();
 					switch(opcaoComentario)
 					{
@@ -270,7 +270,7 @@ public class UsuarioCommand
 							scanner.nextLine();
 							String comentarioComNota = scanner.nextLine();
 							System.out.println("Digite a nota:");
-							double nota = scanner.nextDouble();
+							double nota = Double.parseDouble(scanner.nextLine());
 							float notaFloat = (float)nota;
 							repositorio.addComentarioEmJogo(idJogoPesquisado, comentarioComNota, notaFloat);
 							System.out.println("Comentario adicionado com sucesso.");
