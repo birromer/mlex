@@ -230,6 +230,8 @@ public class Repositorio extends FileHandler
 	public int filtroDasCategorias(String nomeDeCategoria, int opcaoDeBuscaCateg)
 	{
 		List<Integer> ids = new ArrayList<Integer>();
+		String temp;
+		String nomeOpcaoDeSubfiltro;
 		int resultados = -1;
 		switch(opcaoDeBuscaCateg)
 		{
@@ -242,12 +244,26 @@ public class Repositorio extends FileHandler
 			case 1:
 				//com subfiltro
 				int opcaoDeSubfiltro = menuFiltro();
-				System.out.println("\nDigite o parametro do subfiltro.");
-				String nomeOpcaoDeSubfiltro = scanner.next();
-				ids = indice.filtroPorAtributos(nomeOpcaoDeSubfiltro, opcaoDeSubfiltro);
-				resultados = indice.filtroPorCategoria(nomeDeCategoria, ids);
-
-				this.mostraResultadosDoFiltroDeCategorias(resultados, ids, nomeDeCategoria);
+				if(opcaoDeSubfiltro == 4)
+				{
+					System.out.println("\nCancelado.\n\n");
+				}
+				else
+				{
+					if(opcaoDeSubfiltro < 4 && opcaoDeSubfiltro > 0)
+					{
+						System.out.println("\nDigite o parametro do subfiltro.");
+						nomeOpcaoDeSubfiltro = scanner.nextLine();
+						ids = indice.filtroPorAtributos(nomeOpcaoDeSubfiltro, opcaoDeSubfiltro);
+					}
+					else
+					{
+						System.out.println("\nOpcao parece ser invalida. Mostrando todos os jogos da categoria.");
+						ids = indice.getIdsDoIndice();
+					}
+					resultados = indice.filtroPorCategoria(nomeDeCategoria, ids);
+					this.mostraResultadosDoFiltroDeCategorias(resultados, ids, nomeDeCategoria);
+				}
 				break;
 		}
 		return resultados;
@@ -257,16 +273,16 @@ public class Repositorio extends FileHandler
 	{
 		if(nroDeResultados == -1)
 		{
-			System.out.println("\nNenhum jogo encontrado, verifique se o nome da colecao foi digitado corretamente.");
+			System.out.println("\nNenhum jogo encontrado, verifique se o nome da colecao foi digitado corretamente.\n\n");
 			return nroDeResultados;
 		}
 		if(nroDeResultados == 0)
 		{
-			System.out.println("Nao ha jogos na colecao selecionada.");
+			System.out.println("\nNao ha jogos na colecao selecionada ou nenhum satisfaz o filtro.\n\n");
 			return nroDeResultados;
 		}
-		System.out.println("\nResultados filtrados por colecao '" + nomeDeCategoria + "': ");
-		indice.imprimeAlgunsJogos(idsValidos);
+		System.out.println("\nResultados filtrados por colecao '" + nomeDeCategoria + "': \n\n");
+		//indice.imprimeAlgunsJogos(idsValidos);
 		return nroDeResultados;
 	}
 
@@ -362,6 +378,7 @@ public class Repositorio extends FileHandler
 				+ "4)Cancela;\n");
 
 		int opcaoDeFiltro = scanner.nextInt();
+		scanner.nextLine();
 
 		return opcaoDeFiltro;
 	}
