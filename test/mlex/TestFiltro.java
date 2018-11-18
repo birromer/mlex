@@ -75,9 +75,9 @@ public class TestFiltro {
 		repoTeste.criaCateg("Jogos do verao passado");
 		repoTeste.criaCateg("Jogos do inverno passado");
 		repoTeste.criaCateg("Jogos do equinocio passado");
-		repoTeste.addJogoNaCateg(jogoTeste1, "Jogos do verao passado");
-		repoTeste.addJogoNaCateg(jogoTeste2, "Jogos do verao passado");
-		repoTeste.addJogoNaCateg(jogoTeste2, "Jogos do equinocio passado");
+		repoTeste.addJogoNaCateg(jogoTeste1.getIdJogo(), "Jogos do verao passado");
+		repoTeste.addJogoNaCateg(jogoTeste2.getIdJogo(), "Jogos do verao passado");
+		repoTeste.addJogoNaCateg(jogoTeste2.getIdJogo(), "Jogos do equinocio passado");
 //		System.out.println("\nfiltro por colecao 'Jogo Chato':");
 		assertTrue(repoTeste.filtroDasCategorias("Jogo Chato", 0) == -1);
 //		System.out.println("\nfiltro por colecao 'Jogos do inverno passado':");
