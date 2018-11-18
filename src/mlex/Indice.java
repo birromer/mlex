@@ -127,13 +127,9 @@ public class Indice extends FileHandler
 	}
 
 	public void adicionaCategoriaAoIndice(String novaCategoria)
-	{
-		System.out.println(novaCategoria);
-		
-		
+	{	
 		if (listaCategorias.contains(novaCategoria) == true)
 		{
-			System.out.println("entrou no caso da categoria ja existir blaaaaaaaaaaaaaaaaaaaa");
 			return;
 		}
 
@@ -144,11 +140,9 @@ public class Indice extends FileHandler
 			if (this.getNumeroCategorias() > 1)
 			{
 				String novaListaCategorias = mapaJogoCategorias.get(key) + "0";
-				System.out.println("==================  " + novaListaCategorias);
 				mapaJogoCategorias.replace(key, novaListaCategorias);
 			}
 		}
-		System.out.println("==================  " + mapaJogoCategorias);
 	}
 
 	List<String> getListaCategorias()
@@ -253,7 +247,6 @@ public class Indice extends FileHandler
 		int resultados = -1;
 		if(listaCategorias.contains(nomeCateg) == false)
 		{
-			System.out.println("Entrou no caso de nao conter a categoria na lista de categorias");
 			return resultados;
 		}
 		
@@ -301,7 +294,8 @@ public class Indice extends FileHandler
 		this.salvaObjetoEmArquivo(listaCategorias, caminhoParaListaCategorias);
 	}
 
-	Object leArquivo(String caminhoParaArquivo)
+	@Override
+	public Object leArquivo(String caminhoParaArquivo)
 	{
 		File arquivo = new File(caminhoParaArquivo);
 		try

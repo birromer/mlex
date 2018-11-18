@@ -10,33 +10,40 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 
-public class Comentario extends FileHandler{
+public class Comentario extends FileHandler
+{
 	private Date data;
 	private float nota;
 	private String texto;
 	private String path = "./etc/";
 	private String absolutePath;
 
-	public String getAbsolutePath() {
+	public String getAbsolutePath()
+	{
 		return this.absolutePath;
 	}
-	public String getTexto() {
+	public String getTexto() 
+	{
 		return this.texto;
 	}
 
-	public float getNota() {
+	public float getNota() 
+	{
 		return this.nota;
 	}
 	
-	public Date getData() {
+	public Date getData() 
+	{
 		return this.data;
 	}
 	
-	public String getPath() {
+	public String getPath() 
+	{
 		return this.path;
 	}
 	
-	public Comentario(String s, int idJogo) {
+	public Comentario(String s, int idJogo) 
+	{
 		this.data = new Date();
 		this.nota = 0;
 		this.texto = s;
@@ -45,7 +52,8 @@ public class Comentario extends FileHandler{
 	}
 	
 	
-	public Comentario(String s, int idJogo, float n) {
+	public Comentario(String s, int idJogo, float n) 
+	{
 		this.data = new Date();
 		this.texto = s;
 		this.nota = n;
@@ -54,12 +62,14 @@ public class Comentario extends FileHandler{
 
 	}
 	
-	public void salvaComentario() {
+	public void salvaComentario() 
+	{
 		
 		File f = new File(this.getPath());
 		
 		//se arquivo nao existe
-		if(!f.exists()) {
+		if(!f.exists()) 
+		{
 			try {
 				String txt = "" + this.getData();
 				f.createNewFile();
@@ -77,12 +87,14 @@ public class Comentario extends FileHandler{
 				
 				bw.close();
 			}
-			catch(IOException e) {
+			catch(IOException e)
+			{
 				
 			}
 		}
 		//se arquivo ja existe e nao eh diretorio
-		else if (f.exists() && !f.isDirectory()) {
+		else if (f.exists() && !f.isDirectory()) 
+		{
 			//salva comentario em fim de arquivo 
 			try {
 				PrintWriter out = new PrintWriter (new BufferedWriter (new FileWriter(this.getPath(),true)));
@@ -101,7 +113,8 @@ public class Comentario extends FileHandler{
 	}
 	
 	
-	public void exibeComentarios() {
+	public void exibeComentarios() 
+	{
 		String fpath = this.path;
 		
 		try {
@@ -112,7 +125,8 @@ public class Comentario extends FileHandler{
 			}
 			br.close();
 			
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) 
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -122,7 +136,8 @@ public class Comentario extends FileHandler{
 		
 	}
 	
-	public void removeComentarios() {
+	public void removeComentarios()
+	{
 		File f = new File(this.path);
 		if(f.delete()) {
 			System.out.println("Comentarios deletados");

@@ -58,7 +58,7 @@ public class Jogo extends FileHandler{
 		return listaAtributosRelevantes;
 	}
 	
-	public void atualizaAtributos(int opcao, String atributoAtualizado)
+	public Jogo atualizaAtributos(int opcao, String atributoAtualizado)
 	{
 		switch (opcao)
 		{
@@ -73,16 +73,22 @@ public class Jogo extends FileHandler{
 			case 5:
 				genero = atributoAtualizado;
 		}		
-		caminhoObjetoJogo = "./etc/" + Integer.toString(idJogo);
+		caminhoObjetoJogo = "./etc/jogos/" + Integer.toString(idJogo);
 		System.out.println(caminhoObjetoJogo);
 		this.salvaObjetoEmArquivo(this, caminhoObjetoJogo);
+		
+		return this;
 	}
+	
 	
 	@Override
 	public String toString()
 	{
-		//refazer para ficar bonito
-		return ( Integer.toString(this.idJogo) + ',' + this.nomeJogo + ',' + this.lancamento + ',' + this.desenvolvedor); 
+		return ("Nome: "+ this.nomeJogo
+				+ "Data lancamento: " +this.lancamento
+				+ "Desenvolvedor: " + this.desenvolvedor
+				+ "Versao: " + this.versao
+				+ "Genero: " + this.genero); 
 	}
 	
 	public void addComentario(String texto) {
