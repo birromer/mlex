@@ -48,9 +48,13 @@ public class Jogo extends FileHandler implements Serializable
 	}
 	
 	public String getDesenvolvedorJogo() {
-				return this.desenvolvedor;
+		return this.desenvolvedor;
 	}
 
+	public String getGeneroJogo()
+	{
+		return this.genero;
+	}
 	
 	public List<String> retornaListaAtributosRelevantes()
 	{

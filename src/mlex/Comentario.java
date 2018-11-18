@@ -45,7 +45,7 @@ public class Comentario extends FileHandler
 	public Comentario(String s, int idJogo) 
 	{
 		this.data = new Date();
-		this.nota = 0;
+		this.nota = -1;
 		this.texto = s;
 		this.path = path + Integer.toString(idJogo) + "comentario.txt";
 		this.absolutePath =  Integer.toString(idJogo) + "comentario.txt";
@@ -80,8 +80,13 @@ public class Comentario extends FileHandler
 				
 				bw.write(this.getTexto());
 				bw.newLine();
-				bw.write(Float.toString(this.getNota()));
-				bw.newLine();
+				
+				if(this.getNota() != -1) 
+				{
+					bw.write(Float.toString(this.getNota()));
+					bw.newLine();
+				}
+				
 				bw.write(txt);
 				bw.newLine();
 				
@@ -115,24 +120,31 @@ public class Comentario extends FileHandler
 	
 	public void exibeComentarios() 
 	{
-		String fpath = this.path;
-		
-		try {
-			BufferedReader br = new BufferedReader( new FileReader(fpath));
-			String ln = null;
-			while ((ln = br.readLine()) != null) {
-				System.out.println(ln);
+		 String fpath = this.path;
+		 File f = new File(fpath);
+		 if (!(f.exists())) 
+		 {
+			 System.out.println("Arquivo de comentarios nao existe.");
+		 }
+		 else 
+		 {
+			try {
+				BufferedReader br = new BufferedReader( new FileReader(fpath));
+				String ln = null;
+				while ((ln = br.readLine()) != null) {
+					System.out.println(ln);
+				}
+				br.close();
+				
+			} catch (FileNotFoundException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			br.close();
-			
-		} catch (FileNotFoundException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		 }
 		
 	}
 	
