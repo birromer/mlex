@@ -66,12 +66,13 @@ public class UsuarioCommand
 				if (repositorio.verificaId(nomeJogoPesquisado))
 				{
 					int opcaoJogo = -1;
+					int temp;
 					do
 					{
-						this.menuJogo(opcaoJogo);
+						temp = this.menuJogo(opcaoJogo);
 						opcaoJogo = scanner.nextInt();
 						scanner.nextLine();
-					} while (opcaoJogo != OPCAO_VOLTAR);
+					} while (opcaoJogo != OPCAO_VOLTAR && temp != -2);
 				}
 				else
 				{
@@ -272,7 +273,11 @@ public class UsuarioCommand
 	public int menuJogo(int opcaoDeJogo)
 	{		
 		int idJogoPesquisado = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
-				
+		
+		System.out.println("id do jogo que acabou de ser pesquisado = " + idJogoPesquisado);
+		System.out.println("jogos no indice atualmente na ordem = + ");
+		
+		
 		if (idJogoPesquisado == -1)
 		{
 			System.out.println("Jogo com esse nome nao existe no repositorio");
@@ -339,7 +344,7 @@ public class UsuarioCommand
 							+ "5)Configuracoes do usuario;\n"
 							+ "666)Sair;\n"
 							+ "Escolha a acao que deseja realizar: ");
-					return -1;
+					return -2;
 				case 2:
 					//adicionar comentario
 					System.out.println("Comentarios:");
@@ -435,7 +440,7 @@ public class UsuarioCommand
 	{
 		try
 		{
-			Runtime.getRuntime().exec("cls");
+			Runtime.getRuntime().exec("clear");
 		}
 		catch (IOException e)
 		{

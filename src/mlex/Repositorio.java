@@ -6,16 +6,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-
-import com.sun.xml.internal.fastinfoset.sax.Properties;
 
 public class Repositorio extends FileHandler
 {
@@ -81,6 +77,9 @@ public class Repositorio extends FileHandler
 		}
 		String caminhoParaJogo = "./etc/jogos/" + Integer.toString(idNovoJogo);
 		
+		System.out.println("tamanho atual da lista de objetos jogo = " + listaJogosObj.size());
+		System.out.println("id tentativa adicao = " + idNovoJogo);
+		
 		if (indice.getIdsDoIndice().contains(idNovoJogo))
 		{
 			System.out.println("tentativa de adicao de novo jogo falhou pois jogo ja existe");
@@ -102,7 +101,8 @@ public class Repositorio extends FileHandler
 
 			indice.novoJogoSendoAdicionado(idNovoJogo); //funciona quando restaura jogo pq o indice restaura sobrescrevendo o mapa depois
 		}
-
+		
+		
 		this.salvaObjetoEmArquivo(novoJogo, caminhoParaJogo);
 		
 		this.salvaRepositorio();
@@ -123,9 +123,12 @@ public class Repositorio extends FileHandler
 				System.out.println("Jogo nao existe no indice");
 			}
 			
+			
 			tabelaJogos.remove(listaJogosObj.get(idJogo).getNomeJogo());
 
-			listaJogosObj.set(idJogo, null);
+			//listaJogosObj.set(idJogo, null);
+			
+			System.out.println("tamanho da lista de objetos agora = " + Integer.toString(listaJogosObj.size()));
 			
 			if (! new File("./etc/jogos/" + idJogo).delete())
 			{
@@ -346,6 +349,10 @@ public class Repositorio extends FileHandler
 		
 		Jogo jogoModificado = listaJogosObj.get(idJogo).atualizaAtributos(opcao, atributoAtualizado);
 		
+		String caminhoParaJogo = "./etc/jogos/" + Integer.toString(idJogo);
+		
+		this.salvaObjetoEmArquivo(jogoModificado, caminhoParaJogo);
+		
 		listaJogosObj.set(idJogo, jogoModificado);
 		
 		try
@@ -391,7 +398,7 @@ public class Repositorio extends FileHandler
 		}
 		else
 		{		
-			System.out.println((listaJogosObj.get(idJogoPesquisado)));
+			System.out.println((Repositorio.listaJogosObj.get(idJogoPesquisado)));
 		}
 	}
 
@@ -506,10 +513,7 @@ public class Repositorio extends FileHandler
 			}
 			try
 			{
-				
 				Jogo jogoPorEmail = Repositorio.listaJogosObj.get(idJogo);
-
-				
 				FileWriter fw = new FileWriter (f.getPath());
 				BufferedWriter bw = new BufferedWriter(fw);
 
@@ -598,6 +602,14 @@ public class Repositorio extends FileHandler
 			for (String nomeJogo : tabelaJogos.keySet())
 			{
 				System.out.println(" - " + nomeJogo);
+				System.out.println("id dentro do indice = " + indice.getIdComNome(nomeJogo));
+				System.out.println("id dentro da tabela de jogos = " + tabelaJogos.get(nomeJogo));
+				System.out.println("id dentro da lista de objetos = ");
+				for (Jogo j : listaJogosObj)
+				{
+					if (j.getNomeJogo().equals(nomeJogo))
+						System.out.println(j.getIdJogo());
+				}
 			}
 		}
 	}
