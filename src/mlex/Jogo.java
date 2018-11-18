@@ -11,7 +11,7 @@ public class Jogo extends FileHandler implements Serializable
 	private String nomeJogo; 
 	private String lancamento; 
 	private String desenvolvedor;
-	private String versao = "v1.0";
+	private String versao;
 	private String genero = "valor inexistente";
 	private Comentario comentario;
 	String caminhoObjetoJogo;
@@ -22,6 +22,15 @@ public class Jogo extends FileHandler implements Serializable
 		this.nomeJogo = nomeJogo; 
 		this.lancamento = lancamento; 
 		this.desenvolvedor = desenvolvedor;
+		this.versao = "v1.0";
+	}
+	
+	public String getVersao() {
+		return this.versao;
+	}
+	
+	public void setVersao(String novaVersao) {
+		this.versao = novaVersao;
 	}
 	
 	public String getNomeJogo()
@@ -33,16 +42,15 @@ public class Jogo extends FileHandler implements Serializable
 	{
 		return this.idJogo;
 	}
-	
-	public String getLancamento()
-	{
+
+	public String getLancamentoJogo() {
 		return this.lancamento;
 	}
 	
-	public String getDesenvolvedor()
-	{
-		return this.desenvolvedor;
+	public String getDesenvolvedorJogo() {
+				return this.desenvolvedor;
 	}
+
 	
 	public List<String> retornaListaAtributosRelevantes()
 	{
@@ -86,6 +94,27 @@ public class Jogo extends FileHandler implements Serializable
 				+ "\nDesenvolvedor: " + this.desenvolvedor
 				+ "\nVersao: " + this.versao
 				+ "\nGenero: " + this.genero); 
+	}
+	
+	public void addComentario(String texto) {
+		this.comentario = new Comentario(texto, this.idJogo);
+		comentario.salvaComentario();
+	}
+	
+	public void addComentario(String texto, float nota) {
+		this.comentario = new Comentario("",this.idJogo);
+		this.comentario = new Comentario(texto, this.idJogo, nota);
+		this.comentario.salvaComentario();
+	}
+	
+	public void removeComentarios() {
+		this.comentario = new Comentario("",this.idJogo);
+		this.comentario.removeComentarios();
+	}
+	
+	public void exibeComentarios() {
+		this.comentario = new Comentario("",this.idJogo);
+		this.comentario.exibeComentarios();
 	}
 	
 

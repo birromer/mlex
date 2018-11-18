@@ -52,6 +52,7 @@ public class testIndice {
 	@Test
 	public void testAdicionaJogoIndiceVazio()
 	{
+		System.out.println(indiceTeste.getNumeroJogos());
 		assertTrue(indiceTeste.getNumeroJogos() == 0);
 		try
 		{

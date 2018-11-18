@@ -1,6 +1,11 @@
 package mlex;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +49,7 @@ public class Repositorio extends FileHandler
 	public void getInformacoesJogo()
 	{
 		System.out.println("Nome do jogo a ser adicionado: ");
-		this.nomeNovoJogo = scanner.next();
+		this.nomeNovoJogo = scanner.nextLine();
 
 		System.out.println("Data de lancamento do jogo a ser adicionado (DD/MM/AAAA): ");
 		scanner.reset();
@@ -265,6 +270,27 @@ public class Repositorio extends FileHandler
 		return listaJogosObj.size();
 	}
 
+	
+	public void addComentarioEmJogo(int jogoId, String txt)
+	{
+		for (Jogo j: this.listaJogosObj) {
+			if (j.getIdJogo() == jogoId){
+				j.addComentario(txt);
+				break;
+			}
+		}
+	}
+		
+	public void addComentarioEmJogo(int jogoId, String txt, float nota)
+	{	
+		for (Jogo j: this.listaJogosObj) {
+			if (j.getIdJogo() == jogoId){
+				j.addComentario(txt, nota);
+				break;
+			}
+		}
+	}
+
 	public void atualizaAtributo(int idJogo, int opcao, String atributoAtualizado)
 	{
 		switch (opcao)
@@ -308,11 +334,22 @@ public class Repositorio extends FileHandler
 		return opcaoDeFiltro;
 	}
 	
+	public void removeComentariosDeJogo(int jogoId)
+	{
+		for (Jogo j: this.listaJogosObj) {
+			if (j.getIdJogo() == jogoId){
+				j.removeComentarios();
+				break;
+			}
+		}
+	}
+
 	public void exibeInformacoesJogo(int idJogoPesquisado)
 	{
 		System.out.println((listaJogosObj.get(idJogoPesquisado)));
 	}
 	
+
 	public void encerraRepositorio()
 	{
 		indice.salvaObjetoIndice();
@@ -321,4 +358,100 @@ public class Repositorio extends FileHandler
 	}
 	
 
+
+	public void exibeComentariosDeJogo(int jogoId) 
+	{
+		for (Jogo j: this.listaJogosObj) {
+			if (j.getIdJogo() == jogoId){
+				j.exibeComentarios();
+				break;
+			}
+		}	
+	}
+	
+	public void setInfoJogo(Jogo j) 
+	{
+		this.idNovoJogo = j.getIdJogo();
+		this.nomeNovoJogo = j.getNomeJogo();
+		this.lancamentoNovoJogo = j.getLancamentoJogo();
+		this.desenvolvedorNovoJogo = j.getDesenvolvedorJogo();
+			
+	}
+	
+	public void verificaIntegridade() 
+	{
+		BufferedReader r;
+		try 
+		{
+			r = new BufferedReader(new FileReader("./etc/versoes.txt"));
+			String ln = r.readLine();
+			while(ln != null) 
+			{
+				String[] parsedLine = ln.split(",");
+				
+				int i = 0;
+				for(Jogo j: this.listaJogosObj) 
+				{
+					if(j.getNomeJogo().equals(parsedLine[0])) 
+					{
+
+						if(!(this.listaJogosObj.get(i).getVersao().equals(parsedLine[1]))) 
+						{
+							String velhaVersao = this.listaJogosObj.get(i).getVersao().substring(1);
+							String novaVersao = parsedLine[1].substring(1);
+							double novo = Double.parseDouble(novaVersao);
+							double velho = Double.parseDouble(velhaVersao);
+
+							if (novo > velho) 
+							{
+								j.setVersao(parsedLine[1]);
+								this.listaJogosObj.set(i, j);
+								System.out.println(j.getNomeJogo() + " foi atualizado com sucesso para a vers�o " + parsedLine[1] +".");
+							}
+						}
+					}
+					i++;
+				}
+
+				ln = r.readLine();
+			}
+		}
+		catch(IOException e) {
+			System.out.println("Nao foi possivel verificar versao");
+		}
+	}
+	
+	
+	public void atualizaVersaoJogo(int jogoId, String novaVersao) 
+	{
+		int i = 0;
+		for (Jogo j: this.listaJogosObj) 
+		{
+			if (j.getIdJogo() == jogoId)
+			{	
+				j.setVersao(novaVersao);
+
+				this.listaJogosObj.set(i, j);
+
+			}
+			i++;
+		}
+			
+	}
+	
+	public String getVersaoJogo(int jogoId) 
+	{
+		int i = 0;
+		for (Jogo j : this.listaJogosObj)
+		{
+			if (jogoId == this.listaJogosObj.get(i).getIdJogo())
+			{
+				return this.listaJogosObj.get(i).getVersao();
+			}
+		i++;
+		}
+		return null;
+	}
+	
+	
 }
