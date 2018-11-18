@@ -1,10 +1,13 @@
 package mlex;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class Jogo extends FileHandler{
+public class Jogo extends FileHandler implements Serializable
+{
+	private static final long serialVersionUID = 1L;
 	private int idJogo;
 	private String nomeJogo; 
 	private String lancamento; 
@@ -12,7 +15,6 @@ public class Jogo extends FileHandler{
 	private String versao = "v1.0";
 	private String genero = "valor inexistente";
 	private Comentario comentarios;
-	Scanner scanner = new Scanner(System.in);
 	String caminhoObjetoJogo;
 	
 	public Jogo(int id, String nomeJogo, String lancamento, String desenvolvedor)
@@ -31,6 +33,16 @@ public class Jogo extends FileHandler{
 	public int getIdJogo()
 	{
 		return this.idJogo;
+	}
+	
+	public String getLancamento()
+	{
+		return this.lancamento;
+	}
+	
+	public String getDesenvolvedor()
+	{
+		return this.desenvolvedor;
 	}
 	
 	public List<String> retornaListaAtributosRelevantes()
@@ -56,7 +68,6 @@ public class Jogo extends FileHandler{
 				genero = atributoAtualizado;
 		}		
 		caminhoObjetoJogo = "./etc/jogos/" + Integer.toString(idJogo);
-		System.out.println(caminhoObjetoJogo);
 		this.salvaObjetoEmArquivo(this, caminhoObjetoJogo);
 		
 		return this;
