@@ -140,10 +140,10 @@ public class Comentario extends FileHandler
 	{
 		File f = new File(this.path);
 		if(f.delete()) {
-			System.out.println("Comentarios deletados");
+			System.out.println("Comentarios deletados com sucesso");
 		}
 		else {
-			System.out.println("Arquivos não existem");
+			System.out.println("Arquivo não existe");
 		}
 		
 	}

@@ -7,12 +7,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-abstract public class FileHandler
+abstract public class FileHandler implements Serializable
 {
+	private static final long serialVersionUID = 1L;
 	static String path = "./etc/";
-	private FileOutputStream saidaArquivoEscrita;
-	private ObjectOutputStream saidaObjetoEscrita;
+	private transient FileOutputStream saidaArquivoEscrita;
+	private transient ObjectOutputStream saidaObjetoEscrita;
 	File arquivoUsado;
 	
 	static public boolean verificaArquivo(int nome)
@@ -22,9 +24,9 @@ abstract public class FileHandler
 		return arquivo.exists();
 	}
 	
-	public Object leArquivo(String nome)
+	public Object leArquivo(String nome, String caminhoParaArquivo)
 	{
-		File arquivo =  new File(path + nome);
+		File arquivo =  new File(caminhoParaArquivo + nome);
 		try
 		{
 			FileInputStream fileIn = new FileInputStream(arquivo);
@@ -76,6 +78,7 @@ abstract public class FileHandler
 		catch (IOException e)
 		{
 			System.out.println("erro ao escrever objeto no arquivo");
+			e.printStackTrace();
 		}
 		
 		try

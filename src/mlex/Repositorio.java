@@ -33,12 +33,13 @@ public class Repositorio extends FileHandler
 		{
 			for (File arquivoJogo : jogosSalvos)
 			{
-				jogoASerSalvo = this.leJogo(arquivoJogo.getName());
+				jogoASerSalvo = (Jogo) this.leArquivo(arquivoJogo.getName(),  "./etc/jogos/");
 				this.adicionaJogoPassaTeste(jogoASerSalvo);
 			}
 		}
 	}
 	
+
 	public boolean verificaId(String nomeJogo)
 	{
 		return tabelaJogos.keySet().contains(nomeJogo);
@@ -47,7 +48,7 @@ public class Repositorio extends FileHandler
 	public void getInformacoesJogo()
 	{
 		System.out.println("Nome do jogo a ser adicionado: ");
-		this.nomeNovoJogo = scanner.next();
+		this.nomeNovoJogo = scanner.nextLine();
 
 		System.out.println("Data de lancamento do jogo a ser adicionado (DD/MM/AAAA): ");
 		scanner.reset();
@@ -66,19 +67,21 @@ public class Repositorio extends FileHandler
 
 	public int adicionaJogo()
 	{
+		Jogo novoJogo = null;
 		idNovoJogo = indice.getIdComNome(nomeNovoJogo);
 		if (idNovoJogo == -1)
 		{
 			idNovoJogo = listaJogosObj.size();
 		}
-
+		String caminhoParaJogo = "./etc/jogos/" + Integer.toString(idNovoJogo);
+		
 		if (indice.getIdsDoIndice().contains(idNovoJogo))
 		{
 			System.out.println("tentativa de adicao de novo jogo falhou pois jogo ja existe");
 		}
 		else
 		{
-			Jogo novoJogo = new Jogo(this.idNovoJogo, this.nomeNovoJogo, this.lancamentoNovoJogo, this.desenvolvedorNovoJogo);
+			novoJogo = new Jogo(this.idNovoJogo, this.nomeNovoJogo, this.lancamentoNovoJogo, this.desenvolvedorNovoJogo);
 			
 			criaJogo(novoJogo);
 
@@ -91,9 +94,11 @@ public class Repositorio extends FileHandler
 				System.out.println("falha ao adicionar novo jogo no indice");
 			}
 
-			indice.novoJogoSendoAdicionado(idNovoJogo);
+			indice.novoJogoSendoAdicionado(idNovoJogo); //funciona quando restaurando jogo pq o indice restaura sobrescrevendo o mapa depois
 		}
 
+		this.salvaObjetoEmArquivo(novoJogo, caminhoParaJogo);
+		
 		return idNovoJogo;
 	}
 
@@ -287,7 +292,21 @@ public class Repositorio extends FileHandler
 
 	public void atualizaAtributo(int idJogo, int opcao, String atributoAtualizado)
 	{
+		switch (opcao)
+		{
+			case 1:
+				this.nomeNovoJogo = atributoAtualizado;
+				break;
+			case 2:
+				this.lancamentoNovoJogo = atributoAtualizado;
+				break;
+			case 3:
+				this.desenvolvedorNovoJogo = atributoAtualizado;
+				break;
+		}
+		
 		Jogo jogoModificado = listaJogosObj.get(idJogo).atualizaAtributos(opcao, atributoAtualizado);
+		
 		try
 		{
 			indice.modificaJogoNoIndice(jogoModificado);
@@ -327,26 +346,6 @@ public class Repositorio extends FileHandler
 		indice.salvaListaCategorias();
 	}
 	
-	public Jogo leJogo(String nome)
-	{
-		File arquivo =  new File("./etc/jogos/" + nome);
-		try
-		{
-			FileInputStream fileIn = new FileInputStream(arquivo);
-			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-		
-			Jogo jogoLido = (Jogo) objectIn.readObject();
-			
-			objectIn.close();
-			
-			return jogoLido;
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			return null;
-		}
-	}
 
 
 	public void exibeComentariosDeJogo(int jogoId) 
@@ -359,7 +358,8 @@ public class Repositorio extends FileHandler
 		}	
 	}
 	
-	public void setInfoJogo(Jogo j) {
+	public void setInfoJogo(Jogo j) 
+	{
 		this.idNovoJogo = j.getIdJogo();
 		this.nomeNovoJogo = j.getNomeJogo();
 		this.lancamentoNovoJogo = j.getLancamentoJogo();

@@ -85,13 +85,21 @@ public class UsuarioCommand
 				//remove-lo, modifica-lo, adicionar comentario, verificar integridade, enviar por email
 				limpaTela();
 				System.out.println("Digite o nome do jogo a ser pesquisado (Digite 5 para voltar): ");
-				nomeJogoPesquisado = scanner.next();
-				int opcaoJogo = -1;
-				do
+				nomeJogoPesquisado = scanner.nextLine();
+				
+				if (repositorio.verificaId(nomeJogoPesquisado))
 				{
-					this.menuJogo(opcaoJogo);
-					opcaoJogo = scanner.nextInt();
-				} while (opcaoJogo != OPCAO_VOLTAR);
+					int opcaoJogo = -1;
+					do
+					{
+						this.menuJogo(opcaoJogo);
+						opcaoJogo = scanner.nextInt();
+					} while (opcaoJogo != OPCAO_VOLTAR);
+				}
+				else
+				{
+					System.out.println("Jogo pesquisado nao existe, voltando para menu");
+				}
 				break;
 			case 2:
 				//add um jogo
@@ -101,7 +109,7 @@ public class UsuarioCommand
 			case 3:
 				//opcoes da colecoes
 				int opcaoCategoria = -1;
-				do
+			do
 				{
 					this.menuCategorias(opcaoCategoria);
 					opcaoCategoria = scanner.nextInt();
@@ -205,7 +213,6 @@ public class UsuarioCommand
 		if (idJogoPesquisado == -1)
 		{
 			System.out.println("Jogo com esse nome nao existe no repositorio");
-			return -1;
 		}
 		else
 		{
@@ -227,7 +234,7 @@ public class UsuarioCommand
 					{
 						case 1:
 							System.out.println("Digite o nome atualizado do jogo:");
-							atributoAtualizado = scanner.next();
+							atributoAtualizado = scanner.nextLine();
 							repositorio.atualizaAtributo(idJogoPesquisado, 1, atributoAtualizado);
 							break;
 						case 2:
@@ -259,15 +266,18 @@ public class UsuarioCommand
 					break;
 				case 2:
 					//adicionar comentario
-					System.out.println("Tipo de comentario:");
-					System.out.println("1 - Com Nota\n"
-									+ "2 - Sem Nota");
+					System.out.println("Comentarios:");
+					System.out.println("1 - Adicionar comentario com Nota\n"
+									+ "2 - Adicionar comentario sem Nota\n"
+									+ "3 - Exibir todos os comentarios do jogo\n"
+									+ "4 - Remover todos os comentarios do jogo\n"
+									+ "5 - Voltar\n");
 					int opcaoComentario = scanner.nextInt();
 					switch(opcaoComentario)
 					{
 						case 1:
 							System.out.println("Digite o seu comentario:");
-							scanner.nextLine();
+							scanner.next();
 							String comentarioComNota = scanner.nextLine();
 							System.out.println("Digite a nota:");
 							double nota = Double.parseDouble(scanner.nextLine());
@@ -281,6 +291,15 @@ public class UsuarioCommand
 							String comentarioSemNota = scanner.nextLine();
 							repositorio.addComentarioEmJogo(idJogoPesquisado, comentarioSemNota);
 							System.out.println("Comentario adicionado com sucesso.");
+							break;
+						case 3:
+							repositorio.exibeComentariosDeJogo(idJogoPesquisado);
+							System.out.println("Aperte (ENTER) para voltar");
+							break;
+						case 4:
+							repositorio.removeComentariosDeJogo(idJogoPesquisado);
+							break;
+						case 5:
 							break;
 						default:
 							break;
@@ -302,14 +321,15 @@ public class UsuarioCommand
 			limpaTela();
 			System.out.println("\n0)Modificar informacoes;\n"
 					+ "1)Remover do repositorio;\n"
-					+ "2)Adicionar comentario;\n"
+					+ "2)Comentarios;\n"
 					+ "3)Verificar integridade;\n"
 					+ "4)Recomendar para um amigo;\n"
 					+ "5)Voltar;\n"
 					+ "Escolha a acao que deseja realizar: ");
-		}
 		
-		return opcaoDeJogo;
+			return opcaoDeJogo;
+		}
+		return -1;
 	}
 	
 	public int menuFiltro()
