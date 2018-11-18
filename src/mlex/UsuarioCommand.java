@@ -271,7 +271,7 @@ public class UsuarioCommand
 									+ "2 - Adicionar comentario sem Nota\n"
 									+ "3 - Exibir todos os comentarios do jogo\n"
 									+ "4 - Remover todos os comentarios do jogo\n"
-									+ "5 - Voltar\n");
+									+ "5 - Voltar");
 					int opcaoComentario = scanner.nextInt();
 					switch(opcaoComentario)
 					{
@@ -294,7 +294,10 @@ public class UsuarioCommand
 							break;
 						case 3:
 							repositorio.exibeComentariosDeJogo(idJogoPesquisado);
-							System.out.println("Aperte (ENTER) para voltar");
+							System.out.println("Digite ENTER para voltar");
+							scanner.nextLine();
+							scanner.nextLine();
+
 							break;
 						case 4:
 							repositorio.removeComentariosDeJogo(idJogoPesquisado);
