@@ -49,15 +49,16 @@ public class Repositorio extends FileHandler
 	public void getInformacoesJogo()
 	{
 		System.out.println("Nome do jogo a ser adicionado: ");
+		scanner.reset();
 		this.nomeNovoJogo = scanner.nextLine();
 
 		System.out.println("Data de lancamento do jogo a ser adicionado (DD/MM/AAAA): ");
 		scanner.reset();
-		this.lancamentoNovoJogo = scanner.next();
+		this.lancamentoNovoJogo = scanner.nextLine();
 
 		System.out.println("Desenvolvedor do jogo a ser adicionado: ");
 		scanner.reset();
-		this.desenvolvedorNovoJogo = scanner.next();
+		this.desenvolvedorNovoJogo = scanner.nextLine();
 	}
 
 	public void criaJogo(Jogo jogo)
