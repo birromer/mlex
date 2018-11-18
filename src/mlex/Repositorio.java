@@ -116,6 +116,8 @@ public class Repositorio extends FileHandler
 			{
 				System.out.println("Jogo nao existe no indice");
 			}
+			
+			tabelaJogos.remove(listaJogosObj.get(idJogo).getNomeJogo());
 
 			listaJogosObj.set(idJogo, null);
 			
@@ -124,7 +126,7 @@ public class Repositorio extends FileHandler
 				System.out.println("arquivo jogo a ser deletado nao existe");
 			}
 		}
-		
+				
 		this.salvaRepositorio();
 	}
 
@@ -471,9 +473,16 @@ public class Repositorio extends FileHandler
 	
 	public void exibeJogosNoRepositorio()
 	{
-		for (String nomeJogo : tabelaJogos.keySet())
+		if (tabelaJogos.size() == 0)
 		{
-			System.out.println(" - " + nomeJogo);
+			System.out.println("Nao existem jogos a serem exibidos");
+		}
+		else
+		{
+			for (String nomeJogo : tabelaJogos.keySet())
+			{
+				System.out.println(" - " + nomeJogo);
+			}
 		}
 	}
 	
@@ -485,10 +494,12 @@ public class Repositorio extends FileHandler
 		{
 			System.out.println("Nao existem colecoes a serem exibidas\n");
 		}
-		
-		for (int i=0; i< colecoes.size(); i++)
+		else
 		{
-			System.out.println(" - " + colecoes.get(i));
+			for (int i=0; i< colecoes.size(); i++)
+			{
+				System.out.println(" - " + colecoes.get(i));
+			}
 		}
 	}
 	

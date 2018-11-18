@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class UsuarioCommand
 {		
-	private final static int OPCAO_VOLTAR = 5;
+	private final static int OPCAO_VOLTAR = 666;
 	private static Repositorio repositorio = new Repositorio();
 	private Scanner scanner = new Scanner(System.in);
 	private Properties configuracoes = new Properties();
@@ -271,7 +271,16 @@ public class UsuarioCommand
 					break;
 				case 1:
 					repositorio.removeJogo(idJogoPesquisado);
-					break;
+					limpaTela();
+					System.out.println("\n0)Mostrar os jogos do repositorio;\n"
+							+ "1)Selecionar jogo;\n"
+							+ "2)Adicionar um jogo ao repositorio;\n"
+							+ "3)Acessar colecoes;\n"
+							+ "4)Filtrar jogos;\n"
+							+ "5)Configuracoes do usuario;\n"
+							+ "666)Sair;\n"
+							+ "Escolha a acao que deseja realizar: ");
+					return -1;
 				case 2:
 					//adicionar comentario
 					System.out.println("Comentarios:");
