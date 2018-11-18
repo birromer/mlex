@@ -109,13 +109,13 @@ public class UsuarioCommand
 						+ "2)Alterar email\n"
 						+ "3)Alterar ordenacao");
 				int opcaoConfiguracao = scanner.nextInt();
+				scanner.nextLine();
 				switch(opcaoConfiguracao)
 				{
 				case 0:
 					if(config.validacaoUsuario()) 
 					{
 						System.out.println("Digite o novo nome: ");
-						scanner.nextLine();
 						String novoNome = scanner.nextLine();
 						config.setUsuario(novoNome);
 						System.out.println("Nome atualizado com sucesso.");
@@ -131,9 +131,8 @@ public class UsuarioCommand
 					if(config.validacaoUsuario()) 
 					{
 						System.out.println("Digite a nova senha: ");
-						scanner.nextLine();
 						String novaSenha = scanner.nextLine();
-						config.setUsuario(novaSenha);	
+						config.setSenha(novaSenha);
 						System.out.println("Senha atualizada com sucesso.");
 					}
 					else
@@ -146,7 +145,6 @@ public class UsuarioCommand
 					if(config.validacaoUsuario())
 					{
 						System.out.println("Digite o novo email: ");
-						scanner.nextLine();
 						String novoEmail = scanner.nextLine();
 						config.setUsuario(novoEmail);
 						System.out.println("Email atualizado com sucesso.");
@@ -161,7 +159,6 @@ public class UsuarioCommand
 					if(config.validacaoUsuario())
 					{
 						System.out.println("Digite a nova ordenacao: ");
-						scanner.nextLine();
 						String novaOrdenacao = scanner.nextLine();
 						config.setUsuario(novaOrdenacao);
 						System.out.println("Ordenacao atualizada com sucesso.");
@@ -253,7 +250,7 @@ public class UsuarioCommand
 		}
 		
 		limpaTela();
-		System.out.println("0)Mostrar todas colecoes\n"
+		System.out.println("\n\n0)Mostrar todas colecoes\n"
 				+ "1)Buscar jogos da colecao;\n"
 				+ "2)Criar colecao;\n"
 				+ "3)Adicionar um jogo a colecao;\n"
@@ -270,8 +267,7 @@ public class UsuarioCommand
 	{		
 		int idJogoPesquisado = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
 
-		System.out.println("id do jogo que acabou de ser pesquisado = " + idJogoPesquisado);
-		System.out.println("jogos no indice atualmente na ordem = + ");
+		System.out.println(idJogoPesquisado);
 		
 		if (idJogoPesquisado == -1)
 		{
@@ -328,17 +324,10 @@ public class UsuarioCommand
 					}
 					break;
 				case 1:
-					repositorio.removeJogo(idJogoPesquisado);
+					repositorio.removeJogo(idJogoPesquisado, nomeJogoPesquisado);
 					idJogoPesquisado = -1;
 					limpaTela();
-					System.out.println("\n0)Mostrar os jogos do repositorio;\n"
-							+ "1)Selecionar jogo;\n"
-							+ "2)Adicionar um jogo ao repositorio;\n"
-							+ "3)Acessar colecoes;\n"
-							+ "4)Filtrar jogos;\n"
-							+ "5)Configuracoes do usuario;\n"
-							+ "666)Sair;\n"
-							+ "Escolha a acao que deseja realizar: ");
+					System.out.println("\nPressione 0 para continuar.\n");
 
 					return -2;
 				case 2:
@@ -348,7 +337,7 @@ public class UsuarioCommand
 									+ "2 - Adicionar comentario sem Nota\n"
 									+ "3 - Exibir todos os comentarios do jogo\n"
 									+ "4 - Remover todos os comentarios do jogo\n"
-									+ "5 - Voltar\n");
+									+ "5 - Voltar");
 
 					int opcaoComentario = scanner.nextInt();
 					scanner.nextLine();
@@ -356,7 +345,6 @@ public class UsuarioCommand
 					{
 						case 1:
 							System.out.println("Digite o seu comentario:");
-							scanner.next();
 							String comentarioComNota = scanner.nextLine();
 							System.out.println("Digite a nota:");
 							double nota = Double.parseDouble(scanner.nextLine());
@@ -366,7 +354,6 @@ public class UsuarioCommand
 							break;
 						case 2:
 							System.out.println("Digite o seu comentario:");
-							scanner.nextLine();
 							String comentarioSemNota = scanner.nextLine();
 							repositorio.addComentarioEmJogo(idJogoPesquisado, comentarioSemNota);
 							System.out.println("Comentario adicionado com sucesso.");
@@ -374,7 +361,6 @@ public class UsuarioCommand
 						case 3:
 							repositorio.exibeComentariosDeJogo(idJogoPesquisado);
 							System.out.println("Aperte (ENTER) para voltar");
-
 							scanner.nextLine();
 							break;
 						case 4:

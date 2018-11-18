@@ -104,11 +104,10 @@ public class Jogo extends FileHandler implements Serializable
 	
 	public void addComentario(String texto) {
 		this.comentario = new Comentario(texto, this.idJogo);
-		comentario.salvaComentario();
+		this.comentario.salvaComentario();
 	}
 	
 	public void addComentario(String texto, float nota) {
-		this.comentario = new Comentario("",this.idJogo);
 		this.comentario = new Comentario(texto, this.idJogo, nota);
 		this.comentario.salvaComentario();
 	}

@@ -106,7 +106,10 @@ public class Comentario extends FileHandler
 				
 				out.println();
 				out.println(this.getTexto());
-				out.println(Double.toString(this.getNota()));
+				if(this.getNota() != -1)
+				{
+					out.println(Double.toString(this.getNota()));
+				}
 				out.println(this.getData());
 
 				out.close();

@@ -90,19 +90,35 @@ public class PlataformaConfiguracao extends FileHandler
 	public void setUsuario(String usuario) 
 	{
 		configuracoes.setProperty("usuario", usuario);
+
+		salvaConfig();
 	}
 	public void setSenha(String senha) 
 	{
 		configuracoes.setProperty("senha", senha);
+		salvaConfig();
 	}
 	public void setEmailDoUsuario(String emailDoUsuario) 
 	{
 		configuracoes.setProperty("emailDoUsuario", emailDoUsuario);
+		salvaConfig();
 	}
 	public void setOrdenacao(String ordenacao) 
 	{
 		configuracoes.setProperty("ordenacao", ordenacao);
+		salvaConfig();
 	}
 
-
+	private void salvaConfig()
+	{
+		try
+		{
+			configuracoes.store(new FileOutputStream("./.mlex.conf"), "");
+		}
+		catch (IOException e)
+		{
+			System.out.println("erro ao escrever arquivo de configuracao");
+		}
+	}
+	
 }
