@@ -3,7 +3,6 @@ package mlex;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 public class Jogo extends FileHandler implements Serializable
 {
@@ -14,7 +13,7 @@ public class Jogo extends FileHandler implements Serializable
 	private String desenvolvedor;
 	private String versao = "v1.0";
 	private String genero = "valor inexistente";
-	private Comentario comentarios;
+	private Comentario comentario;
 	String caminhoObjetoJogo;
 	
 	public Jogo(int id, String nomeJogo, String lancamento, String desenvolvedor)
