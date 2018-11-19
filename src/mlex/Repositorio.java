@@ -1,7 +1,6 @@
 package mlex;
 
 import java.io.BufferedReader;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
@@ -64,6 +63,7 @@ public class Repositorio extends FileHandler
 	}
 
 	public void getInformacoesJogo()
+	/*exibe informacoes do jogo no console*/
 	{
 		System.out.println("Nome do jogo a ser adicionado: ");
 		scanner.reset();
@@ -470,6 +470,9 @@ public class Repositorio extends FileHandler
 								{
 									j.setVersao(parsedLine[1]);
 									Repositorio.listaJogosObj.set(i, j);
+			
+									String caminhoParaJogo = "./etc/jogos/" + Integer.toString(j.getIdJogo());
+									this.salvaObjetoEmArquivo(j, caminhoParaJogo);
 									System.out.println(j.getNomeJogo() + " foi atualizado com sucesso para a versao " + parsedLine[1] +".");
 								}
 							}

@@ -19,7 +19,7 @@ public class UsuarioCommand
 	
 	public UsuarioCommand()
 	{	
-		config = new PlataformaConfiguracao();
+		config = new PlataformaConfiguracao(); //inicializa a plataforma de configuracao ao construir objeto usuario command
 	}
 	
 	String getUsuario()
@@ -49,24 +49,23 @@ public class UsuarioCommand
 			case -1:
 				break;
 			case 0:
+				//exibe o nome de todos jogos armazenado
 				repositorio.exibeJogosNoRepositorio();
-				//ver tds jogos
 				break;
 			case 1:
 				//ve um jogo e pode:
 				//remove-lo, modifica-lo, adicionar comentario, verificar integridade, enviar por email
 				limpaTela();
 				System.out.println("Digite o nome do jogo a ser pesquisado: ");
-				
 				nomeJogoPesquisado = scanner.nextLine();
 				
 				if (repositorio.verificaId(nomeJogoPesquisado))
 				{
-					int opcaoJogo = -1;
+					int opcaoJogo = -1; //valor inicial do caso de erro
 					int temp;
 					do
 					{
-						temp = this.menuJogo(opcaoJogo);
+						temp = this.menuJogo(opcaoJogo); //chama menu do jogo caso verificado que o jogo existe e enquanto nao ocorrer caso de parada
 						opcaoJogo = scanner.nextInt();
 						scanner.nextLine();
 					} while (opcaoJogo != OPCAO_VOLTAR && temp != -2);
@@ -77,16 +76,16 @@ public class UsuarioCommand
 				}
 				break;
 			case 2:
-				//add um jogo
-				repositorio.getInformacoesJogo();				
-				repositorio.adicionaJogo();
+				//adiciona um jogo
+				repositorio.getInformacoesJogo(); //recebe informacoes do jogo a ser adicionado e armazena nas variaveis do repositorio			
+				repositorio.adicionaJogo(); //realiza adicao do jogo usando informacoes recebidas
 				break;
 			case 3:
 				//opcoes da colecoes
 				int opcaoCategoria = -1;
 			do
 				{
-					this.menuCategorias(opcaoCategoria);
+					this.menuCategorias(opcaoCategoria); //chama menu relacionado as categorias
 					opcaoCategoria = scanner.nextInt();
 					scanner.nextLine();
 				} while (opcaoCategoria != OPCAO_VOLTAR);
@@ -174,6 +173,9 @@ public class UsuarioCommand
 				}
 
 				break;
+			case 6:
+				repositorio.verificaIntegridade();
+				break;
 			case 666:
 				//encerra o programa
 				repositorio.salvaRepositorio();
@@ -189,6 +191,7 @@ public class UsuarioCommand
 				+ "3)Acessar colecoes;\n"
 				+ "4)Filtrar jogos;\n"
 				+ "5)Configuracoes do usuario;\n"
+				+ "6)Verificar integridade do repositorio;\n"
 				+ "666)Sair;\n"
 				+ "Escolha a acao que deseja realizar: ");
 		
@@ -373,16 +376,12 @@ public class UsuarioCommand
 					}
 					break;
 				case 3:
-					repositorio.verificaIntegridade();
-					break;
-				case 4:
 					//enviar por email -- fazer depois que comentarios e toString integrados
-					System.out.println("Digite email do destinatario: \n");
-					scanner.nextLine();
+					System.out.println("\nDigite email do destinatario: ");
 					String emailTO = scanner.nextLine();
 					repositorio.enviaEmail(emailTO, config.getEmailDoUsuario(), idJogoPesquisado);
 					break;
-				case 5:
+				case 666:
 					//volta
 					break;
 				default: 
@@ -393,8 +392,7 @@ public class UsuarioCommand
 			System.out.println("\n0)Modificar informacoes;\n"
 					+ "1)Remover do repositorio;\n"
 					+ "2)Comentarios;\n"
-					+ "3)Verificar integridade;\n"
-					+ "4)Recomendar para um amigo;\n"
+					+ "3)Recomendar para um amigo;\n"
 					+ "666)Voltar;\n"
 					+ "Escolha a acao que deseja realizar: ");
 		
