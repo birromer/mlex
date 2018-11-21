@@ -665,6 +665,7 @@ public class Repositorio extends FileHandler
 	}
 	
 	public void exibeJogosNoRepositorio()
+	/*exibe lista com apenas o nome dos jogos armazenados*/
 	{
 		if (tabelaJogos.size() == 0)
 		{
@@ -700,6 +701,7 @@ public class Repositorio extends FileHandler
 	}
 	
 	public void salvaRepositorio()
+	/*chama salvamento dos objetos do indice e salva os jogos armazenados*/
 	{
 		indice.salvaObjetoIndice();
 		indice.salvaMapaJogoCategorias();
