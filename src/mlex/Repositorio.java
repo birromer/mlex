@@ -124,6 +124,7 @@ public class Repositorio extends FileHandler
 	}
 
 	public void removeJogo(int idJogo, String nomeJogo)
+	/* remove jogo do repositorio e do indice*/
 	{
 		if (indice.getIdsDoIndice().contains(idJogo))
 		{
@@ -171,6 +172,7 @@ public class Repositorio extends FileHandler
 	}
 	
 	public void adicionaJogoPassaTeste(Jogo novoJogo)
+	/* adiciona jogo no indice e atualiza mapas de colecoes */
 	{
 		try
 		{
@@ -189,6 +191,7 @@ public class Repositorio extends FileHandler
 	}
 
 	public int getIdParaVerInfoDeJogo(String nomeJogoProcurado)
+	/* recupera o id do jogo atraves do seu nome */
 	{
 		int id = -1;
 
@@ -201,6 +204,7 @@ public class Repositorio extends FileHandler
 	}
 
 	public List<Integer> filtroPorAtributoDoJogo(String nomeOpcaoDeBusca, int opcaoDeBusca)
+	/* devolve lista com indices de jogos com certo atributo fornecido em comum */
 	{
 		List<Integer> ids = new ArrayList<Integer>();
 
@@ -247,6 +251,7 @@ public class Repositorio extends FileHandler
 	}
 
 	public int filtroDasCategorias(String nomeDeCategoria, int opcaoDeBuscaCateg)
+	/* retorna jogos pertencentes a uma categoria, com ou sem subfiltro por atributo */
 	{
 		List<Integer> ids = new ArrayList<Integer>();
 		String temp;
@@ -290,6 +295,7 @@ public class Repositorio extends FileHandler
 	}
 
 	private int mostraResultadosDoFiltroDeCategorias(int nroDeResultados, List<Integer> idsValidos, String nomeDeCategoria)
+	/* imprime na tela os jogos depois do filtro */
 	{
 		if(nroDeResultados == -1)
 		{
@@ -307,12 +313,14 @@ public class Repositorio extends FileHandler
 	}
 
 	public void criaCateg(String nomeCateg)
+	/* atualiza indice com nova categoria e salva estado do repositorio */
 	{
 		indice.adicionaCategoriaAoIndice(nomeCateg);
 		this.salvaRepositorio();
 	}
 	
 	public void addJogoNaCateg(int idDoJogo, String nomeCateg)
+	/* adiciona certo jogo em certa categoria */
 	{
 		try
 		{
@@ -327,6 +335,7 @@ public class Repositorio extends FileHandler
 	}
 	
 	public void removeJogoDaCateg(int idDoJogo, String nomeCateg)
+	/* troca o valor da categoria no jogo por 0, indicando que ele nao esta ais naquela colecao */
 	{
 		indice.removeCategoriaDoJogo(idDoJogo, nomeCateg);
 		this.salvaRepositorio();
@@ -338,6 +347,7 @@ public class Repositorio extends FileHandler
 	}
 
 	public void addComentarioEmJogo(int jogoId, String txt)
+	/* adiciona um comentario sem nota em um jogo especifico */
 	{
 		for (Jogo j: Repositorio.listaJogosObj) {
 			if (j != null)
@@ -351,6 +361,7 @@ public class Repositorio extends FileHandler
 	}
 		
 	public void addComentarioEmJogo(int jogoId, String txt, float nota)
+	/* adiciona um comentario com nota em um jogo especifico */
 	{	
 		for (Jogo j: Repositorio.listaJogosObj) {
 			if (j != null)
@@ -364,6 +375,7 @@ public class Repositorio extends FileHandler
 	}
 
 	public void atualizaAtributo(int idJogo, int opcao, String atributoAtualizado)
+	/* atualiza atributos de jogo modificado no arquivo */
 	{
 		switch (opcao)
 		{
@@ -401,6 +413,7 @@ public class Repositorio extends FileHandler
 	}
 	
 	private int menuFiltro()
+	/* menu de opcoes de filtro baseado nos atributos relevantes dos jogos */
 	{
 		System.out.println("\n1)Filtrar por nome do jogo;\n"
 				+ "2)Filtrar data do lancamento do jogo;\n"
@@ -414,6 +427,7 @@ public class Repositorio extends FileHandler
 	}
 	
 	public void removeComentariosDeJogo(int jogoId)
+	/* remove comentarios de um jogo */
 	{
 		for (Jogo j: Repositorio.listaJogosObj) {
 			if (j != null)
@@ -428,6 +442,7 @@ public class Repositorio extends FileHandler
 
 
 	public void exibeComentariosDeJogo(int jogoId) 
+	/* mostra comentarios de certos jogos */
 	{
 		for (Jogo j: Repositorio.listaJogosObj) {
 			if (j != null)
@@ -440,7 +455,8 @@ public class Repositorio extends FileHandler
 		}
 	}
 	
-	public void verificaIntegridade() 
+	public void verificaIntegridade()
+	
 	{
 		BufferedReader r;
 		try 
@@ -508,6 +524,7 @@ public class Repositorio extends FileHandler
 	}
 	
 	public void exibeInformacoesJogo(int idJogoPesquisado)
+	/* exibe todas as informacoes no objeto */
 	{
 		if (idJogoPesquisado == -1)
 		{
@@ -665,6 +682,7 @@ public class Repositorio extends FileHandler
 	}
 	
 	public void exibeColecoesNoIndice()
+	/* mostra nome das colecoes existentes */
 	{
 		List <String> colecoes = indice.getListaCategorias();
 		

@@ -10,12 +10,13 @@ import java.io.ObjectOutputStream;
 
 abstract public class FileHandler
 {
-	static String path = "./etc/";
+	static String path = "./etc/"; //caminho padrao para arquivos armazenados
 	private transient FileOutputStream saidaArquivoEscrita;
 	private transient ObjectOutputStream saidaObjetoEscrita;
 	File arquivoUsado;
 	
 	static public boolean verificaArquivo(int nome)
+	//verifica se arquivo existe
 	{
 		File arquivo =  new File(path + nome);
 		
@@ -23,6 +24,7 @@ abstract public class FileHandler
 	}
 	
 	public Object leArquivo(String nome, String caminhoParaArquivo)
+	/*retorna o objeto armazenado no arquivo binario lido*/
 	{
 		File arquivo =  new File(caminhoParaArquivo + nome);
 		try
@@ -44,7 +46,8 @@ abstract public class FileHandler
 	}
 	
 	public void salvaObjetoEmArquivo (Object objeto, String caminhoParaArquivo)
-	{
+	/*salva em arquivo binario o objeto recebido como parametro*/
+	{	
 		arquivoUsado = new File(caminhoParaArquivo);
 		
 		if (arquivoUsado.exists() == false)

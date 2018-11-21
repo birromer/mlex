@@ -17,6 +17,7 @@ public class Jogo extends FileHandler implements Serializable
 	String caminhoObjetoJogo;
 	
 	public Jogo(int id, String nomeJogo, String lancamento, String desenvolvedor)
+	/*inicializa atributos de acordo com parametros*/
 	{
 		this.idJogo = id;
 		this.nomeJogo = nomeJogo; 
@@ -59,6 +60,7 @@ public class Jogo extends FileHandler implements Serializable
 	}
 	
 	public List<String> retornaListaAtributosRelevantes()
+	/*retorna lista com atributos obrigatorios do jogo*/
 	{
 		String[] atributosRelevantes = new String[] {(Integer.toString(this.idJogo)), this.nomeJogo, this.lancamento, this.desenvolvedor};
 		List<String> listaAtributosRelevantes= Arrays.asList(atributosRelevantes);
@@ -66,6 +68,7 @@ public class Jogo extends FileHandler implements Serializable
 	}
 	
 	public Jogo atualizaAtributos(int opcao, String atributoAtualizado)
+	/*atualiza atributos do objeto de acordo com a opcao selecionada no menu anterior e coloca o valor parametro*/
 	{
 		switch (opcao)
 		{
@@ -94,6 +97,7 @@ public class Jogo extends FileHandler implements Serializable
 	
 	@Override
 	public String toString()
+	/*para print bonito*/
 	{
 		return ("\nNome: "+ this.nomeJogo
 				+ "\nData lancamento: " +this.lancamento
@@ -102,22 +106,30 @@ public class Jogo extends FileHandler implements Serializable
 				+ "\nGenero: " + this.genero); 
 	}
 	
-	public void addComentario(String texto) {
+	public void addComentario(String texto)
+	/*cria novo objeto comentario com conteudo do parametro*/
+	{
 		this.comentario = new Comentario(texto, this.idJogo);
 		this.comentario.salvaComentario();
 	}
 	
-	public void addComentario(String texto, float nota) {
+	public void addComentario(String texto, float nota)
+	/*cria novo comentario com nota e conteudo do parametro*/
+	{
 		this.comentario = new Comentario(texto, this.idJogo, nota);
 		this.comentario.salvaComentario();
 	}
 	
-	public void removeComentarios() {
+	public void removeComentarios()
+	/*adiciona instancia de comentario necessaria para remocao caso nenhum outro exista*/
+	{
 		this.comentario = new Comentario("",this.idJogo);
 		this.comentario.removeComentarios();
 	}
 	
-	public void exibeComentarios() {
+	public void exibeComentarios()
+	/*cria coentario para caso de nao existir algum e chama funcao de exibicao*/
+	{
 		this.comentario = new Comentario("",this.idJogo);
 		this.comentario.exibeComentarios();
 	}

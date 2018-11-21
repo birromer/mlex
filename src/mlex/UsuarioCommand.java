@@ -43,6 +43,9 @@ public class UsuarioCommand
 	}
 	
 	public int menuInicial(int opcaoMenu)
+	/* menu inicial do repositorio, onde se pode escolher exibir o nome de todos os jogos, 
+	 * selecionar um jogo especifico a partir do nome, adicionar um jogo ao repositorio*, 
+	 * abrir o menu de colecoes, filtrar jogos com determinado atributo, alterar configuracoes de usurio e encerrar programa */
 	{
 		switch(opcaoMenu)
 		{
@@ -199,6 +202,9 @@ public class UsuarioCommand
 	}
 	
 	public int menuCategorias(int opcaoDeCategoria)
+	/* menu das colegoes, onde se pode escolher exibir o nome de todas as colecoes, 
+	 * exibir os jogos de uma determinada colecao, criar uma nova colecao, adicionar um jogo a uma colecao, 
+	 * remover jogo de uma colecao, filtrar jogos com certo atributo dentro de uma colecao especifica, voltar ao enu inicial */
 	{				
 		switch(opcaoDeCategoria)
 		{
@@ -267,6 +273,8 @@ public class UsuarioCommand
 	}
 	
 	public int menuJogo(int opcaoDeJogo)
+	/* menu de jogos selecioandos, onde se modificar um jogo, remover o jogo do repositorio, adicionar um comentario, 
+	 * indicar o jogo ("enviando por email") e voltar ao menu inicial */
 	{		
 		int idJogoPesquisado = repositorio.getIdParaVerInfoDeJogo(nomeJogoPesquisado);
 
@@ -402,6 +410,7 @@ public class UsuarioCommand
 	}
 	
 	public int menuFiltro()
+	/* menu de opcoes de filtro baseado nos atributos relevantes dos jogos */
 	{
 		limpaTela();
 		System.out.println("\n1)Filtrar por nome do jogo;\n"
@@ -417,6 +426,7 @@ public class UsuarioCommand
 	}
 	
 	public void limpaTela()
+	/* chama funcao do sistema e limpa a tela */
 	{
 		try
 		{

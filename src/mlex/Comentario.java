@@ -42,7 +42,8 @@ public class Comentario extends FileHandler
 		return this.path;
 	}
 	
-	public Comentario(String s, int idJogo) 
+	public Comentario(String s, int idJogo)
+	/*cria comentario sem nota*/
 	{
 		this.data = new Date();
 		this.nota = -1;
@@ -53,6 +54,7 @@ public class Comentario extends FileHandler
 	
 	
 	public Comentario(String s, int idJogo, float n) 
+	/*cria comenttario com nota*/
 	{
 		this.data = new Date();
 		this.texto = s;
@@ -63,11 +65,11 @@ public class Comentario extends FileHandler
 	}
 	
 	public void salvaComentario() 
+	/*salva comentario em arquivo com o nome <id do jogo> <comentario> .txt*/
 	{
-		
 		File f = new File(this.getPath());
 		
-		//se arquivo nao existe
+		//se arquivo nao existe cria novo arquivo de texto com novo comentario
 		if(!f.exists()) 
 		{
 			try {
@@ -81,6 +83,7 @@ public class Comentario extends FileHandler
 				bw.write(this.getTexto());
 				bw.newLine();
 				
+				//nao salva nota caso nota seja -1
 				if(this.getNota() != -1) 
 				{
 					bw.write(Float.toString(this.getNota()));
@@ -106,6 +109,7 @@ public class Comentario extends FileHandler
 				
 				out.println();
 				out.println(this.getTexto());
+				//nao salva nota caso nota seja -1
 				if(this.getNota() != -1)
 				{
 					out.println(Double.toString(this.getNota()));
@@ -122,6 +126,7 @@ public class Comentario extends FileHandler
 	
 	
 	public void exibeComentarios() 
+	/*exibe comentarios em sysout*/
 	{
 		 String fpath = this.path;
 		 File f = new File(fpath);
@@ -141,16 +146,17 @@ public class Comentario extends FileHandler
 				
 			} catch (FileNotFoundException e) 
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				System.out.println("Erro ao abrir arquivo");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				System.out.println("Erro ao abrir arquivo");
 			}
 		 }
 	}
 	
 	public void removeComentarios()
+	/*remove comentarios*/
 	{
 		File f = new File(this.path);
 		if(f.delete()) {
